@@ -1,3 +1,6 @@
+% pakete
+\usepackage{ifthen}
+
 % Deutsch
 \usepackage[german]{babel} % deutsch und deutsche Rechtschreibung
 \usepackage[utf8]{inputenc} % Unicode Text 
@@ -101,5 +104,22 @@
     urlcolor=black
 }
 
-% text-variablen
+% text shortcut variablen
 \newcommand{\metaeffekt}{\{met\ae ffekt\}\ }
+
+% custom commands
+\newcommand{\weekdaymarginpar}[1]{%
+    \ifthenelse{\equal{#1}{Montag}}%
+    {\marginpar{\raisebox{-1.6em}{#1}}}%
+    {\marginpar{\raisebox{-1.92em}{#1}}}%
+}
+\newcommand{\qt}[1]{„#1“}
+
+% custom environments
+\newenvironment{smitemize}
+{ \begin{itemize}
+      \setlength{\itemsep}{0em}
+      \setlength{\topsep}{0em}
+      \setlength{\partopsep}{0em} }
+      {
+\end{itemize} }
