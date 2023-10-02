@@ -108,10 +108,11 @@
 \newcommand{\metaeffekt}{\{met\ae ffekt\}\ }
 
 % custom commands
-\newcommand{\weekdaymarginpar}[1]{%
-    \ifthenelse{\equal{#1}{Montag}}%
-    {\marginpar{\raisebox{-1.6em}{#1}}}%
-    {\marginpar{\raisebox{-1.92em}{#1}}}%
+\newcommand{\lweekdaymarginpar}[1]{%
+    \marginpar{\raisebox{-1.6em}{\underline{#1}}}
+}
+\newcommand{\sweekdaymarginpar}[1]{%
+    \marginpar{\raisebox{-1.92em}{\underline{#1}}}
 }
 \newcommand{\qt}[1]{„#1“}
 

@@ -6,7 +6,7 @@
 
 \section{Woche 1 - Einarbeitung in CVSS 4.0} \label{sec:bericht-wo-1}
 
-\weekdaymarginpar{Montag}
+\lweekdaymarginpar{Montag}
 Der erste Arbeitstag meines Praktikums bei der \metaeffekt fiel für mich mit dem Ende der Sommerpause für viele meiner Kollegen zusammen.
 Da ich schon seit einiger Zeit im Unternehmen arbeite, war eine ausführliche Einführung für mich nicht nötig, denn ich habe bereits meine eigenen Aufgabenbereiche zugewiesen, um die ich mich kümmern muss.
 Der Montag war allerdings auch für mich der erste Tag nach dem Urlaub, daher musste ich mich erst wieder orientieren und herausfinden, welche Aufgaben als Nächstes anstehen.
@@ -21,18 +21,18 @@ Der eher ereignisreiche Montag endete damit, dass ich mit meinem Vorgesetzten un
 Diese haben wir bisher jeden Tag durchgeführt und sowohl über berufliche als auch private Themen gesprochen.
 Ich werde die genauen Inhalte dieser Meetings hier nicht immer aufführen, da sie meist über die bereits behandelten Themen des Tages gehen.
 
-\weekdaymarginpar{Dienstag}
+\sweekdaymarginpar{Dienstag}
 Am Dienstag startete ich mit der Recherche zu den theoretischen Grundlagen und den Einzelheiten von CVSS 4.0.
 Ich stellte schnell fest, dass es mehr Unterschiede als Gemeinsamkeiten zu den vorherigen Versionen CVSS 2 und 3 gibt, insbesondere in Bezug auf Berechnung, Implementierungsdetails, Interpretation der Ergebnisse und der Theorie dahinter.
 Den Rest des Tages verbrachte ich damit, die noch unfertige Dokumentation und Beispiele des neuen Standards zu studieren und das Konzept zu verstehen, was sich als komplexer als zunächst angenommen erwies.
 
-\weekdaymarginpar{Mittwoch}
+\sweekdaymarginpar{Mittwoch}
 Am Mittwoch begann ich mit einem ersten Versuch einer Implementierung der CVSS 4.0-Berechnungen.
 Nach weiterer Recherche fand ich auf dem offiziellen RedHat GitHub-Repository\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator}} den Quellcode einer Implementierung eines CVSS 4.0-Rechners in JavaScript.
 RedHat war stark an der Entwicklung des Standards beteiligt.
 Dieses Beispiel hat mir geholfen, das Grundgerüst für die Implementierung in unserem Java-System vorzubereiten, das dem Modell der CVSS 2 und 3 ähnelt.
 
-\weekdaymarginpar{Donnerstag}
+\sweekdaymarginpar{Donnerstag}
 Der Donnerstag startete mit einer Fehlermeldung in einem unserer Kundenprojekte.
 Es handelte sich um eine „OutOfMemoryError“-Exception, die auftrat, wenn unser generierter Report zu Schwachstellen in Kundenprojekten aus einer bisher noch nicht so aufgetretenen großen Menge an Daten generiert werden sollte.
 Das Problem war, dass während der Serialisierung in ein HTML-Dokument das interne Modell kurzzeitig dupliziert wurde und damit auch der Speicherbedarf.
@@ -44,7 +44,7 @@ Nicht nur, dass der Code nicht sehr leserlich geschrieben war und viele verwirre
 Ich meldete meine Probleme mit der Implementierung zusammen mit einigen inhaltlichen Fragen in einem Issue auf dem entsprechenden GitHub-Repository.
 Ich beendete den Tag mit einer teilweise funktionierenden Implementierung.
 
-\weekdaymarginpar{Freitag}
+\sweekdaymarginpar{Freitag}
 Der Freitag sollte der Tag sein, an dem ich die Basis-Implementierung abschließe.
 Es überraschte mich, dass ich so schnell auch eine Antwort auf meine GitHub-Fragen bekommen hatte: Die Spezifikation ist veraltet, aber die Implementierung ist korrekt.
 Mithilfe dieser Informationen und einigem weiteren herumexperimentieren konnte ich die Berechnungen fertigstellen.
@@ -59,7 +59,7 @@ Da ich am Freitagnachmittag private Verpflichtungen hatte, begann ich den Tag et
 
 \section{Woche 2 - Vertiefung in CVSS 4.0 und Korrelationsdaten} \label{sec:bericht-wo-2}
 
-\weekdaymarginpar{Montag}
+\lweekdaymarginpar{Montag}
 Die zweite Woche meines Praktikums wollte und sollte ich mich mit der genaueren Funktionsweise von CVSS 4.0 auseinandersetzen.
 Ich verbrachte also den Montag damit, die Spezifikation\footnote{\url{htthttps://www.first.org/cvss/v4.0/specification-document}},
 die Entwicklungsgeschichte\footnote{\url{https://www.first.org/cvss/v4.0/user-guide#New-Scoring-System-Development}}
@@ -70,14 +70,14 @@ Die Unklarheiten lagen eher in dem zweiten Schritt: Der Interpolation zwischen d
 Ich konnte selbst nach einem ganzen Tag an Recherche keine zufriedenstellende Erklärung finden, wie die Berechnung in diesem Schritt funktioniert.
 Durch meine Recherche konnte ich immerhin weitere Randfall-Tests anlegen und damit zwei Fehler in meiner Implementierung finden.
 
-\weekdaymarginpar{Dienstag}
+\sweekdaymarginpar{Dienstag}
 Eigentlich wollte ich am Dienstag weiter an meinem Verständnis von CVSS 4.0 arbeiten, aber es gab etwas Wichtigeres:
 Da ein Kollege noch im Urlaub war, musste ich einen Teil seiner Arbeit übernehmen.
 Es geht um das Pflegen von Korrelationsdaten, die dazu dienen, Software-Komponenten automatisch zu Produkten in fremden Datenbanken (wie den CPE in der NVD\footnote{\url{https://nvd.nist.gov/products/cpe}}) zuzuordnen.
 Da dies früher einmal meine Aufgabe im Unternehmen war, habe ich dafür in der Vergangenheit ein Tool geschrieben, das ich kurz vor meinem Praktikum mit viel Feedback von und für meinen Mitarbeiter als Web-UI neu aufgesetzt hatte.
 Das gab mir also die Chance, dieses Tool endlich einmal selbst zu verwenden und an einigen Stellen den Workflow zu verbessern.
 
-\weekdaymarginpar{Mittwoch}
+\sweekdaymarginpar{Mittwoch}
 Leider war ich Dienstag nicht mit den zu verarbeitenden Korrelationsdaten fertig geworden, darum habe ich noch den halben Mittwoch damit verbracht.
 Was mich positiv überraschte war, wie gewissenhaft mein Kollege diese Arbeit durchgeführt hatte, seitdem er diese von mir übernommen hatte.
 Ich musste nur bei wenigen Einträgen die Matching-Informationen überarbeiten, bei den meisten hatten diese bereits gestimmt und ich musste sie nur noch abnicken.
@@ -86,7 +86,7 @@ Den restlichen zwei Stunden habe ich dann noch mit meinem Chef über ein interes
 Also: was passiert, wenn man eine kritische Software-Schwachstelle, die man zuvor als \qt{Nicht Ausnutzbar} abgestempelt hatte, über eine andere, für sich alleine stehende harmlose, Schwachstelle ausnutzen kann?
 Dieses Thema müssen wir auf Kundenwunsch in den nächsten Monaten abbilden können, aber eine hohe Priorität bekommt es noch nicht.
 
-\weekdaymarginpar{Donnerstag}
+\sweekdaymarginpar{Donnerstag}
 Donnerstag war mein Chef nicht im Büro, da er ein Treffen bei einem Kunden hatte.
 Es war auch ein Tag, an dem ich sehr viel Code geschrieben habe, denn ich musste meine Planung für die Woche etwas umpriorisieren:
 Ende der Woche musste die Implementierung und Integration von CVSS 4.0 in unser System fertiggestellt sein, darum beschloss ich, mich erst einmal darum zu kümmern und danach erst weiter mein Verständnis aufzubauen.
@@ -105,7 +105,7 @@ Ich habe also fast noch einmal die gesamte Implementierung neu geschrieben, inde
 
 Am Ende des Tages hatte ich Pull Requests für die drei Projekte, in denen diese Berechnungen stattfinden, fertiggestellt.
 
-\weekdaymarginpar{Freitag}
+\sweekdaymarginpar{Freitag}
 Der Freitag begann frostig - im wahrsten Sinne des Wortes.
 Es waren nur 7 °C und mit dem Fahrrad und kurzer Hose bin ich gut durchgefroren angekommen.
 Mit einem Tee konnte ich mich aber ganz gut wieder aufwärmen.
@@ -118,3 +118,85 @@ Dies habe ich in einem Dokument für späteren Zugriff festgehalten.
 Das Weekly war stark gefüllt, nicht nur ich hatte viele Neuigkeiten über die Funktionsweise von CVSS 4.0 zu berichten, sondern zwei meiner Kollegen hatten diese Woche auch in ihren Teilprojekten größere Durchbrüche, die sie sogar live demonstriert und erklärt haben.
 Damit wurde das Weekly von einer Stunde auf fast zweieinhalb Stunden verlängert und der Tag war schnell herum.
 Ich beendete meine zweite Woche mit einem guten Gefühl, diese Woche viel geschafft zu haben.
+
+
+\section{Woche 3 - Excel-Limitierungen \& Präsentationsvorbereitung} \label{sec:bericht-wo-3}
+
+\lweekdaymarginpar{Montag}
+Der Montag verlief eher ruhig, es gab keine größeren Themen, die dringend anstanden.
+Darum lag mein Fokus daran, endlich einmal einige der Issues aus dem Jira-Backlog abzuarbeiten, die schon zu lange nötig waren.
+
+Bei einem dieser Issues ging es darum, in unserem automatisierten CPE Matching-Algorithmus zwischen Hardware- und Software-Komponenten zu unterscheiden.
+Dadurch würden wesentlich weniger false-positives entstehen, weil keine Softwarekomponenten mehr Hardware-CPEs zugeordnet werden würden.
+Dazu war erst einmal eine Liste an Kategorien für Hardware nötig, die für die einzelnen Komponenten vergeben werden können.
+
+Das Problem hierbei war der Detailgrad der Kategorien, welcher noch nicht festgelegt wurde.
+Ich habe also nach einiger Recherche drei Vorschläge vorbereitet, die ich meinem Chef präsentierte.
+Mein Chef und ich konnten uns recht schnell auf einen einigen, allerdings wollten wir uns noch eine Drittmeinung von einem Kollegen einholen.
+Dieser hatte zu diesem Thema deutliche andere Meinungen, wie eine solche Liste auszusehen hatte.
+
+Die Diskussion hierüber hat den gesamten restlichen Tag eingenommen und leider konnten wir bei keinem Ergebnis landen, mit dem alle zugestimmt hätten.
+Wir machten aus, diese Diskussion an einem anderen Tag fortzuführen und damit war das Ende des Tages für mich erreicht.
+
+\sweekdaymarginpar{Di, Mi, Do}
+
+Die folgenden Tage konnte ich mich an etwas setzen, was ich schon lange in unserem Core-Projekt angehen wollte:
+Es geht um die Serialisierung und Deserialisierung unserer Software-Inveterate zu Excel-Dateien.
+Zellen speziell in Excel-Dokumenten haben ein Zeichenlimit von $32.767$\footnote{\url{https://support.microsoft.com/en-gb/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3}}, was in vielen unserer Fälle nicht ausreicht.
+Seitdem ich bei der \metaeffekt bin, haben wir einen Workaround verwendet, der bereits in unserem Datenmodell nach einem System diese Zellen in mehrere Zellen aufteilt, sodass beim Serialisieren keine Probleme auftreten.
+Das führt dazu, dass man nicht einfach so auf die betroffenen Felder in unserem Modell zugreifen kann, ohne speziell von dem Workaround Gebrauch zu machen.
+
+Dass dies keine schöne Lösung ist, muss ich nicht erst sagen.
+Probleme daran sind zum Beispiel:
+
+\begin{smitemize}
+    \item weiß jemand nicht von diesem Workaround, bekommt er vielleicht nur einen Bruchteil seiner Daten, wenn er die falsche Zugriffsart verwendet
+    \item das Stylen der Excel-Zellen und Spalten funktioniert nicht richtig, da die Spalten aufgeteilt werden
+    \item falls ein anderes Format mit niedrigerem Limit hinzugefügt werden soll, muss dieses Limit auch bei allen anderen Formaten so angewendet werden
+\end{smitemize}
+
+Ich war also recht froh, dass ich mich endlich einmal daran setzen konnte.
+Ich habe die drei Tage nicht nur dazu genutzt, die Spaltung der Spalten in die Serialisierer zu verschieben, sondern auch ein allgemeines Styling-Modell einzuführen, das unabhängig vom Format auf Serialisierte Daten angewendet werden kann und einfach auf neue Formate angepasst werden kann.
+
+\sweekdaymarginpar{Freitag}
+Bei der Beschreibung für Donnerstag habe ich bewusst eben etwas ausgelassen, da es hier besser passt:
+Mein Chef wollte, dass ich nächste Woche Dienstag und Mittwoch mit ihm und einer anderen Kollegin nach Erfurt auf das
+Treffen des Arbeitskreises OpenSource\footnote{\url{https://www.bitkom.org/Bitkom/Organisation/Gremien/Open-Source.html}} unter dem Thema \qt{Open-Source-Communities} und das
+Forum OpenSource\footnote{\url{htthttps://www.bitkom.org/bfoss23}} der Bitkom gehe.
+
+So weit, so gut.
+Danach kam allerdings etwas, das ich nicht erwartet hätte: Ich sollte bei dem Treffen des Arbeitskreises OpenSource eine 25-Minütige Präsentation vor 30 Leuten von RedHat, Siemens, DB Systel und anderen großen Unternehmen über \qt{Identifikation von Schwachstellen in Softwarekomponenten unter der Verwendung von Community-Datenquellen} halten.
+
+Das kam überraschend, da ich noch nie auf einem solchen Treffen war und keine Ahnung hatte, wie eine solche Präsentation auszusehen hat.
+Zum Glück hat mir mein Chef am Freitag noch geholfen, die wichtigen Themen aufzulisten und in eine sinnvolle Reihenfolge zu bringen.
+Ich habe jedoch schnell gemerkt, dass die Zeit am Freitag und Montag nicht reichen werden, um die Präsentation vorzubereiten.
+Ich habe zwar den Foliensatz an diesem Tag noch größtenteils fertigstellen können, aber das Skript hatte ich gerade erst angefangen zu verfassen.
+
+\sweekdaymarginpar{Sa, So}
+Und so kam das erste Mal, dass ich an einem Wochenende für die \metaeffekt gearbeitet habe.
+Ich habe das gesamte Wochenende damit verbracht, ein 11-seitiges Skript vorzubereiten, das alles enthält, was ich unbedingt in der Präsentation erwähnen wollte.
+Natürlich habe ich die Präsentationsfolien weiter angepasst und mir Punkte notiert, die ich noch mit meinem Chef am Montag besprechen wollte.
+Am Sonntagabend hatte ich dann ein Skript, mit dem ich zwar zufrieden war, aber irgendwie noch etwas fehlte.
+
+
+\section{Woche 4 - AK OpenSource \& OpenSource Forum Erfurt} \label{sec:bericht-wo-4}
+
+\lweekdaymarginpar{Montag}
+Geschlafen hatte ich nicht viel, da ich noch in die Nacht hinein an dem Skript gearbeitet hatte.
+Mit meinem Chef bin ich noch einmal die Präsentation durchgegangen und konnte meine vielen inhaltlichen und organisatorischen Fragen stellen.
+Mein Hauptproblem war das folgende: Mit dem Thema, wie wir unsere Software-Inventare aufbauen, hatte ich bisher nur wenige Berührungspunkte, sollte es aber in der Präsentation ansprechen.
+Mein Chef hat sich dann dazu bereiterklärt, diesen Teil in der Präsentation zu übernehmen, da nur der Nachmittag nicht reichen würden, in dieses Thema richtig einzusteigen.
+
+Lange war ich nicht im Büro, da ich die Vorbereitung lieber zu Hause abschließen wollte, wo ich ungestört üben konnte.
+Den Abend habe ich also genau damit verbracht, und damit, mein Gepäck für die morgige Reise zu packen.
+
+\sweekdaymarginpar{Dienstag}
+Dienstag früh ging es dann los: Von Hauptbahnhof Heidelberg haben wir eine Direktverbindung mit dem ICE nach Erfurt genommen, bei der auch alles reibungsfrei verlaufen ist.
+Auf der Strecke haben mein Chef und ich uns noch einmal abgestimmt, an welcher Stelle er einspringt und ich habe noch einmal die Präsentation in unserem Abteil vorgetragen.
+
+In Erfurt sind wir ohne Umwege zu den Gebäuden der DB Systel gereist, wo es zunächst einige Grußworte und eine Wahl für den nächsten Vorstand gab und dann stand schon meine Präsentation an.
+Ich hatte bis ca.\ 15 Minuten vor der Präsentation meine Aufregung noch unter Kontrolle, jedoch wurde sie immer stärker, je näher der Zeitpunkt kam.
+Es gab allerdings keinen Grund, so aufgeregt zu sein:
+Ich war gut vorbereitet, hatte die Präsentation über zehnmal bereits aufgesagt, es handelte sich bei den Themen um die Dinge, die ich jetzt schon seit drei Jahren täglich mache, meine Kollegen haben mir gut zugeredet und mein bisheriger Eindruck von den Anwesenden war ein nur positiver.
+
+Und genau darum, wegen eines Umfeldes, in dem ich mich sicher fühlte und wegen meines Fachwissens auf dem Gebiet, wurde die Präsentation sehr gut.
