@@ -1,0 +1,292 @@
+\documentclass[11pt,a4paper]{report}
+% dasselbe Template wie Thesis mit nur leichten Anpassungen
+% Nehmen Sie das Thesis-Template für die Thesis!
+% Lesen Sie Hinweise zum Umgang mit LaTeX und zum Schreiben
+% von Berichten im Thesis-Template nach
+% => Moodle => PraxissemesterThesis => LaTeXThesis.zip
+%    https://moodle.hs-mannheim.de/course/view.php?id=2500
+
+
+% Für doppelseitigen Ausdruck (nur bei > 60 Seiten sinnvoll)
+% \usepackage{ifthen}
+% \setboolean{@twoside}{true}
+% \setboolean{@openright}{true} 
+
+\include{preamble} % alle Pakete und Einstellungen
+
+% Hier anpassen 
+\newcommand{\autor}{Yan Wittmann}
+\newcommand{\matrikelnummer}{2121578}
+\newcommand{\fachsemester}{5IB} % im wie vielten Semester waren Sie?
+%\newcommand{\studiengang}{Medizintechnik}
+%\newcommand{\studiengang}{Technische Informatik}
+\newcommand{\studiengang}{Informationstechnik}
+\newcommand{\firma}{\{metæffekt\} GmbH}
+\newcommand{\standort}{Heidelberg}
+\newcommand{\abteilung}{Automated Vulnerability Monitoring}
+\newcommand{\betreuer}{Karsten Klein}
+\newcommand{\pbeginn}{01.09.2023}
+\newcommand{\pende}{29.02.2024}
+\newcommand{\tage}{100} % arbeitstagerechner verwenden!
+\newcommand{\titel}{Bericht zum praktischen Studiensemester}
+\newcommand{\kurztitel}{Praxisbericht}
+% \sperrvermerktrue % Kommentar am Anfang der Zeile löschen für Sperrvermerk
+
+% Wenn jemand unbedingt ein Glossar will, die nächsten drei Zeilen...
+%\usepackage{glossaries} % oder schlimmer mit [toc], damit es im TOC auftaucht
+%\makeglossaries
+%\input{glossar} % In dieser Datei die Einträge definieren
+% und noch ganz unten printglossaries auskommentieren
+% Damit jetzt ein Glossar gezeigt wird noch \gls{label} verwenden
+
+\begin{document}
+    \include{vorspann} % Titelseite, Erklärungen, etc.
+
+    \begin{abstract}
+        Beim führenden Anbieter von Fallen aller Art ist die
+        Produktentwicklung geprägt von Kreativität und höchsten
+        Qualitätsansprüchen, die schon in der Forschungs- und
+        Entwicklungsabteilung umfassende Tests und Messungen
+        nach sich zieht.
+
+        Bei ausgiebigen Materialprüfungen konnte bei Federn für
+        Steingewichte $>5$ Tonnen eine ungewünschte Zielabweichung
+        bestätigt werden.
+        Beim Aufbau der Prüfumgebung, insbesondere der
+        Nachverfolgung der Flugbahn mit Kameras wurde die Genauigkeit
+        der Messung mit kleineren Steinen zunächst bestimmt und dann
+        die Abweichung in Abhängigkeit der Masse belegt.
+        Eine deutliche Verbesserung von 5 Sekunden auf 0,1 Sekunden
+        konnte bei der Auslösung der Raketentriebwerke erreicht werden.
+        Durch die massive Zunahme der Anzahl der Sensormessungen war
+        das eingesetzte Sortierverfahren nicht mehr in der Lage die
+        Berechnungen rechtzeitig abzuschließen.
+        Durch den Einsatz eines effizienten, stabilen Standardsortierverfahrens
+        ist dieser Teil des Gesamtaufwands bis zu 10000 Sensorwerten von bis
+        zu 5 Sekunden auf immer unter 10 ms auf dem eingesetzten Mikrocontroller
+        ACME (ACME Controlled Micro Engine) 503 geschrumpft.
+        Auch bei den bisher mechanisch ausgeführten Langwaffen (Bogen) konnte
+        durch den Einsatz von ausgeklügelter Elektronik die Anwendbarkeit
+        deutlich verbessert werden.
+        Das entwickelte System meldet gegebenenfalls einen 416-Fehler, falls
+        das Ziel für einen erfolgreichen Einsatz zu weit entfernt ist.
+        Ein versuchter Abschuss bei eingerichteter Sperre, der vorher zu
+        erheblichen Schäden am Gerät geführt hat, ergibt jetzt einen
+        benutzerfreundlichen 423-Fehler.
+        Falls das eingesetzte Geschoss (Chip-kodiert) nicht für die
+        Abschussgeschwindigkeit freigegeben ist oder die Zielführung kein
+        relevantes Ziel verifizieren kann, wird dies mit einem
+        428-Fehler angezeigt.
+    \end{abstract}
+
+    \tableofcontents
+
+    \chapter{Einleitung} \label{ch:einl}
+
+    Die Firma
+% \gls{acme} % das fügt ein Glossar-Eintrag ein
+    ACME Inc.\cite{acme,acmecatalog,kenner1994chuck} ist internationaler Marktführer
+    bei Fallen aller Art.
+    In der deutschen Niederlassung ist neben dem Vertrieb eine
+    Entwicklungsabteilung ansässig, um Qualitätsmängel bei frühen
+    Produktversionen zu identifizieren und gegebenenfalls abzustellen.
+    Bei der Produktisierung sollte der gesamte Lebenszyklus,
+    wie in Abbildung~\ref{fig:lifecycle} gezeigt,
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=.9\textwidth]{res/ablauf}
+        \caption{Lebenszyklus eines Produkts von ACME Inc.}
+        \label{fig:lifecycle}
+    \end{figure}
+    berücksichtigt werden.\marginpar{Fokus auf Ihren Aufgaben}
+    Ziel ist dabei immer den Umsatz in einem Segment aus Tabelle~\ref{tab:umsatz}
+    zu steigern.
+    \begin{table}[htp]
+        \centering
+        \begin{tabular}{l|rrrrrrrrrr}
+            Fallentyp/Jahre    & 56 & 57 & 58 & 59 & 60 & 61 & 62 & 63 & 64 & 65 \\\hline\hline
+            Mechanische Fallen & 1  & 3  & 5  & 8  & 8  &  8 &  5 &  5 & 10 & 7 \\
+            Raketenfallen      & -  & -  & -  & 2  & 3  &  6 &  7 &  9 &  3 & 2 \\
+            Bogen              & 2  & 3  & 2  & 2  & 3  &  4 &  3 &  2 &  2 & 3 \\
+        \end{tabular}
+        \caption{Umsatz-Segmente von ACME Inc. von 1956--1965, in Tausend Dollar}
+        \label{tab:umsatz}
+    \end{table}
+    Langfristig sollte dann aber meist auch die Funktionalität garantiert
+    werden können.
+    Im Praktikum \ldots
+
+
+%% > weg damit
+    \vskip\medskipamount % or other desired dimension
+    \leaders\vrule width \textwidth\vskip0.4pt
+    \vskip\medskipamount % ditto
+    \nointerlineskip
+
+    Bitte lesen Sie die Informationen zum Praxissemester~\cite{psmoodle}
+    der Fakultät in Moodle.
+    Sie halten sich an die Vorgaben im
+    „Leitfaden zur Berichterstellung“~\cite{psberichtleitfaden},
+    der auch in Moodle erhältlich ist.
+    Für Hinweise zu \LaTeX~\cite{kopka,lamport,bibtexing,knuth} und zum
+    Anfertigen einer Ausarbeitung~\cite{gockel,rechenberg} lesen Sie bitte
+    auch das Thesis-Template in der
+    Moodle Gruppe \texttt{PraxissemesterThesis}~\cite{psmoodle}.
+    Ernsthaft, lesen Sie das Thesis-Template.
+    Da stehen wirklich Hinweise zum Schreiben.
+    Sie sollen dann durchaus viele Abbildungen und gegebenenfalls auch
+    Tabellen in Ihren Text einbringen und nicht, wie hier im Template,
+    nur Textwüsten.
+
+    Die Vorstellung der Firma\marginpar{Vorstellung der Firma}
+    braucht meist kein eigenes Kapitel und auf keinen Fall ein Logo.
+    Sie machen selten eine Analyse der Firmenstruktur und die
+    historische Entwicklung der Firma macht nur Seiten, aber hilft
+    inhaltlich nicht.
+    Also schreiben Sie in der Einleitung maximal nur einen Absatz
+    zu der Firma und der Abteilung und konzentrieren sich dann auch
+    die Inhalte.
+    Wir schließen die Einleitung mit einer inhaltlichen Übersicht
+    über die folgenden Kapitel.
+
+    In Kapitel~\ref{ch:ppv} stellen wir die drei typischen Fallenprodukte
+    vor sowie die passenden Prüfverfahren zur Verbesserung der
+    mechanischen Genauigkeit und zur Reduktion der zeitlichen Verzögerung.
+    In Kapitel~\ref{ch:sling} erläutern wir den Aufbau und das Messverfahren
+    für die Abweichung von Schleudern beim Einsatz von schweren Gewichten
+    über mehrere Tonnen.
+    In Kapitel~\ref{ch:rocket} besprechen wir die erzielte Auslösereaktion
+    durch Einsatz adäquater Sortierverfahren auf dem Mikrocontroller für die
+    Raketensteuerung.
+    Die Verbesserungen der Benutzbarkeit von Bögen unter Einsatz moderner Technik
+    sammeln wir in Kapitel~\ref{chap:bow}.
+    Abschließend fassen wir in Kapitel~\ref{chap:fazit} die im Praktikum
+    erzielten mechanischen und zeitlichen Verbesserungen sowie die
+    erhöhte Benutzbarkeit noch einmal zusammen.
+
+
+    \chapter{Produkte und Prüfverfahren} \label{ch:ppv}
+
+    Trotz Fokus auf den Anwendungsbereich Fallen wird ein weiter Bereich
+    von technischer Infrastruktur im Produktangebot abgedeckt.
+    Die eingesetzten Prüfverfahren testen meist eine mechanische
+    und zeitliche Genauigkeit.
+
+    \section{Schleudern, Raketen und Bögen} \label{sec:was}
+
+    \blindtext[1]
+
+    \section{Mechanische Genauigkeit} \label{sec:mec}
+
+    \blindtext[1]
+
+    \section{Zeitliche Abweichungen} \label{sec:time}
+
+    \blindtext[1]
+
+    \chapter{Genauigkeit von Schleudern} \label{ch:sling}
+
+    Die Genauigkeit von Schleudern hängt von den beiden Faktoren
+    Eins und Zwei ab und wird mit Drei oder Vier gemessen.
+    Eins kombiniert X und Y, um qualitative Aussagen über den
+    strukturellen Aufbau zu machen.
+    Im Gegensatz dazu setzt sich Zwei aus A, B und C zusammen
+    und erlaubt eine quantitative Festlegung.
+    Das Verfahren Drei liefert mit wenig Aufwand einen ersten
+    Anhaltspunkt, ob weitere detaillierte Messungen notwendig sind.
+    Mit dem aufwendigen Verfahren Vier können wir dann Toleranzen
+    auf $\pm 0.1\%$ Abweichung bestimmen.
+
+    \section{Eins}
+
+    \blindtext[1]
+
+    \section{Zwei}
+
+    \blindtext[1]
+
+    \section{Drei}
+
+    \blindtext[1]
+
+    \chapter{Steuern von Raketentriebwerken} \label{ch:rocket}
+
+    Raketentriebwerke werden hauptsächlich mechanisch gesteuert.
+    Nur das Anstoßen von Zustandsübergängen Zwei wird elektronisch
+    getriggert.
+    Drei ist eine übliche Realisierung.
+
+    \section{Eins}
+
+    \blindtext[1]
+
+    \section{Zwei}
+
+    \blindtext[1]
+
+    \section{Drei}
+
+    \blindtext[1]
+
+    \chapter{Benutzbarkeit von Bögen} \label{chap:bow}
+
+    Text\ldots
+
+    \section{Eins}
+
+    \blindtext[1]
+
+    \section{Zwei}
+
+    \blindtext[1]
+
+    \section{Drei}
+
+    \blindtext[1]
+
+
+    \chapter{Fazit} \label{chap:fazit}
+
+    \blindtext[1]
+
+
+    \newpage
+
+% Listen wenn überhaupt ans Ende und nicht an den Anfang.
+% Meist ist das aber unnötig.
+    \listoffigures % Liste der Abbildungen
+%\begingroup % aahh nicht noch ein pagebreak
+%\let\clearpage\relax %
+    \listoftables % Liste der Tabellen
+%\endgroup
+
+% Glossar kommt auch ans Ende
+%\glsaddall % das fügt alle Glossar-Einträge ein
+%\printglossaries % nicht vergessen "makeglossaries praksem" aufzurufen
+%\gls{Computer}
+%\newpage
+
+    \addcontentsline{toc}{chapter}{Literaturverzeichnis}
+    \bibliographystyle{plain} % Literaturverzeichnis
+    \bibliography{praksem}
+% \bibliography{praksem,online} # wenn man zwei Dateien hätte
+
+% Das wäre die Alternative mit geteilten Quellen (preamble muss auch
+% angepasst werden) und die Literatur muss in die Datei praksem.bib
+% und die Online-Quellen müssen in die Datei online.bib.
+%\begin{btSect}{praksem} % mit bibtopic Quellen trennen
+%\section*{Literaturverzeichnis}
+%\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+%\btPrintCited
+%\end{btSect}
+%\begin{btSect}{online}
+%\section*{Online-Quellen}
+%\addcontentsline{toc}{chapter}{Online-Quellen}
+%\btPrintCited
+%\end{btSect}
+% dann ab und zu "bibtex praksem1" und "bibtex praksem2" aufrufen
+
+\end{document}
+;;; Local Variables:
+;;; ispell-local-dictionary: "de_DE-neu"
+;;; End:

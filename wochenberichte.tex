@@ -1,0 +1,52 @@
+%! Author = Yan Wittmann
+
+
+\chapter{Tätigkeitsbeschreibung} \label{ch:wochenberichte}
+
+
+\section{Erste Woche - Einarbeitung in CVSS 4.0} \label{sec:bericht-wo-1}
+
+Der erste Arbeitstag meines Praktikums bei \metaeffekt fiel mit dem Ende der Sommerpause für viele meiner Kollegen zusammen.
+Da ich schon seit einiger Zeit im Unternehmen arbeite, war eine ausführliche Einführung für mich nicht notwendig.
+Ich habe bereits meine eigenen Aufgabenbereiche, um die ich mich kümmern muss.
+Allerdings war auch für mich der Montag der erste Tag nach dem Urlaub, daher musste ich mich erst wieder orientieren und herausfinden, welche Aufgaben als nächstes anstehen.
+
+Ich verbrachte den Montag damit, einige Fehler zu korrigieren, die während der Urlaubszeit in unserem System in Kundenprojekten aufgetreten waren.
+Ich führte auch Gespräche mit Kollegen, um zu klären, welche Projekte als nächstes anstehen.
+Ein wichtiges Thema war die anstehende Veröffentlichung des CVSS 4.0-Standards, die für den 31. Oktober 2023\footnote{\url{https://www.first.org/cvss/v4-0/}} geplant ist.
+Es wurde entschieden, dass ich diesen Standard in den kommenden Tagen in unser System einpflegen sollte.
+Unsere Software kann bereits die Score-halfBerechnungen für die CVSS-Versionen 2 und 3 durchführen, und wir möchten in der Lage sein, auch die neuen CVSS 4.0-Vektoren zu interpretieren und zu berechnen, sobald diese in den öffentlichen Datenbanken auftauchen.
+
+Mit meinem Vorgesetzten und Betreuer für das Praktikum, Karsten Klein, habe ich vereinbart, während meines Vollzeitsemesters bei \metaeffekt tägliche Meetings abzuhalten.
+Diese haben bisher jeden Tag durchgeführt und sowohl über berufliche als auch private Themen gesprochen.
+Ich werde die genauen Inhalte dieser Meetings hier nicht immer aufführen, da sie meist über die bereits behandelten Themen des Tages gehen.
+
+Am Dienstag startete ich mit der Recherche zu den theoretischen Grundlagen und den Einzelheiten von CVSS 4.0.
+Ich stellte schnell fest, dass es mehr Unterschiede als Gemeinsamkeiten zu den vorherigen Versionen CVSS 2 und 3 gibt, insbesondere in Bezug auf Berechnung, Implementierung und Theorie.
+Den Rest des Tages verbrachte ich damit, die noch unfertige Dokumentation und Beispiele zu studieren und das Konzept des neuen Standards zu verstehen.
+Dies erwies sich als komplexer als zunächst angenommen.
+
+Am Mittwoch begann ich mit der Implementierung der CVSS 4.0-Berechnung.
+Nach weiterer Recherche fand ich den Quellcode einer Beispiel-Implementierung eines CVSS 4.0-Rechners in JavaScript auf dem offiziellen RedHat GitHub-Repository\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator}}, die stark an der Entwicklung des Standards beteiligt waren.
+Dieses Beispiel hat mir geholfen, das Grundgerüst für die Implementierung in unserem Java-System vorzubereiten, das bereits Klassen für CVSS 2 und 3 enthält.
+
+Der Donnerstag startete mit einer Fehlermeldung in einem unserer Kundenprojekte.
+Es handelte sich um eine „OutOfMemoryError“-Exception, die auftrat, wenn unser Schwachstellen-Report aus einer großen Menge an Daten generiert werden sollte.
+Ich löste das Problem durch einen File Appender, der den HTML-String des Reports direkt in eine Datei schreibt, anstatt ihn wie zuvor im Speicher zu halten und habe so die kurzzeitige Verdoppelung den Hauptspeicher-Bedarf entfernt.
+
+Der Hauptteil des Tages war jedoch weiterhin dem CVSS 4.0-Standard gewidmet.
+Der Code der Referenz-Implementierung in JavaScript war komplizierter zu verstehen als erwartet.
+Der Code ist nicht sehr leserlich geschrieben, wenig modular und enthält unnötige Operationen, die teilweise später ignoriert oder rückgängig gemacht werden.
+Ich fand auch einige Abweichungen zwischen der Spezifikation und der Implementierung und meldete diese zusammen mit einigen inhaltlichen Fragen in einem Issue auf dem entsprechenden GitHub-Repository.
+Ich beendete den Tag mit einer teilweise funktionierenden Implementierung.
+
+Der Freitag sollte der Tag sein, an dem ich die Implementierung abschließe.
+Ich erhielt eine Antwort auf meine GitHub-Fragen: Die Spezifikation ist veraltet, aber die Implementierung ist korrekt.
+Mithilfe dieser Informationen und einigem weiteren herumexperimentieren konnte ich die Berechnungen fertigstellen.
+Ich validierte sie, indem ich einen großen Datensatz an CVSS-Vektoren durch die Referenz-Implementierung und meine eigene Implementierung laufen ließ und die Ergebnisse verglich.
+
+Am Freitagmittag findet bei \metaeffekt ein wöchentliches Meeting statt, das als „Weekly“ bezeichnet wird.
+In diesem Meeting berichtet jedes Teammitglied über seine Fortschritte, Herausforderungen und nächsten Schritte.
+Ich berichtete über meine Erfahrungen mit der Implementierung von CVSS 4.0 und hörte, was die anderen Teammitglieder in dieser Woche erreicht hatten.
+
+Da ich am Freitagnachmittag private Verpflichtungen hatte, begann ich den Tag etwas früher und beendete meine erste Praktikumswoche nach dem „Weekly“-Meeting.

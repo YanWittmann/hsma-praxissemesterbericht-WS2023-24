@@ -1,0 +1,79 @@
+\begin{titlepage}
+    \hsmalogo[1] \hfill
+    \parbox[b]{60mm}{
+        Fakultät Informationstechnik\\
+        Studiengang \studiengang}
+    \begin{center}
+        \rule{1\textwidth}{1pt}\\[-3mm]
+        \parbox[t][64mm]{110mm}{% 11 cm für Breite 13, ca. 7 für Höhe 6
+            \Large{\ } \\[8mm]
+            Bericht zum praktischen Studiensemester \\[4mm]
+            \begin{tabular}{rl}
+                \large{Vorgelegt von} & \large{\autor} \\[2mm]
+                \large{Studiengang}   & \large{\studiengang} \\[2mm]
+                \large{Firma}         & \large{\firma} \\[2mm]
+            \end{tabular}
+        }
+        \rule{\textwidth}{1pt}
+        \vfill
+    \end{center}
+
+    \vspace{2em}
+    \begin{tabular}{ll}
+        Name               & \autor                   \\
+        Matrikelnummer     & \matrikelnummer          \\
+        Studiengang        & \studiengang             \\
+        Fachsemester       & \fachsemester \\[8mm]
+
+        Praktikumszeitraum & \pbeginn\ \ bis \ \pende \\
+        Präsenztage        & \tage \\[8mm]
+
+        Firma              & \firma                   \\
+        Standort           & \standort                \\
+        Abteilung          & \abteilung               \\
+        Betreuer           & \betreuer                \\
+    \end{tabular}
+
+    \vspace{8em}
+    \noindent\begin{tabular}{p{0.48\textwidth}p{0.48\textwidth}}
+                 \rule{0.46\textwidth}{0.5pt} & \rule{0.46\textwidth}{0.5pt} \\
+                 Datum, \betreuer             & Firmenstempel
+    \end{tabular}
+    \vfill
+\end{titlepage}
+\cleardoublepage
+
+
+% Erklärung gemäß der Prüfungsordnung
+\thispagestyle{empty}
+\subsection*{Selbstständigkeitserklärung}
+
+Ich versichere, dass ich diesen Bericht zum praktischen Studiensemester
+selbstständig und nur unter Verwendung der angegebenen Quellen und
+Hilfsmittel angefertigt habe.
+Die Stellen, an denen Inhalte aus den Quellen verwendet wurden, sind
+als solche eindeutig gekennzeichnet.
+Die Arbeit hat in gleicher oder ähnlicher Form bei keinem anderen
+Prüfungsverfahren vorgelegen.
+
+\vspace{6em}
+\noindent\begin{tabular}{p{0.48\textwidth}p{0.48\textwidth}}
+             \rule{0.42\textwidth}{0.5pt} & \rule{0.48\textwidth}{0.5pt} \\
+             Datum, Ort                   & \makebox[1cm]{\ } \autor
+\end{tabular}
+
+\vfill
+
+\ifsperrvermerk
+\subsection*{Sperrvermerk}
+
+Der vorliegende Bericht enthält interne und teilweise vertrauliche Daten
+der Firma \newline \firma.
+Der Bericht darf daher zu keinen anderen als Prüfungszwecken verwendet werden.
+Insbesondere ist die Vervielfältigung und Veröffentlichung von Berichtinhalten
+oder Teilen davon nur mit Zustimmung des Unternehmens erlaubt.
+\vfill
+\fi
+
+\cleardoublepage
+
