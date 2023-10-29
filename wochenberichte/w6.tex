@@ -1,0 +1,50 @@
+\section{Woche 6 - Weiter an Inventaren} \label{sec:bericht-wo-6}
+
+\lweekdaymarginpar{Mo, Di, Mi}
+Der Anfang dieser Woche spielte sich ähnlich zur letzten ab: das Anlegen von Korrelationsdaten zu den neuen Inventardaten.
+Da es absehbar war, dass die Menge nicht von meinem neuen Kollegen Nils bis zum Ende der Woche alleine bewältigt werden konnte, sollte nun auch ich mich wenigstens teilweise daran beteiligen.
+
+Intern betreiben wir auch gerne etwas, das sich \qt{Dogfooding} nennen lässt: die von uns entwickelten Tools sollen wir auch selbst einmal anwenden, in der Hoffnung, dass Verbesserungsmöglichkeiten entdeckt und umsetzt werden, bevor man diese auf andere loslässt.
+Dies war also ein Anlass für mich, meine eigenen Tools, die ich damals für den Kollegen geschrieben hatte, den Nils inzwischen ersetzt hat, an einem echten Fall einzusetzen.
+Ich habe diese Korrelationsarbeit schon immer zwar als interessant, jedoch auf Dauer auch etwas mühsam und monoton angesehen.
+Daher habe ich dies gerne als Anlass genommen, etwas an dem Tool weiterzuentwickeln.
+
+Nehmen wir dennoch einen Schritt zurück:
+bei dem Tool, von dem ich berichte, handelt es sich um eine Webapplikation, die mit einem lokal gehosteten Spring Boot Server interagiert.
+Bei dem Server wurde sich für Java entschieden, da die von der \metaeffekt produzierten Applikationen zum sehr großen Teil ebenfalls in Java geschrieben sind und deren Integration über eine einfache Dependency möglich war.
+
+Das Ziel dieses Tools ist es, den Prozess des Mappings von unseren internen Produkten zu denen externer Datenbanken zu unterstützen:
+es soll also möglichst alle Informationen zu Komponenten anzeigen, die automatisierbar abfragbar sind, und Empfehlungen machen, wie am besten mit einem Fall umgegangen werden sollte.
+
+Bereits vor dem Erstellen des Tools war es klar, dass es viele verschiedene Workflows abbilden muss, eventuell auch welche, die zu dieser Zeit noch nicht bekannt waren.
+Daher ist das Webinterface dank Gridstack\footnote{\url{https://gridstackjs.com/}} modular und mit den abgekapselten Funktionalitäten (\qt{Widgets}) kann über drag-and-drop ein beliebiges Layout erzeugt werden.
+Einige der Widgets sind:
+eine tabellarische Übersicht über die Komponenten in einem Inventar, eine Detailzone über die aktuell ausgewählte Komponente,
+eine Query-View um den lokalen Index der Datenbanken zu aktualisieren und Abfragen darauf zu ermöglichen, eine Sicht,
+in der die bereits erzeugten Korrelationsdaten automatisch nach Übereinstimmungen durchsucht werden und einigen weiteren.
+
+Dank des Tools besteht nun bereits fast keine Notwendigkeit, das ursprungs-Inventar zu durchsuchen oder Internet-Suchen zu starten.
+Jedoch, wie gesagt, ist es noch nicht perfekt und ich habe mich über die Tage also daran gemacht, einige spezifische Features, wie eine live-Aktualisierung der Korrelationsdaten auf die Komponenten und schlauere automatisierte Internet-Suchen hinzuzufügen.
+
+Bis Mittwochabend hatten Nils und ich die Hälfte der Daten durchgearbeitet und validiert, da ich jedoch den Rest der Woche wieder zu meinen eigentlichen Aufgaben zurückkehren musste, haben wir bereits mit meinem Chef ausgemacht, dass die Daten nicht bis Freitag fertig würden.
+
+\sweekdaymarginpar{Donnerstag}
+
+Donnerstag hatten mein Chef und ich gleich morgens einen zweistündigen Termin mit einem unserer Kunden, Thales, bei dem es um die automatisierte Erstellung einer SBOM (Software Bill of Materials),
+beziehungsweise eines Inventars von allen installierten Programmen, Treibern und Hardware-Devices auf Windows-Systemen ging.
+Am Ende der Videokonferenz war klar, dass der Prozess zweigeteilt sein wird:
+
+Ein erster Schritt, bestehend aus PowerShell-Skripten, wird über Windows-Integrierte Features viele verschiedene Datenquellen anzapfen und die rohen Ergebnisse in einem maschinenlesbaren Format in Dateien schreiben.
+Der zweite Schritt ist ein Maven-Plugin, das diese Daten analysiert und Komponenten in diesen erkennt.
+
+Bis Montag sollten bereits erste Versionen der Skripte erstellt werden, darum habe ich mich gleich daran gesetzt.
+Mein Arbeitslaptop ist ein MacBook, also hat mir mein Chef für diese Woche einen zusätzlichen Windows-Laptop zum Entwickeln zur Verfügung gestellt.
+
+Das habe ich auch den restlichen Tag gemacht:
+Ich habe mich zunächst einmal darüber informiert, was die Unterschiede der PowerShell zu anderen Terminals sind und wie man an Systeminformationen gelangen kann.
+Meine ersten Ergebnisse habe ich in unserem internen Confluence niedergeschrieben, wo ich auch sonst meine Dokumentation ablege.
+
+\sweekdaymarginpar{Freitag}
+
+Freitag war ein intensiver Tag, denn ich musste heute mit einer ersten Version der Skripte fertig werden.
+Ich habe schnell festgestellt, dass Windows seine Systeminformationen über eine Vielzahl an Befehlen offenlegt, zum Beispiel über \code{Get-WmiObject} und seine über 1300 abfragbaren Datenklassen oder \code{Get-Computerinfo}.

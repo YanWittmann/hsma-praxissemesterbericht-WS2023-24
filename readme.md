@@ -22,3 +22,11 @@ sudo apt install texlive-full
 
 pdflatex praksem.tex
 ```
+
+## IntelliJ Plugin
+
+SDK liegt unter
+
+```
+~\AppData\Local\Programs\MiKTeX
+```

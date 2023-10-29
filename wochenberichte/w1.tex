@@ -1,0 +1,51 @@
+\section{Woche 1 - Einarbeitung in CVSS 4.0} \label{sec:bericht-wo-1}
+
+\lweekdaymarginpar{Montag}
+Der erste Arbeitstag meines Praktikums bei der \metaeffekt fiel für mich mit dem Ende der Sommerpause für viele meiner Kollegen zusammen.
+Da ich schon seit einiger Zeit im Unternehmen arbeite, war eine ausführliche Einführung für mich nicht nötig, denn ich habe bereits meine eigenen Aufgabenbereiche zugewiesen, um die ich mich kümmern muss.
+Der Montag war allerdings auch für mich der erste Tag nach dem Urlaub, daher musste ich mich erst wieder orientieren und herausfinden, welche Aufgaben als Nächstes anstehen.
+
+Ich verbrachte den Montag vor allem damit, einige Fehler zu korrigieren, die während der Urlaubszeit in unserem System in Kundenprojekten aufgetreten waren.
+Ich führte auch Gespräche mit Kollegen, um zu klären, welche Projekte als Nächstes anstehen.
+Ein wichtiges Thema war die anstehende Veröffentlichung des CVSS 4.0-Standards, die für den 31.\ Oktober 2023\footnote{\url{https://www.first.org/cvss/v4-0/}} geplant ist.
+Es wurde entschieden, dass ich diesen Standard in den kommenden Tagen in unser System einpflegen sollte.
+Unsere Software kann bereits die Score-Berechnungen für die CVSS-Versionen 2 und 3 durchführen, und wir möchten in der Lage sein, auch die neuen CVSS 4.0-Vektoren zu interpretieren und zu berechnen, sobald diese in den öffentlichen Datenbanken auftauchen.
+
+Der eher ereignisreiche Montag endete damit, dass ich mit meinem Vorgesetzten und Betreuer für das Praktikum, Karsten Klein, vereinbart habe, während meines Vollzeitsemesters bei der \metaeffekt tägliche Meetings mit ihm abzuhalten.
+Diese haben wir bisher jeden Tag durchgeführt und sowohl über berufliche als auch private Themen gesprochen.
+Ich werde die genauen Inhalte dieser Meetings hier nicht immer aufführen, da sie meist über die bereits behandelten Themen des Tages gehen.
+
+\sweekdaymarginpar{Dienstag}
+Am Dienstag startete ich mit der Recherche zu den theoretischen Grundlagen und den Einzelheiten von CVSS 4.0.
+Ich stellte schnell fest, dass es mehr Unterschiede als Gemeinsamkeiten zu den vorherigen Versionen CVSS 2 und 3 gibt, insbesondere in Bezug auf Berechnung, Implementierungsdetails, Interpretation der Ergebnisse und der Theorie dahinter.
+Den Rest des Tages verbrachte ich damit, die noch unfertige Dokumentation und Beispiele des neuen Standards zu studieren und das Konzept zu verstehen, was sich als komplexer als zunächst angenommen erwies.
+
+\sweekdaymarginpar{Mittwoch}
+Am Mittwoch begann ich mit einem ersten Versuch einer Implementierung der CVSS 4.0-Berechnungen.
+Nach weiterer Recherche fand ich auf dem offiziellen RedHat GitHub-Repository\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator}} den Quellcode einer Implementierung eines CVSS 4.0-Rechners in JavaScript.
+RedHat war stark an der Entwicklung des Standards beteiligt.
+Dieses Beispiel hat mir geholfen, das Grundgerüst für die Implementierung in unserem Java-System vorzubereiten, das dem Modell der CVSS 2 und 3 ähnelt.
+
+\sweekdaymarginpar{Donnerstag}
+Der Donnerstag startete mit einer Fehlermeldung in einem unserer Kundenprojekte.
+Es handelte sich um eine „OutOfMemoryError“-Exception, die auftrat, wenn unser generierter Report zu Schwachstellen in Kundenprojekten aus einer bisher noch nicht so aufgetretenen großen Menge an Daten generiert werden sollte.
+Das Problem war, dass während der Serialisierung in ein HTML-Dokument das interne Modell kurzzeitig dupliziert wurde und damit auch der Speicherbedarf.
+Ich löste das Problem durch einen File Appender, der den HTML-String des Reports direkt in eine Datei schreibt, anstatt ihn wie zuvor im Speicher zu halten und habe so die kurzzeitige Verdoppelung den Hauptspeicher-Bedarf entfernt.
+
+Der Hauptteil des Tages war jedoch weiterhin dem CVSS 4.0-Standard gewidmet.
+Der Code der Referenz-Implementierung und die Spezifikation\footnote{\url{https://www.first.org/cvss/v4.0/specification-document}} haben mir erneut schwierigkeiten bereitet:
+Nicht nur, dass der Code nicht sehr leserlich geschrieben war und viele verwirrende Muster verwendet, es gab auch einige Abweichungen zu der Spezifikation.
+Ich meldete meine Probleme mit der Implementierung zusammen mit einigen inhaltlichen Fragen in einem Issue auf dem entsprechenden GitHub-Repository.
+Ich beendete den Tag mit einer teilweise funktionierenden Implementierung.
+
+\sweekdaymarginpar{Freitag}
+Der Freitag sollte der Tag sein, an dem ich die Basis-Implementierung abschließe.
+Es überraschte mich, dass ich so schnell auch eine Antwort auf meine GitHub-Fragen bekommen hatte: Die Spezifikation ist veraltet, aber die Implementierung ist korrekt.
+Mithilfe dieser Informationen und einigem weiteren herumexperimentieren konnte ich die Berechnungen fertigstellen.
+Ich validierte sie, indem ich einen großen Datensatz an zufälligen CVSS-Vektoren sowohl durch die Referenz-Implementierung und meine eigene laufen ließ und die Ergebnisse sich glichen.
+
+Am Freitagmittag findet bei der \metaeffekt ein wöchentliches Meeting statt, das als \qt{Weekly} bezeichnet wird.
+In diesem Meeting berichtet jedes Teammitglied über seine Fortschritte, Herausforderungen und nächsten Schritte.
+Ich berichtete über meine Erfahrungen mit der Implementierung von CVSS 4.0 und hörte, was die anderen Teammitglieder in dieser Woche erreicht hatten.
+
+Da ich am Freitagnachmittag private Verpflichtungen hatte, begann ich den Tag etwas früher und beendete meine erste Praktikumswoche nach dem „Weekly“-Meeting.
