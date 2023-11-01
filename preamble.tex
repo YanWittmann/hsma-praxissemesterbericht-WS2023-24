@@ -105,8 +105,10 @@
 }
 
 % text shortcut variablen
-\newcommand{\metaeffekt}{\{met\ae ffekt\}\ }
-\newcommand{\bitkom}{bitkom\ }
+\newcommand{{\metaeffekt}}{\{met\ae ffekt\}}
+\newcommand{\bitkom}{bitkom}
+\newcommand{\aeclientZEZESE}{Thales}
+\newcommand{\headerand}{und\ }
 
 % custom commands
 \newcommand{\lweekdaymarginpar}[1]{%
@@ -118,7 +120,7 @@
 \newcommand{\qt}[1]{„#1“}
 
 \definecolor{codegray}{gray}{0.9}
-\newcommand{\code}[1]{\colorbox{codegray}{\texttt{#1}}}
+\newcommand{\code}[1]{\colorbox{codegray}{\texttt{\detokenize{#1}}}}
 
 % custom environments
 \newenvironment{smitemize}
@@ -128,3 +130,29 @@
       \setlength{\partopsep}{0em} }
       {
 \end{itemize} }
+
+% code listings
+\input{latex-listings-powershell/src/latex-listings-powershell}
+\definecolor{lst-gray}{rgb}{0.98,0.98,0.98}
+\definecolor{lst-blue}{RGB}{40,0.0,255}
+\definecolor{lst-green}{RGB}{65,128,95}
+\definecolor{lst-red}{RGB}{200,0,85}
+\lstset{
+    commentstyle=\color{lst-green},
+    basicstyle=\small\ttfamily,
+    backgroundcolor=\color{lst-gray},
+    breaklines=true,
+    captionpos=b,
+    columns=fixed,
+    extendedchars=true,
+    frame=single,
+    framesep=2pt,
+    keepspaces=true,
+    keywordstyle=\color{lst-blue},
+    language={PowerShell},
+    numbers=left,
+    numberstyle=\small\ttfamily,
+    showstringspaces=false,
+    stringstyle=\color{lst-red},
+    tabsize=2,
+}

@@ -1,0 +1,84 @@
+\section{Woche 7 - Windows-Inventar \headerand Strategieworkshop} \label{sec:bericht-wo-7}
+
+\lweekdaymarginpar{Montag}
+Montag stellte ich also eine erste, nicht unbedingt schöne, aber funktionierende Version der PowerShell Skripte fertig, die alle Use-Cases abdecken konnten.
+Ich habe hier nach dem Prinzip \qt{Lieber zuviel als zu wenig} gearbeitet, habe also redundante und zusätzliche Informationen gesammelt, da das nächste Meeting erst wieder am Freitag sein wird und ich nicht darauf warten könnte.
+
+Das Meeting mit den Mitarbeitern von {\aeclientZEZESE} verlief sehr gut:
+Wir wurden live per Video-Call in das Test-Labor mitgenommen, wo das Ziel-Windows-Gerät vorhanden war.
+Meine Skripte wurden auf dem System ohne Komplikationen ausgeführt und nach Besprechungen über das weitere Vorgehen haben wir diese Daten auch übermittelt bekommen.
+
+\sweekdaymarginpar{Dienstag}
+Den Dienstag habe ich dann begonnen, die Daten zunächst manuell auszuwerten und musste, wie erwartet, feststellen, dass noch einige Daten für ein vollständiges Bild fehlen.
+Vor allem zu den PNP-Devices gibt es im WMI-Interface sehr viele Subklassen, die je Details über eine gewisse Kategorie liefern können.
+Die Skripte habe ich den Vormittag dann angepasst, sodass sie nun wirklich alle benötigten Daten abfragen.
+
+\sweekdaymarginpar{Di, Mi, Do}
+Den restlichen Nachmittag und die folgenden beiden Tage habe ich damit verbracht, den zweiten Schritt der Windows-Inventar-Extraktion zu schreiben:
+einen Java-Prozess, der die JSON-Daten verwertet und daraus ein Inventar im proprietären Format der {\metaeffekt} erzeugt.
+
+Ich habe in der Vergangenheit bereits Erfahrungen mit Inkonsistenzen in den Datenquellen von Microsoft gemacht, wie denen zwischen dem
+MSRC Security Update Guide\footnote{\url{https://msrc.microsoft.com/update-guide}},
+MSRC CVRF API\footnote{\url{https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index}} und
+Security Update Catalogue\footnote{\url{httphttps://www.catalog.update.microsoft.com/Home.aspx}},
+die jeweils ein unvollständiges Bild der Security-Situation rund um Microsoft geben und nur zusammen betrachtet vollständig sind.
+Nicht anders war es hier:
+die unterschiedlichen Befehle an die PowerShell liefern je Teile eines großen Bildes zurück, die sich gegenseitig ergänzen müssen.
+
+Dies war vor allem bei den Systeminformationen und Informationen zu PNP-Geräten der Fall.
+Bei den Systeminformationen bieten mindestens vier verschiedene Befehle (siehe Listing\ \ref{lst:win-systeminfo-commands}) jeweils teils überlappende, teils einzigartige Datensätze an.
+Die PNP-Geräte waren ähnlich:
+Grundlegende Informationen können durch zwei Hauptbefehle abgerufen werden (siehe Listing\ \ref{lst:win-pnp-commands-base}), für Details zu einzelnen Devices müssen jedoch viele verschiedene spezifische WMI-Klassen abgefragt werden (siehe Listing\ \ref{lst:win-pnp-commands-details}).
+Hier habe ich mindestens 20 weitere Klassen\footnote{Alle Klassen: \url{https://learn.microsoft.com/de-de/windows/win32/cimwin32prov/win32-provider}} abgefragt und die Daten in einen einheitlichen Datensatz konsolidieren können.
+
+\begin{lstlisting}[language=PowerShell, label={lst:win-systeminfo-commands}, caption={Windows Systeminformationen abfragen}]
+Get-ComputerInfo
+systeminfo
+Get-WmiObject -Class Win32_ComputerSystem
+Get-WmiObject -Class Win32_OperatingSystem
+\end{lstlisting}
+
+\begin{lstlisting}[language=PowerShell, label={lst:win-pnp-commands-base}, caption={Windows PNP-Devices abfragen}]
+Get-PnpDevice
+Get-WmiObject -Class Win32_PnPEntity
+\end{lstlisting}
+
+\begin{lstlisting}[language=PowerShell, label={lst:win-pnp-commands-details}, caption={Details zu Windows PNP-Devices abfragen}]
+Get-WmiObject -Class Win32_Printer
+Get-WmiObject -Class Win32_Processor
+\end{lstlisting}
+
+Natürlich habe ich auch die restlichen Daten noch verarbeitet und hatte zum Schluss über 30 verwendete PowerShell-Befehle, deren Daten ich zu dem Inventar umgewandelt habe.
+Donnerstagabend hatte ich also einen Prozess und ein vorläufiges Inventar, das wir am Freitag mit dem Kunden besprechen konnten.
+
+\sweekdaymarginpar{Freitag}
+Dieser Freitag war ebenfalls ein ereignisreicher Tag:
+Die {\metaeffekt} hat einen Strategieworkshop gehalten, der das Vorgehen der nächsten 9--12 Monate angeben sollte.
+Auf diesen Tag hatte ich mich bereits seit einigen Wochen gefreut, da er jedes Jahr für mich und die anderen neue Aufgaben und einen roten Faden festlegt, der vor allem für mein Praxissemester dieses Halbjahr wichtig ist.
+
+Wie immer bisher haben wir sich alle Mitarbeiter der {\metaeffekt} an einen großen Tisch gesetzt und auf mehreren großen Whiteboard-Blättern konnte jeder in mehreren Phasen seine Wünsche und Pflichten aufschreiben und diese wurden dann diskutiert.
+Ein großer Punkt war dieses Mal:
+Wenn wir nächstes Jahr in Erfurt auf der großen Bühne stehen, was wollen wir dort zeigen können?
+
+Wie dem auch sei, meinen roten Faden habe ich auf jeden Fall bekommen:
+Ich werde die nächsten Wochen die CVSS 4.0-Implementierung in Kombination mit einem Online-Rechner fertigstellen und beide unter Open Source veröffentlichen, sodass wir eines der ersten Unternehmen sind, die diesen Standard unterstützen.
+Damit wir das aber angehen können, müssen wir zunächst einmal noch einige grundlegende Dinge an unserer Systemlogik überarbeiten.
+Dabei geht es vor allem darum, wie wir Schwachstell-Informationen und Security Advisories in unseren Inventaren ablegen und in unseren Systemen ein- und auslesen.
+Hier gibt es viele redundante Systeme, die diese Operationen immer leicht unterschiedlich durchführen, was schon öfters zu Verwirrung und Fehlern geführt hat.
+
+Aber auch die Nachvollziehbarkeit unserer Ergebnisse soll verbessert werden:
+Es soll nachvollziehbar sein, aus welchen Quellen eine Schwachstelle durch welchen Matching-Informationen gefunden wurde.
+
+Dies sind die Ziele, die bis Ende dieses Jahres fertiggestellt sein sollen.
+Danach geht es allerdings gleich weiter:
+Eine der Ausgaben unseres Systems ist ein \qt{Vulnerability Assessment Dashboard} (VAD), welches ich vor einigen Jahren geschrieben habe, um die Ergebnisse unserem Schwachstell-Monitoring Prozesse in einer überblick-Tabelle mit einer Detail-Spalte darzustellen.
+Seitdem hat es sich kontinuierlich weiterentwickelt, aber mit der Zeit wurde es immer klarer, dass einige grundlegende Dinge daran geändert werden müssen.
+Ich werde also einen kompletten rewrite dieses Dashboards durchführen, davor allerdings mit einigen unserer Kunden über potenzielle Verbesserungen in einer \qt{Version 2.0} sprechen.
+
+Das letzte Ziel wird eventuell nicht mehr in meinem Semester gestartet:
+Ein Software-Asset-Report / Dashboard, das eine Integration mit dem VAD bekommen soll.
+Die Details hierzu werden allerdings noch ausgearbeitet, wenn wir diesem Schritt näher sind.
+
+Natürlich war dies nicht der einzige Tagespunkt, denn {\aeclientZEZESE} haben wir natürlich auch noch unsere Ergebnisse der Windows-Scans gezeigt und darum gebeten, dass sie die aktualisierten Skripte erneut ausführen, damit wir vollständigere Daten erhalten.
+Dieses Meeting war allerdings recht schnell vorbei, denn viel mehr gab es nicht zu bereden.
+Dies beendete diese intensive, aber sehr erfolgreiche Woche.
