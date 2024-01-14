@@ -1,0 +1,28 @@
+\section{Woche 9 - Überarbeitung des Datenformats} \label{sec:bericht-wo-x}
+
+% Woche 9 (2023-10-30 bis 2023-11-03)
+
+\lweekdaymarginpar{Montag}
+
+Diese Woche begann ich mit der Überarbeitung des Datenformats für Schwachstellen und Security Advisories.
+Das bisherige Datenformat besteht im Wesentlichen aus einer \codendt{Map<List<Map<String, String>\!>\!>}, wobei die einzelnen Ebenen zwar tatsächliche Instanzen mit weiteren Attributen und Methoden sind, aber sich nicht um das domänenspezifische  Parsen der Werte kümmern.
+
+Dies bedeutet, dass komplexe Attribute oft über mehrere Schlüssel in der innersten Map verteilt sind oder aus einem strukturierten JSON-Objekt als String abgelegt werden.
+Ein Problem dabei ist, dass man das Format dieser einzelnen Schlüssel genau kennen und es bei jedem Lese- und Schreibzugriff korrekt implementieren muss.
+
+Obwohl Hilfsmethoden dafür zwar vorhanden sind, müssen diese trotzdem erst dem Entwickler bekannt sein und auch konsequent genutzt werden.
+Es entsteht ein zusätzlicher Komplexitätsaufwand bei jeder Aufgabe, den man lieber vermeiden möchte.
+
+Darum habe ich ein System entworfen, das sich als Wrapper um die Zugriffe auf diese Klassen legt und dabei automatisch das korrekte (De-)Kodieren der Daten beim Ein- und Auslesen verwendet.
+
+\sweekdaymarginpar{Di, Do, Fr}
+
+Den Rest dieser Woche konzentrierte ich mich auf die Umsetzung des geplanten Systems.
+Dies beinhaltete vor allem die Entwicklung von Wrapper-Klassen für die inneren \code{Map<String, String>} Strukturen, die dafür verantwortlich sind, die Map in eine Kollektion von in unserem Datenmodell vorkommenden Instanzen umzuwandeln.
+Zusätzlich erstellte ich eine Verwaltungsklasse, die für die korrekte Initialisierung aller Wrapper-Instanzen zuständig ist, diese verwaltet und die Verbindungsbeziehungen zwischen ihnen modelliert.
+
+Die Programmierung dieser Komponenten erfolgte \qt{blind}, da ich den Code aufgrund von Konflikten zwischen dem bestehenden und dem neuen Datenmodell nicht ausführen konnte.
+Das bestehende Datenmodell ist tief in unserer Codebasis integriert und stand an mehreren Stellen in Konflikt mit den neuen Strukturen.
+
+Daher musste ich warten, bis die Änderungen in der gesamten Codebasis umgesetzt waren, was Freitagnachmittag fast der Fall war.
+Allerdings zog sich das wöchentliche Meeting länger als erwartet hin, wodurch ich die Umstellung diese Woche nicht vollständig abschließen und testen konnte.

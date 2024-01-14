@@ -1,8 +1,9 @@
-\section{Woche 7 - Windows-Inventar \headerand Strategieworkshop} \label{sec:bericht-wo-7}
+\section{Woche 7 - Windows-Inventar-Extraktion \headerand Strategieworkshop} \label{sec:bericht-wo-7}
 
 % Woche 7 (2023-10-16 bis 2023-10-20)
 
 \lweekdaymarginpar{Montag}
+
 Montag stellte ich also eine erste, funktionierende Version der PowerShell Skripte fertig, die alle Use-Cases abdecken konnten.
 Ich habe hier nach dem Prinzip \qt{Lieber zuviel als zu wenig} gearbeitet, habe also redundante und zusätzliche Informationen gesammelt, da das nächste Meeting erst wieder am Freitag sein wird und ich nicht darauf warten könnte.
 
@@ -11,11 +12,13 @@ Wir wurden live per Video-Call in das Test-Labor mitgenommen, wo das Ziel-Window
 Meine Skripte wurden auf dem System ohne Komplikationen ausgeführt und nach Besprechungen über das weitere Vorgehen haben wir diese Daten auch übermittelt bekommen.
 
 \sweekdaymarginpar{Dienstag}
+
 Den Dienstag habe ich dann begonnen, die Daten zunächst manuell auszuwerten und musste, wie erwartet, feststellen, dass noch einige Daten für ein vollständiges Bild fehlen.
 Vor allem zu den PNP-Devices gibt es im WMI-Interface sehr viele Subklassen, die je Details über eine gewisse Kategorie liefern können.
 Die Skripte habe ich den Tag lang angepasst, sodass sie nun wirklich alle benötigten Daten abfragen.
 
 \sweekdaymarginpar{Mi, Do}
+
 Die folgenden beiden Tage habe ich damit verbracht, den zweiten Schritt der Windows-Inventar-Extraktion zu schreiben:
 einen Java-Prozess, der die JSON-Daten verwertet und daraus ein Inventar im proprietären Format der {\metaeffekt} erzeugt.
 
@@ -54,6 +57,7 @@ Natürlich habe ich auch die restlichen Daten noch verarbeitet und hatte zum Sch
 Donnerstagabend hatte ich also einen Prozess und ein vorläufiges Inventar, das wir am Freitag mit dem Kunden besprechen konnten.
 
 \sweekdaymarginpar{Freitag}
+
 Dieser Freitag war ein ereignisreicher Tag:
 Die {\metaeffekt} hat einen Strategieworkshop gehalten, der das Vorgehen der nächsten 9--12 Monate angeben sollte.
 Auf diesen Tag hatte ich mich bereits seit einigen Wochen gefreut, da er jedes Jahr für mich und die anderen neue Aufgaben und einen roten Faden festlegt, der vor allem für mein Praxissemester dieses Halbjahr wichtig ist.
@@ -67,7 +71,7 @@ Zu den Strategiepunkten, bei denen ich beteiligt sein werde, gehören:
 
 \begin{smitemize}
     \item Eine Java-Implementierung von CVSS:2.0, CVSS:3.1 und CVSS:4.0 soll als Open-Source-Projekt auf GitHub veröffentlicht werden.
-    Dazu muss die CVSS:4.0-Implementierung noch fertiggestellt und alle Versionen müssen noch einmal getestet werden.
+    Dazu muss die CVSS:4.0-Implementierung noch fertiggestellt und zusammen mit den anderen in unser Haupt-Repository (core) verschoben werden.
     \item Ein weiteres Open-Source-Projekt soll ebenfalls auf GitHub angelegt werden, das den CVSS-Standard in den Versionen 2.0, 3.1 und 4.0 in TypeScript implementiert und damit auch im Web nutzbar ist.
     Hiervon existiert noch nichts, sodass ich hier von Grund auf beginnen werde.
     \item Mit der TypeScript-Implementierung soll ein öffentliches Web-Interface erstellt werden, das die Berechnung und Modifikation von CVSS-Vektoren ermöglicht.
@@ -83,5 +87,5 @@ Zu den Strategiepunkten, bei denen ich beteiligt sein werde, gehören:
     Dazu soll ebenfalls ein Reporting und Dashboard erstellt werden, dieses Mal wird es allerdings kein alleinstehendes Dokument, sondern bekommt ein Backend in Java.
 \end{smitemize}
 
-Natürlich war dies nicht der einzige Tagespunkt, denn den Mitarbeitern von {\aeclientZEZESE} haben wir natürlich auch noch unsere Ergebnisse der Windows-Scans gezeigt und darum gebeten, dass sie die aktualisierten Skripte erneut ausführen, damit wir vollständigere Daten erhalten.
+Natürlich war dies nicht der einzige Tagespunkt, denn den Mitarbeitern von {\aeclientZEZESE} haben wir unsere Ergebnisse der Windows-Scans gezeigt und darum gebeten, dass sie die aktualisierten Skripte erneut ausführen, damit wir vollständigere Daten erhalten.
 Dieses Meeting war allerdings recht schnell vorbei.

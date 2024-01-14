@@ -3,6 +3,7 @@
 % Woche 2 (2023-09-11 bis 2023-09-15)
 
 \lweekdaymarginpar{Montag}
+
 Die zweite Woche meines Praktikums wollte und sollte ich mich mit der genaueren Funktionsweise von CVSS 4.0 auseinandersetzen.
 Ich verbrachte also den Montag damit, die Spezifikation\footnote{\url{htthttps://www.first.org/cvss/v4.0/specification-document}},
 die Entwicklungsgeschichte\footnote{\url{https://www.first.org/cvss/v4.0/user-guide#New-Scoring-System-Development}}
@@ -14,6 +15,7 @@ Ich konnte selbst nach einem ganzen Tag an Recherche keine zufriedenstellende Er
 Durch meine Recherche konnte ich immerhin weitere Randfall-Tests anlegen und damit zwei Fehler in meiner Implementierung finden.
 
 \sweekdaymarginpar{Dienstag}
+
 Eigentlich wollte ich am Dienstag weiter an meinem Verständnis von CVSS 4.0 arbeiten, aber es gab etwas Wichtigeres:
 Da ein Kollege noch im Urlaub war, musste ich einen Teil seiner Arbeit übernehmen.
 Es geht um das Pflegen von Korrelationsdaten, die dazu dienen, Software-Komponenten automatisch zu Produkten in fremden Datenbanken (wie den CPE in der NVD\footnote{\url{https://nvd.nist.gov/products/cpe}}) zuzuordnen.
@@ -21,6 +23,7 @@ Da dies früher einmal meine Aufgabe im Unternehmen war, habe ich dafür in der 
 Das gab mir also die Chance, dieses Tool endlich einmal selbst zu verwenden und an einigen Stellen den Workflow zu verbessern.
 
 \sweekdaymarginpar{Mittwoch}
+
 Leider war ich Dienstag nicht mit den zu verarbeitenden Korrelationsdaten fertig geworden, darum habe ich noch den halben Mittwoch damit verbracht.
 Was mich positiv überraschte war, wie gewissenhaft mein Kollege diese Arbeit durchgeführt hatte, seitdem er diese von mir übernommen hatte.
 Ich musste nur bei wenigen Einträgen die Matching-Informationen überarbeiten, bei den meisten hatten diese bereits gestimmt und ich musste sie nur noch abnicken.
@@ -30,6 +33,7 @@ Also: was passiert, wenn man eine kritische Software-Schwachstelle, die man zuvo
 Dieses Thema müssen wir auf Kundenwunsch in den nächsten Monaten abbilden können, aber eine hohe Priorität bekommt es noch nicht.
 
 \sweekdaymarginpar{Donnerstag}
+
 Donnerstag war mein Chef nicht im Büro, da er ein Treffen bei einem Kunden hatte.
 Es war auch ein Tag, an dem ich sehr viel Code geschrieben habe, denn ich musste meine Planung für die Woche etwas umpriorisieren:
 Ende der Woche musste die Implementierung und Integration von CVSS 4.0 in unser System fertiggestellt sein, darum beschloss ich, mich erst einmal darum zu kümmern und danach erst weiter mein Verständnis aufzubauen.
@@ -49,9 +53,6 @@ Ich habe also fast noch einmal die gesamte Implementierung neu geschrieben, inde
 Am Ende des Tages hatte ich Pull Requests für die drei Projekte, in denen diese Berechnungen stattfinden, fertiggestellt.
 
 \sweekdaymarginpar{Freitag}
-Der Freitag begann frostig - im wahrsten Sinne des Wortes.
-Es waren nur 7 °C und mit dem Fahrrad und kurzer Hose bin ich gut durchgefroren angekommen.
-Mit einem Tee konnte ich mich aber ganz gut wieder aufwärmen.
 
 Da ich die Integration bereits Donnerstag fertiggestellt hatte, habe ich mich wieder an das Verständnis über den CVSS 4.0 Standard gesetzt.
 Um besser verstehen zu können, wie die MacroVektor Interpolation funktioniert, habe ich mir drei Beispiele herausgesucht und die Berechnungen aufgrund der Spezifikation und meiner Implementierung manuell mehrfach auf verschiedene Arten durchgeführt.

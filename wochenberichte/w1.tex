@@ -3,6 +3,7 @@
 % Woche 1 (2023-09-4 bis 2023-09-8)
 
 \lweekdaymarginpar{Montag}
+
 Der erste Arbeitstag meines Praktikums bei der {\metaeffekt} fiel für mich mit dem Ende der Sommerpause für viele meiner Kollegen zusammen.
 Da ich schon seit einiger Zeit im Unternehmen arbeite, war eine ausführliche Einführung für mich nicht nötig, denn ich habe bereits meine eigenen Aufgabenbereiche zugewiesen, um die ich mich kümmern muss.
 Der Montag war allerdings auch für mich der erste Tag nach dem Urlaub, daher musste ich mich erst wieder orientieren und herausfinden, welche Aufgaben als Nächstes anstehen.
@@ -18,17 +19,20 @@ Diese haben wir bisher jeden Tag durchgeführt und sowohl über berufliche als a
 Ich werde die genauen Inhalte dieser Meetings hier nicht immer aufführen, da sie meist über die bereits behandelten Themen des Tages gehen.
 
 \sweekdaymarginpar{Dienstag}
+
 Am Dienstag startete ich mit der Recherche zu den theoretischen Grundlagen und den Einzelheiten von CVSS 4.0.
 Ich stellte schnell fest, dass es mehr Unterschiede als Gemeinsamkeiten zu den vorherigen Versionen CVSS 2 und 3 gibt, insbesondere in Bezug auf Berechnung, Implementierungsdetails, Interpretation der Ergebnisse und der Theorie dahinter.
 Den Rest des Tages verbrachte ich damit, die noch unfertige Dokumentation und Beispiele des neuen Standards zu studieren und das Konzept zu verstehen, was sich als komplexer als zunächst angenommen erwies.
 
 \sweekdaymarginpar{Mittwoch}
+
 Am Mittwoch begann ich mit einem ersten Versuch einer Implementierung der CVSS 4.0-Berechnungen.
 Nach weiterer Recherche fand ich auf dem offiziellen RedHat GitHub-Repository\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator}} den Quellcode einer Implementierung eines CVSS 4.0-Rechners in JavaScript.
 RedHat war stark an der Entwicklung des Standards beteiligt.
 Dieses Beispiel hat mir geholfen, das Grundgerüst für die Implementierung in unserem Java-System vorzubereiten, das dem Modell der CVSS 2 und 3 ähnelt.
 
 \sweekdaymarginpar{Donnerstag}
+
 Der Donnerstag startete mit einer Fehlermeldung in einem unserer Kundenprojekte.
 Es handelte sich um eine „OutOfMemoryError“-Exception, die auftrat, wenn unser generierter Report zu Schwachstellen in Kundenprojekten aus einer bisher noch nicht so aufgetretenen großen Menge an Daten generiert werden sollte.
 Das Problem war, dass während der Serialisierung in ein HTML-Dokument das interne Modell kurzzeitig dupliziert wurde und damit auch der Speicherbedarf.
@@ -41,6 +45,7 @@ Ich meldete meine Probleme mit der Implementierung zusammen mit einigen inhaltli
 Ich beendete den Tag mit einer teilweise funktionierenden Implementierung.
 
 \sweekdaymarginpar{Freitag}
+
 Der Freitag sollte der Tag sein, an dem ich die Basis-Implementierung abschließe.
 Es überraschte mich, dass ich so schnell auch eine Antwort auf meine GitHub-Fragen bekommen hatte: Die Spezifikation ist veraltet, aber die Implementierung ist korrekt.
 Mithilfe dieser Informationen und einigem weiteren herumexperimentieren konnte ich die Berechnungen fertigstellen.
