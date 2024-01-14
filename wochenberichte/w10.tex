@@ -1,0 +1,44 @@
+\section{Woche 10 - Abschluss Überarbeitung des Datenformats \headerand CVSS Implementierung Verschieben} \label{sec:bericht-wo-10}
+
+% Woche 10 (2023-11-06 bis 2023-11-10)
+
+\lweekdaymarginpar{Montag}
+
+Den Montag habe also damit verbracht, die Änderungen am Datenmodell und die Integration in die Prozessschritte in Artifact Analysis zu vervollständigen.
+Der einzige verbleibende Prozessschritt ist eine der Ausgaben des Systems: das VAD\@.
+Dieses beinhaltet eine Aggregation aller Daten, die in den Schritten davor angereichert wurden und ist daher einer der komplizierteren Schritte.
+Hierbei ging es mir nur darum, die alte Funktionalität wiederherzustellen, ohne die neuen Features, die durch das neue Datenmodell ermöglicht werden.
+Ich muss hier dazusagen: Im Gegensatz zum alten Datenmodell war eine Freude, damit das UI zu befüllen, da die Daten einfach bereitliegen und ich sie nicht erst überall erneut und erneut berechnen muss.
+
+Ein paar Stunden später konnte ich diesen Schritt abschließen und das Programm zu ersten Mal seit mehr als einer Woche ausführen.
+Das Ergebnis war zu erwarten: natürlich hat die Hälfte der Schritte nicht funktioniert.
+Ich habe den restlichen Tag noch alle (bis hier) auftretenden Probleme an dem Tag beheben können.
+
+\sweekdaymarginpar{Dienstag}
+
+Die nächsten Tage konnte ich mich auf das Verschieben der CVSS-Implementierungen aus Artifact Analysis nach Core, in ein separates Modul, kümmern.
+Die Klassen zu verschieben habe ich innerhalb weniger Stunden erledigen können, bereits mit anpassung aller Imports und anderer Abhängigkeiten.
+
+Eine der Anforderungen an das neue Datenmodell war, dass mehrere Vektoren gleicher Version mit unterschiedlichen Quellen auf der gleichen Schwachstelle abgelegt werden können.
+An dieser hatte ich bereits mit den Quellen in Woche 8 (Kapitel\ \ref{sec:bericht-wo-8}) und bei dem neu-implementieren des Datenmodells gearbeitet.
+Allerdings fehlten hier noch einige wichtige Komponenten, wie die Auswahl effektiver Vektoren und das korrekte Kombinieren und Überlagern von Vektoren.
+
+Vor allem mit einer Datenstruktur für die Auswahl effektiver Vektoren habe ich den gesamten Dienstag verbracht.
+Es stellte sich recht schnell heraus, dass mein initialer Ansatz zu naiv gedacht war und es schnell komplizierter wurde als erhofft.
+Dienstag bin ich mit einem schlechten Gefühl nach Hause gegangen, denn der bisherige Ansatz hat nicht wirklich funktioniert.
+
+\sweekdaymarginpar{Mi, Do}
+
+Über den Feierabend hatte ich mir einige Gedanken zu dem Thema gemacht, wodurch ich durch die Erkenntnisse des vorherigen Tages am Mittwoch dann einen neuen Versuch an diesem System gewagt habe.
+Mit diesem habe ich mir etwas länger Zeit gelassen, habe vernünftige Testfälle geschrieben und mir einige Schaubilder auf Papier gezeichnet.
+Donnerstagnachmittag war der CVSS-Selektor dann fertig - deutlich komplizierter als ich anfangs erhofft hatte, aber nun konnte er alle Fälle abdecken, die mir und einem meiner Kollegen eingefallen sind.
+
+\sweekdaymarginpar{Freitag}
+
+Freitag wollte ich diesen Selektor in die bisherigen Prozessschritte einfügen, davor war allerdings etwas anderes nötig:
+Eine Konfiguration, in der dieser vom Nutzer spezifiziert werden kann.
+Ich habe in unserer Codebasis bereits ein recht umfangreiches Konfigurationssystem gebaut, was ich sehr einfach auf diesen Anwendungsfall anpassen konnte.
+
+Nachdem ich mit meinem Chef noch einmal darüber geredet habe, haben wir beschlossen, dieses Konfigurationsobjekt für alle Attribute zu verwenden, die etwas mit Security zu tun haben, damit diese an einer zentralen Stelle abliegen und nicht in einzelnen Schritten versteckt sind.
+Das habe ich getan, in der neuen \code{CentralSecurityConfiguration}.
+Diese habe ich den Freitag, vor und nach dem Weekly, dann angefangen überall zu integrieren und die alten Konfigurationsparameter durch diese auszutauschen.

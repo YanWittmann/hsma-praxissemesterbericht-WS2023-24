@@ -13,16 +13,17 @@ Ein Problem dabei ist, dass man das Format dieser einzelnen Schlüssel genau ken
 Obwohl Hilfsmethoden dafür zwar vorhanden sind, müssen diese trotzdem erst dem Entwickler bekannt sein und auch konsequent genutzt werden.
 Es entsteht ein zusätzlicher Komplexitätsaufwand bei jeder Aufgabe, den man lieber vermeiden möchte.
 
-Darum habe ich ein System entworfen, das sich als Wrapper um die Zugriffe auf diese Klassen legt und dabei automatisch das korrekte (De-)Kodieren der Daten beim Ein- und Auslesen verwendet.
+Darum habe ich Montag ein System entworfen, das sich als Wrapper um die Zugriffe auf diese Klassen legt und dabei automatisch das korrekte (De-)Kodieren der Daten beim Ein- und Auslesen verwendet.
 
 \sweekdaymarginpar{Di, Do, Fr}
 
-Den Rest dieser Woche konzentrierte ich mich auf die Umsetzung des geplanten Systems.
+Die Implementierung ist in zwei Schritten geplant, für jedes unserer betroffenen Module (core, artifact analysis).
+Den Rest dieser Woche konzentrierte ich mich auf die Umsetzung des geplanten Systems in Artifact Analysis.
 Dies beinhaltete vor allem die Entwicklung von Wrapper-Klassen für die inneren \code{Map<String, String>} Strukturen, die dafür verantwortlich sind, die Map in eine Kollektion von in unserem Datenmodell vorkommenden Instanzen umzuwandeln.
-Zusätzlich erstellte ich eine Verwaltungsklasse, die für die korrekte Initialisierung aller Wrapper-Instanzen zuständig ist, diese verwaltet und die Verbindungsbeziehungen zwischen ihnen modelliert.
+Zusätzlich plante ich eine Verwaltungsklasse, die für die korrekte Initialisierung aller Wrapper-Instanzen zuständig ist, diese verwaltet und die Verbindungsbeziehungen zwischen ihnen modelliert.
 
 Die Programmierung dieser Komponenten erfolgte \qt{blind}, da ich den Code aufgrund von Konflikten zwischen dem bestehenden und dem neuen Datenmodell nicht ausführen konnte.
 Das bestehende Datenmodell ist tief in unserer Codebasis integriert und stand an mehreren Stellen in Konflikt mit den neuen Strukturen.
 
-Daher musste ich warten, bis die Änderungen in der gesamten Codebasis umgesetzt waren, was Freitagnachmittag fast der Fall war.
+Daher musste ich warten, bis die Änderungen in Artifact Analysis umgesetzt waren, was Freitagnachmittag \textit{fast} der Fall war.
 Allerdings zog sich das wöchentliche Meeting länger als erwartet hin, wodurch ich die Umstellung diese Woche nicht vollständig abschließen und testen konnte.
