@@ -1,4 +1,4 @@
-\section{Woche 10 - Abschluss Überarbeitung des Datenformats \headerand CVSS Implementierung Verschieben} \label{sec:bericht-wo-10}
+\section{Woche 10 - Abschluss Überarbeitung des Datenformats \headerand CVSS Implementierung verschieben} \label{sec:bericht-wo-10}
 
 % Woche 10 (2023-11-06 bis 2023-11-10)
 
@@ -29,16 +29,15 @@ Dienstag bin ich mit einem schlechten Gefühl nach Hause gegangen, denn der bish
 
 \sweekdaymarginpar{Mi, Do}
 
-Über den Feierabend hatte ich mir einige Gedanken zu dem Thema gemacht, wodurch ich durch die Erkenntnisse des vorherigen Tages am Mittwoch dann einen neuen Versuch an diesem System gewagt habe.
+Dienstagabend hatte ich mir einige Gedanken zu möglichen Verbesserungen gemacht, wodurch ich am Mittwoch dann einen neuen Versuch an diesem System gewagt habe.
 Mit diesem habe ich mir etwas länger Zeit gelassen, habe vernünftige Testfälle geschrieben und mir einige Schaubilder auf Papier gezeichnet.
 Donnerstagnachmittag war der CVSS-Selektor dann fertig - deutlich komplizierter als ich anfangs erhofft hatte, aber nun konnte er alle Fälle abdecken, die mir und einem meiner Kollegen eingefallen sind.
 
 \sweekdaymarginpar{Freitag}
 
 Freitag wollte ich diesen Selektor in die bisherigen Prozessschritte einfügen, davor war allerdings etwas anderes nötig:
-Eine Konfiguration, in der dieser vom Nutzer spezifiziert werden kann.
+Eine Konfiguration, in der ein Nutzer einen oder mehrere dieser Selektoren spezifiziert werden kann.
 Ich habe in unserer Codebasis bereits ein recht umfangreiches Konfigurationssystem gebaut, was ich sehr einfach auf diesen Anwendungsfall anpassen konnte.
-
-Nachdem ich mit meinem Chef noch einmal darüber geredet habe, haben wir beschlossen, dieses Konfigurationsobjekt für alle Attribute zu verwenden, die etwas mit Security zu tun haben, damit diese an einer zentralen Stelle abliegen und nicht in einzelnen Schritten versteckt sind.
-Das habe ich getan, in der neuen \code{CentralSecurityConfiguration}.
-Diese habe ich den Freitag, vor und nach dem Weekly, dann angefangen überall zu integrieren und die alten Konfigurationsparameter durch diese auszutauschen.
+Mit meinem Chef zusammen habe ich beschlossen, dieses Konfigurationsobjekt auf alle Attribute auszuweiten, die etwas mit Security zu tun haben.
+Das war mir recht wichtig, da bisher viele identische Parameter auf identische Art und Weise in mehrere Schritte eingegeben werden müssen und man so leicht einen vergessen konnte.
+Diese neue zentrale Stelle habe ich \code{CentralSecurityConfiguration} genannt und vor und nach dem Weekly angefangen überall zu integrieren und die alten Konfigurationsparameter durch diese auszutauschen.
