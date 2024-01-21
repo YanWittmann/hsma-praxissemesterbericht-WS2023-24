@@ -1,0 +1,43 @@
+\section{Woche 14 - Neuer Kollege, automatische Korrelationsdaten \headerand Validierung des neuen Prozesses} \label{sec:bericht-wo-14}
+
+% 2023-12-04 bis 2023-12-08
+
+\lweekdaymarginpar{Montag}
+
+Der Montag war auch der erste Arbeitstag eines neuen Kollegen, der uns in Teilzeit bei der Entwicklung einer CI-Pipeline und eines eigenen Testing-Frameworks für unsere Datenstrukturen unterstützen sollte.
+Ich half ihm am Vormittag, unsere Projekte auf seinem Laptop einzurichten und verbrachte den halben Tag damit, ihm verschiedene Teile unserer Codebasis zu erklären.
+Nach der Mittagspause übernahm mein Chef die Einarbeitung, und ich widmete mich einem anderen Kollegen, der Fragen zu einem Inventar und den von ihm erstellten Korrelationsdaten hatte.
+Wir gingen gemeinsam über 40 Produkt-Mappings, um sicherzustellen, dass alles korrekt war.
+
+Diese Überprüfung nahm zwar den Rest des Tages in Anspruch, war aber nützlich für meinen Kollegen:
+Da er kein Informatiker ist, ist sein Wissen über die verschiedenen Ökosysteme und \qt{weit bekannte} Produkte begrenzt.
+So konnte ich ihm verschiedene Paketmanager und Quellen für Paketinformationen zeigen.
+
+\sweekdaymarginpar{Dienstag}
+
+Diese Session brachte mir ein länger bestehendes Problem in Erinnerung: die Art und Weise, wie wir Java-Versionen in diesem Datensatz erkennen.
+Bisher hatte ich mich nicht getraut, Änderungen am Code davon zu machen, weil nicht alle Kunden die neueste Version nutzen und dieser Datensatz von allen verwendet wird.
+Ich verbrachte den Dienstag damit, mit dem alten Code ein System zu entwerfen, das automatisch Einträge für alle bekannten Java-Versionen (etwa 2500 aus der NVD über CPE) generieren und den eingesetzten Java-Versionen unserer Kunden zuordnen kann.
+
+Ich durchlief drei erfolglose Iterationen, die jeweils fast funktionierten, aber es fehlte immer ein entscheidendes Feature.
+Die fehlenden Features waren ähnlich, aber unterschiedlich genug, sodass ich sie nicht direkt verwenden konnte.
+Manchmal hatte ich das Gefühl, mein früheres Ich hätte diese Features absichtlich ausgelassen.
+Zum Tagesende fand ich glücklicherweise eine funktionierende vierte Möglichkeit und legte dafür einen Testdatensatz an.
+
+\sweekdaymarginpar{Mi, Do}
+
+In den folgenden Tagen nahm ich einen Schritt zurück, um den Refactoring-Prozess des Datenmodells noch einmal zu überprüfen.
+Abgesehen davon, dass ich vergessen hatte, zwei größere Klassen in das neue Modell zu überführen, wollte ich auch inhaltlich sicher sein.
+In dem Security-Kontext unserer Applikation ist es besonders wichtig, dass die Ergebnisse entweder gleichbleiben oder sich verbessern, da Kunden korrekte Schwachstellen nicht übersehen sollen, nur weil sich unser Prozess verschlechtert hat.
+Ich erstellte daher aus Bestandsdaten einige Testfälle und verglich die Ergebnisse mit der alten Version.
+Einige der Ergebnisse unterschieden sich auf eine Weise, die nicht besser war als zuvor, welche sich dann allerdings recht Schnell auf konkrete Fehler in der Programmierung zurückführen ließen, die ich beheben konnte.
+
+Donnerstagabend war für diesen Datensatz in jedem Fall die neue Version im Matching verbessert und Schwachstellen sind nur korrekt und nachvollziehbar verschwunden.
+Diese Vergleichsdatensätze besprach ich auch noch einmal mit meinem Chef.
+
+\sweekdaymarginpar{Freitag}
+
+Der bevorstehende CSAF-Workshop nächste Woche rückte näher, deshalb widmete ich den Freitag der Recherche über CSAF, las die Dokumentation und sah einige Beispiele an.
+Meine bis dahin gesammelten Erkenntnisse fasste ich in einem neuen Wiki-Artikel zusammen.
+Allerdings kam ich nicht so weit, wie ich gehofft hatte, da ich immer wieder durch kleinere Anfragen meines Chefs und das wöchentliche Meeting unterbrochen wurde.
+Die Recherche würde ich dann in der nächsten Woche fortfahren.
