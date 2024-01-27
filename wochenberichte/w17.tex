@@ -1,0 +1,32 @@
+\section{Woche 17 - TypeScript CVSS Calculator} \label{sec:bericht-wo-17}
+
+% 2024-01-08 bis 2024-01-12
+
+\lweekdaymarginpar{Montag}
+
+Das neue Jahr begann nicht nur mit neuen Aufgaben, sondern auch mit einer neuen Programmiersprache: TypeScript.
+Nach Abschluss des Datenmodell-Refactors konnte ich mich dem nächsten Projekt unserer Planung stellen, einem online-CVSS-Rechner.
+Dieses Web-Interface soll in der Lage sein, für beliebig viele Vektoren, unabhängig von ihrer Version, die Scores zu berechnen und diese kompakt zu visualisieren.
+Der erste Schritt bestand darin, die Versionen 2.0, 3.1 und 4.0 meiner Java-Implementierung in TypeScript zu übertragen.
+Für das gesamte Projekt ist später eine Veröffentlichung unter einer Open-Source-Lizenz auf GitHub vorgesehen.
+Den Montag lang habe ich das entsprechende Projekt erst einmal in unserem lokalen git eingerichtet, einen Build-Prozess mit Webpack vorbereitet und die leeren Klassen und Interfaces angelegt, die später befüllt werden sollen.
+
+\sweekdaymarginpar{Di, Mi, Do, Fr}
+
+Den Rest der Woche habe ich dann genau damit verbracht:
+Ich habe begonnen die Implementierungen basierend auf dem Java-Code in TypeScript zu übersetzen.
+Um automatisiert prüfen zu können, ob meine Implementierung die Scores für die Vektoren richtig berechnet, habe ich Jest\footnote{\url{https://jestjs.io/}}, ein Testing-Framework für TypeScript-Projekte, verwendet, um einen Datensatz an 20.000 Vektoren pro Version zu prüfen, die ich mit dem Java-Code generiert habe.
+
+Da es noch die erste Woche des Jahres war, mussten alle Prozesse und Tasks auch von den anderen erst wiederaufgenommen werden, daher konnte ich mich sehr gut nur darauf konzentrieren, ohne unterbrochen zu werden.
+Ende der Woche hatte ich dementsprechend bereits die CVSS:2.0 und CVSS:3.0-Klassen fertig abgeschlossen und habe bereits ein wenig mit der deutlich komplizierteren Version CVSS:4.0 angefangen.
+Freitagnachmittag fiel es mir allerdings nach einer ganzen Woche CVSS eher schwer, mich auf das Thema zu konzentrieren, daher war ich über das Wochenende froh.
+
+---
+
+Die restliche Woche verbrachte ich also damit, die Java-Implementierungen in TypeScript zu übersetzen.
+Um sicherzustellen, dass meine Implementierung die Scores auch wirklich korrekt berechnet, nutzte ich Jest\footnote{\url{https://jestjs.io/}}, ein Testing-Framework für TypeScript-Projekte.
+Dafür erzeugte ich durch den vorhandenen Java-Code einen Datensatz von 20.000 Vektoren pro CVSS-Version, um die Tests automatisiert durchzuführen.
+
+Da es die erste Woche des Jahres war und alle anderen erst ihre Prozesse und Aufgaben wiederaufnahmen, konnte ich mich ungestört auf dieses Projekt konzentrieren.
+Bis zum Ende der Woche hatte ich daher die Klassen für CVSS:2.0 und CVSS:3.0 fertiggestellt und hatte bereits ein wenig mit der komplexeren Version CVSS:4.0 begonnen.
+Allerdings fiel es mir am Freitagnachmittag nach einer ganzen Woche mit CVSS schwer, mich weiterhin zu konzentrieren, sodass ich über das Wochenende froh war.
