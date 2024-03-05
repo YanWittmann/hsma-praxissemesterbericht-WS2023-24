@@ -1,7 +1,47 @@
-\section{Woche 21 - Abschluss von Praxissemester und Praktikumsbetreuung} \label{sec:bericht-wo-21}
+\section{Woche 21 - Praktikumsbetreuung \headerand Abschluss des Praxissemesters} \label{sec:bericht-wo-21}
 
 % 2024-02-05 bis 2024-02-09
 
 \lweekdaymarginpar{Montag}
 
-Test
+Die letzte Woche für mich im Praktikum bedeutete den Start eines anderen:
+Die \metaeffekt\ hat einen BOGY-Praktikanten angenommen, der diese Woche einmal bei uns reinschnuppern durfte.
+Ich war zu einem großen Teil für seine Betreuung verantwortlich, nebenbei habe ich noch weitere Probleme mit der Integration von Generation 3 bei den Kunden gelöst, die seit dem Ende der letzten Woche aufgetreten sind.
+
+Mit dem Praktikanten habe ich erst einmal ein wenig programmieren und Konzepte in Java geübt, denn er sollte diese Woche hauptsächlich mit einem der Testing-Frameworks eines anderen Kollegen einige Testfälle für unseren Software-Scanner und Komponenten-Extraktor schreiben.
+
+\sweekdaymarginpar{Dienstag}
+
+Er schien Konzepte recht schnell aufzunehmen und so konnte er bereits Dienstag mit den eigentlichen Testfällen beginnen.
+Natürlich hat er ab und zu auch andere Probleme lösen und Dinge tun dürfen.
+
+Ansonsten ist der Dienstag genau wie der Montag verlaufen - ich durfte wieder Probleme mit Generation 3 beheben.
+Allerdings schien dieses Mal ein größeres Problem dabei zu sein:
+Unser Prozess ist auf einmal von durchschnittlich 10 Minuten Laufzeit auf Generation 2 zu über zwei Stunden auf der dritten gesprungen.
+Das ist natürlich nicht akzeptabel, und ich habe mich gleich an die Recherche gemacht.
+Gewundert hat es mich allerdings schon, denn ich hatte bei meinen Tests bei dem neuen Datenmodell speed-ups von bis zu 200\% oder 300\% in optimalen Fällen gemessen.
+
+Glücklicherweise konnte ich das Problem mit nur einer Zeile Code-Änderungen beheben:
+Ich habe eine Liste zu einem Set umgewandelt, eine Übersehene nicht vollständig durchgeführte Optimierung meinerseits, die ich scheinbar vergessen hatte, fertig durchzuführen.
+Dadurch sind wir bei nur noch zweieinhalb Minuten gelandet, was eher dem entsprach, was ich erwartet hatte.
+
+\sweekdaymarginpar{Mi, Do}
+
+Mittwoch und Donnerstag habe ich noch live in Kooperation mit einem Teams-Meeting die letzten Probleme beheben können, passend zum Ende meines Praktikums war also Generation 3 vollständig integriert.
+Natürlich konnte ich auch noch mit dem Praktikanten einige Dinge tun und üben.
+
+\sweekdaymarginpar{Freitag}
+
+An meinem 100sten und damit letzten Tag des Praktikums habe ich zur Feier Kuchen mitgebracht und beim Weekly zusammen mit den restlichen süßen Stückchen verteilt.
+Nach dem Weekly konnten wir auch noch alle zusammen aus dem Büro Currywurst essen gehen, es war also ein guter Abschluss zum Praktikum.
+
+Natürlich wurde auch gearbeitet:
+Ich habe den Tag dazu genutzt, einem weiteren Issue meines Chefs mit einem unserer Reports zu beheben.
+Hier ging es um den periodischen Security-Advisory Report mit Bezug auf die Schwachstellsituation in einem Projekt.
+Durch die neue Art zu filtern in Generation 3 hat er bemerkt, dass er nun gerne genauer kontrollieren können möchte, welche Daten in diesem Report angezeigt werden.
+Hier habe ich also neue Parameter und alternative Report-Templates angelegt, die diesen Wünschen entsprechen.
+
+Auch für den BOGY-Praktikanten war es der letzte Tag und so sind wir beide mit einem erfolgreich absolvierten Praktikum ins Wochenende gegangen.
+
+Ich habe noch weitere 12 Tage bei dem Unternehmen mit meinen 35 Stunden in den folgenden Wochen gearbeitet und einen weiteren Vertrag für weitere Zusammenarbeit abgeschlossen.
+Meine Reise in dieser Welt ist also noch lange nicht vorbei.
