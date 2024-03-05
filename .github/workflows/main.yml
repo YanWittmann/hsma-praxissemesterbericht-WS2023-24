@@ -10,7 +10,7 @@ jobs:
       uses: xu-cheng/latex-action@v2
       with:
         root_file: praksem.tex
-        working_directory: bericht
+        working_directory: ./
         compiler: pdflatex
         args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf
     - name: Upload PDF
