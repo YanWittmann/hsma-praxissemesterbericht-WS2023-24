@@ -12,7 +12,10 @@ jobs:
 
     - name: Set up TeX Live (1)
       uses: xu-cheng/latex-action@v2
+      if: always()
+      continue_on_error: true
       with:
+        continue_on_error: true
         root_file: praksem.tex
         working_directory: ./
         compiler: latexmk
@@ -20,7 +23,9 @@ jobs:
 
     - name: Set up TeX Live (2)
       uses: xu-cheng/latex-action@v2
+      if: always()
       with:
+        continue_on_error: true
         root_file: praksem.tex
         working_directory: ./
         compiler: latexmk
