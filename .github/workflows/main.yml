@@ -6,6 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Checkout latex-listings-powershell
+      run: git clone https://github.com/rmainer/latex-listings-powershell
+
     - name: Set up TeX Live
       uses: xu-cheng/latex-action@v2
       with:
@@ -13,8 +17,9 @@ jobs:
         working_directory: ./
         compiler: pdflatex
         args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf
+
     - name: Upload PDF
       uses: actions/upload-artifact@v2
       with:
         name: Semesterbericht-PDF
-        path: projects/praxissemester/praksem.pdf
+        path: praksem.pdf

@@ -9,14 +9,14 @@ Nach Abschluss des Datenmodell-Refactors konnte ich mich dem nächsten Projekt u
 Dieses Web-Interface soll in der Lage sein, für beliebig viele Vektoren, unabhängig von ihrer Version, die Scores zu berechnen und diese kompakt zu visualisieren.
 Der erste Schritt bestand darin, die Versionen 2.0, 3.1 und 4.0 meiner Java-Implementierung in TypeScript zu übertragen.
 Für das gesamte Projekt ist später eine Veröffentlichung unter einer Open-Source-Lizenz auf GitHub vorgesehen.
-Den Montag lang habe ich das entsprechende Projekt erst einmal in unserem lokalen git eingerichtet, einen Build-Prozess mit Webpack vorbereitet und die leeren Klassen und Interfaces angelegt, die später befüllt werden sollen.
+Den Montag lang habe ich das entsprechende Projekt erst einmal auf unserem lokalen git-Server eingerichtet, einen Build-Prozess mit Webpack vorbereitet und die leeren Klassen und Interfaces angelegt, die später befüllt werden sollen.
 
 \sweekdaymarginpar{Di, Mi, Do, Fr}
 
 Die restliche Woche verbrachte ich also damit, die Java-Implementierungen in TypeScript zu übersetzen.
 Um sicherzustellen, dass meine Implementierung die Scores auch wirklich korrekt berechnet, nutzte ich Jest\footnote{\url{https://jestjs.io/}}, ein Testing-Framework für TypeScript-Projekte.
-Dafür erzeugte ich durch den vorhandenen Java-Code einen Datensatz von 20.000 Vektoren pro CVSS-Version, um die Tests automatisiert durchzuführen.
+Dafür erzeugte ich durch den vorhandenen Java-Code einen Datensatz von 20.000 Vektoren pro CVSS-Version mit ihren erwarteten Scores, um die Tests automatisiert durchzuführen.
 
-Da es die erste Woche des Jahres war und alle anderen erst ihre Prozesse und Aufgaben wiederaufnahmen, konnte ich mich ungestört auf dieses Projekt konzentrieren.
+Da es die erste Woche des Jahres war und alle anderen erst noch ihre Prozesse und Aufgaben wiederaufnahmen, konnte ich mich ungestört auf dieses Projekt konzentrieren.
 Bis zum Ende der Woche hatte ich daher die Klassen für CVSS:2.0 und CVSS:3.0 fertiggestellt und hatte bereits ein wenig mit der komplexeren Version CVSS:4.0 begonnen.
-Allerdings fiel es mir am Freitagnachmittag nach einer ganzen Woche mit CVSS schwer, mich weiterhin zu konzentrieren, sodass ich über das Wochenende froh war.
+Allerdings fiel es mir am Freitagnachmittag nach einer ganzen Woche mit CVSS schwer, mich weiterhin zu konzentrieren, sodass ich froh war ins Wochenende zu gehen.
