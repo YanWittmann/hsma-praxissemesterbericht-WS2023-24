@@ -18,7 +18,7 @@ jobs:
         root_file: praksem.tex
         working_directory: ./
         compiler: latexmk
-        args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf
+        args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf -synctex=1
 
     - name: Set up TeX Live (2)
       uses: xu-cheng/latex-action@v2
@@ -28,7 +28,7 @@ jobs:
         root_file: praksem.tex
         working_directory: ./
         compiler: latexmk
-        args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf
+        args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf -synctex=1
 
     - name: Upload PDF
       uses: actions/upload-artifact@v2
