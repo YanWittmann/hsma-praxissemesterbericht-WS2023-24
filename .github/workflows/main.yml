@@ -18,10 +18,11 @@ jobs:
           pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf praksem.tex || true
           bibtex praksem || true
           pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf praksem.tex || true
-          pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf praksem.tex || true
+          pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf praksem.tex
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
+        if: always()
         with:
           name: Semesterbericht-PDF
           path: praksem.pdf
