@@ -4,14 +4,14 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive:latest
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Checkout latex-listings-powershell
         run: git clone https://github.com/rmainer/latex-listings-powershell
-
-      - name: Install LaTeX
-        run: sudo apt-get update && sudo apt-get install -y texlive-full
 
       - name: Compile LaTeX document
         run: |
