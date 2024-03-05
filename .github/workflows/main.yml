@@ -5,34 +5,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Checkout latex-listings-powershell
-      run: git clone https://github.com/rmainer/latex-listings-powershell
+      - name: Checkout latex-listings-powershell
+        run: git clone https://github.com/rmainer/latex-listings-powershell
 
-    - name: Set up TeX Live (1)
-      uses: xu-cheng/latex-action@v2
-      if: always()
-      with:
-        continue_on_error: true
-        root_file: praksem.tex
-        working_directory: ./
-        compiler: latexmk
-        args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf -synctex=1
+      - name: Install LaTeX
+        run: sudo apt-get update && sudo apt-get install -y texlive-full
 
-    - name: Set up TeX Live (2)
-      uses: xu-cheng/latex-action@v2
-      if: always()
-      with:
-        continue_on_error: true
-        root_file: praksem.tex
-        working_directory: ./
-        compiler: latexmk
-        args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf -synctex=1
+      - name: Compile LaTeX document
+        run: |
+          latexmk -pdf -file-line-error -interaction=nonstopmode -synctex=1 praksem.tex
 
-    - name: Upload PDF
-      uses: actions/upload-artifact@v2
-      if: always()
-      with:
-        name: Semesterbericht-PDF
-        path: praksem.pdf
+      - name: Upload PDF
+        uses: actions/upload-artifact@v2
+        with:
+          name: Semesterbericht-PDF
+          path: praksem.pdf
