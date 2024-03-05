@@ -5,7 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: texlive/texlive:latest
+      image: blang/latex:ctanfull
 
     steps:
       - uses: actions/checkout@v2
@@ -15,7 +15,10 @@ jobs:
 
       - name: Compile LaTeX document
         run: |
-          latexmk -pdf -f -interaction=nonstopmode -synctex=1 praksem.tex
+          pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf praksem.tex || true
+          bibtex praksem || true
+          pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf praksem.tex || true
+          pdflatex -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf praksem.tex
 
       - name: Upload PDF
         uses: actions/upload-artifact@v2
