@@ -10,16 +10,25 @@ jobs:
     - name: Checkout latex-listings-powershell
       run: git clone https://github.com/rmainer/latex-listings-powershell
 
-    - name: Set up TeX Live
+    - name: Set up TeX Live (1)
       uses: xu-cheng/latex-action@v2
       with:
         root_file: praksem.tex
         working_directory: ./
-        compiler: pdflatex
+        compiler: latexmk
+        args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf
+
+    - name: Set up TeX Live (2)
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: praksem.tex
+        working_directory: ./
+        compiler: latexmk
         args: -file-line-error -interaction=nonstopmode -synctex=1 -output-format=pdf
 
     - name: Upload PDF
       uses: actions/upload-artifact@v2
+      if: always()
       with:
         name: Semesterbericht-PDF
         path: praksem.pdf
