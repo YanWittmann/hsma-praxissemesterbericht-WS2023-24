@@ -1,20 +1,21 @@
 # Praxissemesterbericht - WS2023/24 - Yan Wittmann
 
-> Ich verspreche, diese Datei später mit mehr Informationen auszufüllen.
+[![Semesterbericht PDF](https://img.shields.io/badge/Latest-Semesterbericht%20PDF-blue.svg)](https://nightly.link/YanWittmann/hsma-praxissemesterbericht-WS2023-24/workflows/main/main/Semesterbericht-PDF.zip)
 
 Dieses Projekt dient zur Ablage der Latex-Dateien und weiteren Ressourcen, aus denen der Praxissemesterbericht gebaut
 wird.
 
 ## Arbeitgeber
 
-Ich lege dieses Praxissemester bei der {metæffekt} GmbH ab.
+Ich legte dieses Praxissemester bei der {metæffekt} GmbH ab.
 
 - Website: https://metaeffekt.com/
 - GitHub: https://github.com/org-metaeffekt
 
 ## Bauen des Dokuments
 
-Bisher habe ich es immer so gebaut, kann sich in der Zukunft ändern, wenn ich endlich mehr über Tex gelernt habe.
+Eine gebaute Version des Dokuments kann über den obigen Badge heruntergeladen werden.
+Ansonsten kann das Dokument auch lokal gebaut werden:
 
 ```shell
 sudo apt update
@@ -25,8 +26,16 @@ pdflatex praksem.tex
 
 ## IntelliJ Plugin
 
-SDK liegt unter
+MiKTeX installieren und den Pfad in IntelliJ eintragen.
+
+Das SDK liegt unter Windows unter
 
 ```
 ~\AppData\Local\Programs\MiKTeX
 ```
+
+## Bilder
+
+![Yan beim BSI/CSAF Workshop](res/img/2023-12-14-yan-vor-dem-ish-muenchen.jpg)
+
+![Yan beim Forum Open Source vom bitkom](res/img/2023-10-19-yan-ak-os.png)
