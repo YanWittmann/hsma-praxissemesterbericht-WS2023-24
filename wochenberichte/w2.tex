@@ -4,61 +4,46 @@
 
 \lweekdaymarginpar{Montag}
 
-Die zweite Woche meines Praktikums wollte und sollte ich mich mit der genaueren Funktionsweise von CVSS 4.0 auseinandersetzen.
+Ich hatte nun CVSS 4.0 bei uns implementiert, aber wirklich verstanden hatte ich Theorie dahinter noch nicht.
 Ich verbrachte also den Montag damit, die Spezifikation\footnote{\url{htthttps://www.first.org/cvss/v4.0/specification-document}},
 die Entwicklungsgeschichte\footnote{\url{https://www.first.org/cvss/v4.0/user-guide\#New-Scoring-System-Development}}
 und den Code tiefergehender anzusehen, um zu verstehen, wie die Berechnung des Scores funktioniert.
-
-Ich hatte bereits während der Implementierung einen guten Überblick über den ersten Schritt der Berechnung, den mit den MacroVektoren, erhalten.
-Die Unklarheiten lagen eher in dem zweiten Schritt: Der Interpolation zwischen den MacroVektor-Blasen.
+Über den ersten Schritt der Berechnung mit den MacroVektoren hatte ich ein bereits ein gutes Verständnis, die Unklarheiten lagen eher in dem zweiten Schritt mit der Interpolation zwischen den einzelnen MacroVektoren.
 Ich konnte selbst nach einem ganzen Tag an Recherche keine zufriedenstellende Erklärung finden, wie die Berechnung in diesem Schritt funktioniert.
-Durch meine Recherche konnte ich immerhin weitere Randfall-Tests anlegen und damit zwei Fehler in meiner Implementierung finden.
+Immerhin konnte ich durch weitere Randfall-Tests zwei Fehler in meiner Implementierung finden und beheben.
 
-\sweekdaymarginpar{Dienstag}
+\sweekdaymarginpar{Di, Mi}
 
-Eigentlich wollte ich am Dienstag weiter an meinem Verständnis von CVSS 4.0 arbeiten, aber es gab etwas Wichtigeres:
-Da ein Kollege noch im Urlaub war, musste ich einen Teil seiner Arbeit übernehmen.
-Es geht um das Pflegen von Korrelationsdaten, die dazu dienen, Software-Komponenten automatisch zu Produkten in fremden Datenbanken (wie den CPE in der NVD\footnote{\url{https://nvd.nist.gov/products/cpe}}) zuzuordnen.
-Da dies früher einmal meine Aufgabe im Unternehmen war, habe ich dafür in der Vergangenheit ein Tool geschrieben, das ich kurz vor meinem Praktikum mit viel Feedback von und für meinen Mitarbeiter als Web-UI neu aufgesetzt hatte.
-Das gab mir also die Chance, dieses Tool endlich einmal selbst zu verwenden und an einigen Stellen den Workflow zu verbessern.
+Eigentlich hatte ich geplant, mich Dienstag weiter mit CVSS 4.0 zu beschäftigen, doch es kam anders:
+In Abwesenheit eines Kollegen übernahm ich die Pflege von sog. \qt{Korrelationsdaten}, ein von uns gepflegter Datensatz, der Software-Komponenten automatisch Produkten in externen Datenbanken wie den CPEs der NVD\footnote{\url{https://nvd.nist.gov/products/cpe}} zuordnen kann.
+Dazu konnte ich ein von mir entwickeltes Tool nutzen, das ich kurz vor meinem Praktikum, basierend auf umfangreichem Feedback des Kollegen, als Web-UI über Spring Boot neu aufgesetzt hatte.
+Diese Gelegenheit, das Tool selbst einmal anwenden zu müssen, den Workflow darin zu optimieren.
+Positiv überraschend war, wie sorgfältig mein Kollege diese Arbeit durchgeführt hatte.
+Nur wenige Einträge mussten angepasst werden; die meisten waren bereits korrekt und bedurften nur meiner Bestätigung.
 
-\sweekdaymarginpar{Mittwoch}
-
-Leider war ich Dienstag nicht mit den zu verarbeitenden Korrelationsdaten fertig geworden, darum habe ich noch den halben Mittwoch damit verbracht.
-Was mich positiv überraschte war, wie gewissenhaft mein Kollege diese Arbeit durchgeführt hatte, seitdem er diese von mir übernommen hatte.
-Ich musste nur bei wenigen Einträgen die Matching-Informationen überarbeiten, bei den meisten hatten diese bereits gestimmt und ich musste sie nur noch abnicken.
-
-Den restlichen zwei Stunden habe ich dann noch mit meinem Chef über ein interessantes Thema reden können: Dem Abbilden von Vulnerability Chaining in unseren Systemen.
-Also: was passiert, wenn man eine kritische Software-Schwachstelle, die man zuvor als \qt{Nicht Ausnutzbar} abgestempelt hatte, über eine andere, für sich alleine stehende harmlose, Schwachstelle ausnutzen kann?
-Dieses Thema müssen wir auf Kundenwunsch in den nächsten Monaten abbilden können, aber eine hohe Priorität bekommt es noch nicht.
+In den verbleibenden zwei Stunden diskutierte ich mit meinem Chef über das Abbilden von \qt{Vulnerability Chaining} in unseren Systemen – ein Thema, das wir auf Kundenwunsch in den kommenden Monaten angehen müssen, auch wenn es noch keine hohe Priorität hat.
+Wir haben dieses Thema nicht mehr in meinem Praktikum aufgenommen.
 
 \sweekdaymarginpar{Donnerstag}
 
-Donnerstag war mein Chef nicht im Büro, da er ein Treffen bei einem Kunden hatte.
-Es war auch ein Tag, an dem ich sehr viel Code geschrieben habe, denn ich musste meine Planung für die Woche etwas umpriorisieren:
-Ende der Woche musste die Implementierung und Integration von CVSS 4.0 in unser System fertiggestellt sein, darum beschloss ich, mich erst einmal darum zu kümmern und danach erst weiter mein Verständnis aufzubauen.
-Die folgenden Punkte mussten bearbeitet werden:
+Donnerstag war mein Chef durch einen Kundenbesuch nicht im Büro.
+Da die Implementierung und Integration von CVSS 4.0 bis Wochenende abgeschlossen sein musste, musste ich mich mit den folgenden verbleibenden Aufgaben intensiv beschäftigen:
 
 \begin{smitemize}
-    \item das Parsing der Vektoren aus verschiedenen Datenquellen/Formate (intern, extern)
-    \item das korrekte Verarbeiten, wenn es um die Berechnung von Scores, das Modifizieren von Vektoren, oder das Ablegen in unseren Software-Inventaren geht
-    \item das Anzeigen der Ergebnisse in unseren HTML- und PDF-Reports
+    \item Parsing der Vektoren aus verschiedenen Quellen/Formaten
+    \item Korrektes Verarbeiten der Berechnung von Scores und Modifizieren von Vektoren
+    \item Anzeigen der Ergebnisse in unseren HTML- und PDF-Reports
 \end{smitemize}
 
-Da die externen Datenquellen ja noch keine Vektoren für CVSS 4.0 herausgeben, musste ich einige Annahmen über deren Formate machen, die ich bei tatsächlicher Veröffentlichung dann noch anpassen werde.
-
-Bei diesen Arbeiten sind mir erst einige merkwürdige Muster in der Implementierung für die Berechnung der Scores aufgefallen, die ich mehr oder weniger aus der Referenz-Implementierung übernommen hatte.
-Ich habe also fast noch einmal die gesamte Implementierung neu geschrieben, indem ich duplizierten Code in eigene Methoden und Klassen extrahiert und die Berechnungen wesentlich eleganter und näher an den dahinterliegenden mathematischen Modellen in meinem Programm abgebildet habe.
-
-Am Ende des Tages hatte ich Pull Requests für die drei Projekte, in denen diese Berechnungen stattfinden, fertiggestellt.
+Da keine externe Datenquelle bisher CVSS 4.0 Vektoren bereitstellt, basierten einige meiner Annahmen über deren Formate auf Vermutungen aufgrund von bisherigen Formaten, die später eventuell noch angepasst werden müssen.
+Da ich nun noch einmal Zeit hatte, über meine Implementierung zu sehen, konnte ich viele Muster, die ich aus der Referenzimplementierung übernommen hatte, durch viele Refactoring-Operationen Code deduplizieren und die Berechnungen eleganter und objektorientierter gestalten.
+Am Ende des Tages stellte ich Pull Requests für die drei betroffenen Code-Projekte fertig.
 
 \sweekdaymarginpar{Freitag}
 
-Da ich die Integration bereits Donnerstag fertiggestellt hatte, habe ich mich wieder an das Verständnis über den CVSS 4.0 Standard gesetzt.
-Um besser verstehen zu können, wie die MacroVektor Interpolation funktioniert, habe ich mir drei Beispiele herausgesucht und die Berechnungen aufgrund der Spezifikation und meiner Implementierung manuell mehrfach auf verschiedene Arten durchgeführt.
-Das hat tatsächlich sehr geholfen und kurz vor dem Weekly hatte ich dann ein ganz gutes Verständnis, wie die Berechnung funktioniert.
-Dies habe ich in einem Dokument für späteren Zugriff festgehalten.
+Nachdem die Integration glücklicherweise bereits am Donnerstag abgeschlossen war, widmete ich mich erneut dem Verständnis von CVSS 4.0.
+Unter anderem berechnete ich manuell mehrfach auf unterschiedliche Weisen die drei Beispiele der MacroVektor-Interpolation aus der Spezifikation, was mein Verständnis erheblich verbesserte.
+Kurz vor dem Weekly hatte ich ein besseres Verständnis der Berechnungsmethode, das ich für späteren Zugriff dokumentierte.
 
-Das Weekly war stark gefüllt, nicht nur ich hatte viele Neuigkeiten über die Funktionsweise von CVSS 4.0 zu berichten, sondern zwei meiner Kollegen hatten diese Woche auch in ihren Teilprojekten größere Durchbrüche, die sie sogar live demonstriert und erklärt haben.
-Damit wurde das Weekly von einer Stunde auf fast zweieinhalb Stunden verlängert und der Tag war schnell herum.
-Ich beendete meine zweite Woche mit einem guten Gefühl, diese Woche viel geschafft zu haben.
+Das Weekly war voller Informationen, nicht nur von mir, sondern auch von Kollegen, die Fortschritte in ihren Projekten vorstellen konnten.
+Das Meeting dehnte sich von einer auf fast zweieinhalb Stunden aus und beschloss damit eine produktive Woche.

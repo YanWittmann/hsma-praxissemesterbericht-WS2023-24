@@ -4,57 +4,48 @@
 
 \lweekdaymarginpar{Montag}
 
-Der Montag verlief eher ruhig, es gab keine größeren Themen, die dringend anstanden.
-Darum lag mein Fokus daran, endlich einmal einige der Issues aus dem Jira-Backlog abzuarbeiten, die schon zu lange nötig waren.
+Die Woche startete eher ruhig, darum konnte ich endlich einmal einige der Issues aus dem längeren Jira-Backlog abarbeiten.
 
-Bei einem dieser Issues ging es darum, in unserem automatisierten CPE Matching-Algorithmus zwischen Hardware- und Software-Komponenten zu unterscheiden.
-Dadurch würden wesentlich weniger false-positives entstehen, weil keine Softwarekomponenten mehr Hardware-CPEs zugeordnet werden würden.
-Dazu war erst einmal eine Liste an Kategorien für Hardware nötig, die für die einzelnen Komponenten vergeben werden können.
+Bei einem dieser Issues ging es darum, in unserem automatisierten CPE Matching-Algorithmus zwischen Hardware- und Software-Komponenten zu unterscheiden, sodass Softwarekomponenten nicht mehr Hardware-CPEs (und umgekehrt) zugeordnet werden würden, mit dem Ziel, weniger false-positives zu erzeugen.
+Das Einzige, was ich hierfür noch benötigte, war ein Indikator, ob eine Komponente Hardware oder Software ist.
+Diesen wollten wir durch eine Liste an Kategorien für Hardware ermöglichen, die für die einzelnen Komponenten vergeben werden können.
 
-Das Problem hierbei war der Detailgrad der Kategorien, welcher noch nicht festgelegt wurde.
-Ich habe also nach einiger Recherche drei Vorschläge vorbereitet, die ich meinem Chef präsentierte.
-Mein Chef und ich konnten uns recht schnell auf einen einigen, allerdings wollten wir uns noch eine Drittmeinung von einem Kollegen einholen.
-Dieser hatte zu diesem Thema deutliche andere Meinungen, wie eine solche Liste auszusehen hatte.
-
-Die Diskussion hierüber hat den gesamten restlichen Tag eingenommen und leider konnten wir bei keinem Ergebnis landen, mit dem alle zugestimmt hätten.
-Wir machten aus, diese Diskussion an einem anderen Tag fortzuführen und damit war das Ende des Tages für mich erreicht.
+Der Detailgrad dieser Kategorien war bisher jedoch noch nicht geklärt.
+Ich habe nach einiger Recherche drei Vorschläge für meinen Chef vorbereitet und zu zweit konnten wir uns recht schnell auf einen dieser einigen.
+Leider hat durch eine davon deutliche abweichende Drittmeinung eines anderen Kollegen die Diskussion den gesamten restlichen Tag eingenommen.
+Ohne eine Lösung zu finden, vertagten wir die Diskussion, bis jemand einen neuen Ansatz gefunden hat.
 
 \sweekdaymarginpar{Di, Mi, Do}
 
-Die folgenden Tage konnte ich mich an etwas setzen, was ich schon lange in unserem Core-Projekt angehen wollte:
-Es geht um die Serialisierung und Deserialisierung unserer Software-Inveterate zu Excel-Dateien.
-Zellen speziell in Excel-Dokumenten haben ein Zeichenlimit von $32.767$\footnote{\url{https://support.microsoft.com/en-gb/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3}}, was in vielen unserer Fälle nicht ausreicht.
-Seitdem ich bei der {\metaeffekt} bin, haben wir einen Workaround verwendet, der bereits in unserem Datenmodell nach einem System diese Zellen in mehrere Zellen aufteilt, sodass beim Serialisieren keine Probleme auftreten.
+Die folgenden Tage konnte ich mich eine Aufgabe in unserem Core-Projekt angehen, die ich schon lange erledigen wollte:
+Eine Verbesserung der Excel-Serialisierung und -Deserialisierung unserer Software-Inventare.
+Das Zeichenlimit von $32.767$\footnote{\url{https://support.microsoft.com/en-gb/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3}} Zeichen pro Excel-Zelle stellte uns vor Probleme, da unsere Daten oft dieses Limit überschreiten.
+Der aktuelle Workaround teilt bereits in unserem Datenmodell diese Werte in mehrere Speicherbereiche auf, sodass beim späteren Serialisieren keine Probleme auftreten.
 Das führt dazu, dass man nicht einfach so auf die betroffenen Felder in unserem Modell zugreifen kann, ohne speziell von dem Workaround Gebrauch zu machen.
 
-Dass dies keine schöne Lösung ist, muss ich nicht erst sagen.
-Probleme daran sind zum Beispiel:
+Dies ist offensichtlich keine elegante Lösung, einige Probleme daran sind:
 
 \begin{smitemize}
-    \item weiß jemand nicht von diesem Workaround, bekommt er vielleicht nur einen Bruchteil seiner Daten, wenn er die falsche Zugriffsart verwendet
-    \item das Stylen der Excel-Zellen und Spalten funktioniert nicht richtig, da die Spalten aufgeteilt werden
-    \item falls ein anderes Format mit niedrigerem Limit hinzugefügt werden soll, muss dieses Limit auch bei allen anderen Formaten so angewendet werden
+    \item Weiß jemand nicht von diesem Workaround, wird durch eine falsche Zugriffsart nur ein Bruchteil der Daten zurückgegeben.
+    \item Das automatische Stylen der Excel-Zellen und Spalten funktioniert nicht richtig, da die Spalten aufgeteilt werden.
+    \item Falls später ein weiteres Format mit einem niedrigeren Limit hinzugefügt werden soll, muss dieses Limit auch bei allen anderen Formaten so angewendet werden.
 \end{smitemize}
 
-Ich war also recht froh, dass ich mich endlich einmal daran setzen konnte.
-Ich habe die drei Tage nicht nur dazu genutzt, die Spaltung der Spalten in die Serialisierer zu verschieben, sondern auch ein allgemeines Styling-Modell einzuführen, das unabhängig vom Format auf Serialisierte Daten angewendet werden kann und einfach auf neue Formate angepasst werden kann.
+Ich arbeitete also den Rest des Tages an einer eleganteren Lösung, die die Datenaufteilung direkt beim (De-)Serialisierungsprozess vornimmt und ein allgemeines Styling-Modell für Excel-Dokumente einführt, das leicht auf andere Formate anwendbar ist.
 
 \sweekdaymarginpar{Freitag}
 
-Freitagmorgen wurde ich von meinem Chef erst einmal überrascht:
-Nächste Woche Dienstag und Mittwoch sollte mit ihm und einer Kollegin nach Erfurt auf das Treffen des Arbeitskreises OpenSource\footnote{\url{https://www.bitkom.org/Bitkom/Organisation/Gremien/Open-Source.html}} unter dem Thema \qt{Open-Source-Communities} und das Forum OpenSource\footnote{\url{htthttps://www.bitkom.org/bfoss23}} der Bitkom gehe.
+Freitagmorgen wurde ich von meinem Chef mit folgender Information überrascht:
+Nächste Woche Dienstag und Mittwoch sollte mit ihm und einer Kollegin nach Erfurt auf das Treffen des Arbeitskreises OpenSource\footnote{\url{https://www.bitkom.org/Bitkom/Organisation/Gremien/Open-Source.html}} unter dem Thema \qt{Open-Source-Communities} und auf das darauf folgende Forum OpenSource\footnote{\url{htthttps://www.bitkom.org/bfoss23}} der {\bitkom} gehen.
+Der eigentliche überraschende Punkt war, dass ich bei dem Treffen des Arbeitskreises eine 25-Minütige Präsentation vor 30 Leuten, unter anderem von RedHat, Siemens, DB Systel und anderen großen Unternehmen, über die \qt{Identifikation und Bewertung von Schwachstellen mit Inhalten aus öffentlichen Quellen} halten sollte.
 
-So weit, so gut.
-Danach kam allerdings etwas, das ich nicht erwartet hätte: Ich sollte bei dem Treffen des Arbeitskreises OpenSource eine 25-Minütige Präsentation vor 30 Leuten von RedHat, Siemens, DB Systel und anderen großen Unternehmen über \qt{Identifikation und Bewertung von Schwachstellen mit Inhalten aus öffentlichen Quellen} halten.
-
-Das kam überraschend, da ich noch nie auf einem solchen Treffen war und keine Ahnung hatte, wie eine solche Präsentation auszusehen hat.
-Zum Glück hat mir mein Chef am Freitag noch geholfen, die wichtigen Themen aufzulisten und in eine sinnvolle Reihenfolge zu bringen.
-Ich habe jedoch schnell gemerkt, dass die Zeit am Freitag und Montag nicht reichen werden, um die Präsentation vorzubereiten.
-Ich habe zwar den Foliensatz an diesem Tag noch größtenteils fertigstellen können, aber das Skript hatte ich gerade erst angefangen zu verfassen.
+Ich wurde hiermit etwas ins kalte Wasser geworfen, denn ich war noch nie auf einem solchen Treffen war und wusste nicht, wie eine solche Präsentation auszusehen hat.
+Ich nahm mir den restlichen Tag für die Vorbereitung darauf.
+Trotz der Unterstützung meines Chefs bei der Themenauswahl und Strukturierung, war klar, dass die Zeit knapp werden würde.
+Ich schaffte es, die Präsentationsfolien weitestgehend zu erstellen, doch das Skript hatte ich gerade erst angefangen zu verfassen.
 
 \sweekdaymarginpar{Sa, So}
 
 Und so kam das erste Mal, dass ich an einem Wochenende für die {\metaeffekt} gearbeitet habe.
-Ich verbrachte das gesamte Wochenende damit, ein 11-seitiges Skript vorzubereiten, das alles enthält, was ich unbedingt in der Präsentation erwähnen wollte.
-Natürlich habe ich die Präsentationsfolien weiter angepasst und mir Punkte notiert, die ich noch mit meinem Chef am Montag besprechen wollte.
-Am Sonntagabend hatte ich dann ein Skript, mit dem ich zwar zufrieden war, aber irgendwie noch etwas fehlte.
+Das Wochenende verbrachte ich damit, ein 11-seitiges Skript für die Präsentation zu schreiben, die Folien weiter anzupassen und Punkte notiert zu notieren, die ich noch mit meinem Chef am Montag besprechen wollte.
+Am Sonntagabend hatte ich ein ausführliches Skript, doch zugegebenermaßen fehlte mir noch etwas, um vollends zufrieden zu sein.

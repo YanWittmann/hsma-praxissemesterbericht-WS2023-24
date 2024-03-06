@@ -3,8 +3,8 @@
 [![Semesterbericht PDF](https://img.shields.io/badge/Latest-Semesterbericht%20PDF-blue.svg)](https://nightly.link/YanWittmann/hsma-praxissemesterbericht-WS2023-24/workflows/main/main/Semesterbericht-PDF.zip)
 [![Build LaTeX Document](https://github.com/YanWittmann/hsma-praxissemesterbericht-WS2023-24/actions/workflows/main.yml/badge.svg)](https://github.com/YanWittmann/hsma-praxissemesterbericht-WS2023-24/actions/workflows/main.yml)
 
-Dieses Projekt dient zur Ablage der Latex-Dateien und weiteren Ressourcen, aus denen der Praxissemesterbericht gebaut
-wird.
+Dieses Projekt enthält alle LaTex-Dateien und sonstige Ressourcen für meinen Praxissemesterbericht für das
+Wintersemester 2023/24 an der Hochschule Mannheim.
 
 ## Arbeitgeber
 
