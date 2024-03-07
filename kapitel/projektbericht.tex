@@ -6,6 +6,7 @@
 In der Einleitung (Kapitel\ \ref{sec:projektbericht-projektziel}) wird zunächst auf die Abteilung im Unternehmen, die aktuelle Situation und die Ziele für das Projektsemester eingegangen.
 Bei den darauf folgenden Grundlagen (Kapitel\ \ref{sec:projektbericht-grundlagen}) werden die relevanten Themen, Begriffe und Standards erklärt.
 
+
 \section{Einleitung, Problemstellungen und Projektziel} \label{sec:projektbericht-projektziel}
 
 Die für dieses Praktikum relevante Abteilung in der {\metaeffekt} stellt ein automatisiertes Vulnerability Monitoring her und integriert es bei diversen Kunden, deren Wünsche und Anforderungen priorisiert in die Systeme zurückgeführt werden.
@@ -34,15 +35,34 @@ Konkret geht es um die folgenden Punkte:
     Es gibt keinen Rechner, der alle Versionen zugleich unterstützt, keinen, der mehrere Vektoren gleichzeitig gut vergleichbar zulässt und leider haben viele der offiziellen Rechner auch Probleme, die URL-Parameter korrekt zu erkennen.
 \end{smitemize}
 
-In diesem Bericht wird ein Fokus auf die CVSS-seitigen Arbeiten gelegt, da sie den Großteil des Semesters eingenommen haben.
+In diesem Bericht wird ein Fokus auf die CVSS-seitigen Arbeiten im Unternehmen gelegt, da sie den Großteil des Semesters eingenommen haben.
+
 
 \section{Grundlagen} \label{sec:projektbericht-grundlagen}
 
 \subsection{Software-Inventare} \label{subsec:projektbericht-grundlagen-inventories}
 
+Software-Inventare werden bei der {\metaeffekt} in einem eigens entwickelten, proprietären Format, schlicht \qt{Inventar} genannt, abgelegt.
+Meist wird, um ein solches Inventar zu erhalten, ein ebenfalls eigens entwickelter Scanner verwendet, der ganze Dateisysteme nach Komponenten durchsucht und daraus ein Inventar generiert.
+Um möglichst breiten Support zu bieten, gibt es allerdings nicht nur den Scanner, sondern auch diverse Konverter, mit denen Inventare von und zu Formaten wie CycloneDX SBOM\footnote{\url{https://cyclonedx.org/specification/overview}} oder SPDX\footnote{\url{https://spdx.dev}} umgewandelt werden können.
+
+Diese Inventare können mehrere Kategorien an Daten enthalten: Software-Komponenten (\qt{Artefakte}), Schwachstell-Informationen, Security Advisories, Lizenzinformationen und einige weitere.
+
 \subsection{NVD / NIST} \label{subsec:projektbericht-grundlagen-nvd-nist}
 
+Software-Schwachstellen sind allgegenwärtig, jedes Softwareprodukt hat sie und meistens es ist nur eine Frage der Zeit, bis sie gefunden, veröffentlicht und im schlimmsten Fall ausgenutzt werden.
+Die National Vulnerability Database (NVD)\footnote{\url{https://nvd.nist.gov}} des National Institute of Standards and Technology (NIST) der U.S.\ Regierung stellt mit ihrem CVE-System\textsuperscript{\ref{subsec:projektbericht-grundlagen-cve-cpe}} eine der primären Quellen für Schwachstell-Informationen für Forscher, Unternehmen und automatisierte Tools bereit.
+Sobald eine neue Schwachstelle bekannt gegeben wird, nehmen sie diese in ihren Katalog an CVE mit auf, versehen sie mit CVSS- und Matching-Informationen über das CPE-System.
+Damit ist die Schwachstelle für alle auf der Welt über eine API oder über ihr User Interface erreichbar und kann, falls ein Projekt betroffen ist, frühzeitig kontextualisiert bewertet werden.
+
 \subsection{CVE / CPE} \label{subsec:projektbericht-grundlagen-cve-cpe}
+
+Das CVE-System ist ein von der usw usw TODO.
+
+\begin{quote}
+    A weakness in the computational logic (e.g., code) found in software and hardware components that, when exploited, results in a negative impact to confidentiality, integrity, or availability.
+    Mitigation of the vulnerabilities in this context typically involves coding changes, but could also include specification changes or even specification deprecations (e.g., removal of affected protocols or functionality in their entirety).
+\end{quote}
 
 \subsection{CPE Derivation} \label{subsec:projektbericht-grundlagen-cpe-derivation}
 
