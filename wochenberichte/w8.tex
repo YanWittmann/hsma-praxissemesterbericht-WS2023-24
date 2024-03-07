@@ -2,13 +2,13 @@
 
 % Woche 8 (2023-10-23 bis 2023-10-27)
 
-\lweekdaymarginpar{Montag}
+\lweekdaymarginpar{\weekdayMondayLong}
 
 Durch einige neue Anforderungen an die Windows-Extraktion, die ich am Freitag erhalten hatte, habe ich die Woche mit der Anpassung der Skripte und der Inventar-Generierung begonnen.
 Vor allem ging es um die (genauere) Erkennung von Treibern, PNP-Devices, optionalen Features und einen umfangreicheren Dateisystem-Scan.
 Ich nutzte diese Gelegenheit um die Performance einiger Skripte durch parallele Ausführung, performantere Datenstrukturen und weitere Optimierungen zu verbessern.
 
-\sweekdaymarginpar{Dienstag}
+\sweekdaymarginpar{\weekdayTuesdayLong}
 
 Dienstag sollte die Windows-Thematik vorerst abgeschossen werden.
 Dazu waren noch zwei Schritte nötig:
@@ -16,7 +16,7 @@ Einerseits die PowerShell-Skripte unter einer MIT-Lizenz auf einem unserer GitHu
 Und andererseits musste noch ein Maven-Plugin für die Inventar-Extraktion in Java geschrieben werden, damit diese auch tatsächlich ausgeführt werden kann.
 Diese beiden Aufgaben konnte ich am Dienstag erledigen.
 
-\sweekdaymarginpar{Mi, Do}
+\sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort}
 
 Die folgenden beiden Tage konnte ich dann mit den Tasks beginnen, die mir beim Strategieworkshop zugewiesen wurden.
 Ich beschloss zusammen mit meinem Chef, dass die CVSS:4.0-Implementierung zusammen mit dem Refactoring der Datenstruktur in beiden betroffenen Projekten (core, artifact analysis) auf je nur einem Branch passieren sollten.
@@ -44,7 +44,7 @@ Diese können wir dann zu unserem Format matchen und dadurch Metadaten wie Links
 Dazu habe ich einen Prozess geschrieben, der diese Datenquellen herunterlädt und in eine JSON-Datei schreibt, um sie später wieder einlesen zu können.
 Ein weiteres System macht diese optional in Java komfortabel Instanzen verfügbar.
 
-\sweekdaymarginpar{Freitag}
+\sweekdaymarginpar{\weekdayFridayLong}
 
 Freitag habe ich damit verbracht, einem Kollegen zu helfen, der Probleme mit einer Software-Bibliothek hatte, die wir seit geraumer Zeit einsetzen.
 Das Problem ließ sich am Ende auf einen internen Cache der Bibliothek zurückführen, der sich bei der ersten und zweiten Ausführung unterschiedlich verhalten hat und zu inkorrektem Verhalten an einer anderen Stelle geführt hat.

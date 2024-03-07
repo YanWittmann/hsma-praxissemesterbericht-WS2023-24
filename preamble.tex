@@ -47,9 +47,11 @@
 \floatname{listing}{Listing}
 
 % Seitenlayout
-\usepackage[paper=a4paper,width=14.8cm,left=30mm,right=30mm,height=23cm]{geometry}
+\newcommand{\seitenseitenabstand}{25mm} % 30mm
+\usepackage[paper=a4paper,width=14.8cm,left=\seitenseitenabstand,right=\seitenseitenabstand,height=23cm]{geometry}
 \usepackage{setspace}
-\linespread{1.15}
+% \linespread{1.15}
+\linespread{1.1}
 \setlength{\parskip}{0.5em}
 \setlength{\parindent}{0em} % im Deutschen Einrückung nicht üblich, leider
 
@@ -109,6 +111,21 @@
 \newcommand{\bitkom}{bitkom}
 \newcommand{\aeclientZEZESE}{Thales}
 \newcommand{\headerand}{und\ }
+% weekdays
+\newcommand{\weekdayMondayLong}{Mo} % Mo, Montag
+\newcommand{\weekdayTuesdayLong}{Di} % Di, Dienstag
+\newcommand{\weekdayWednesdayLong}{Mi} % Mi, Mittwoch
+\newcommand{\weekdayThursdayLong}{Do} % Do, Donnerstag
+\newcommand{\weekdayFridayLong}{Fr} % Fr, Freitag
+\newcommand{\weekdaySaturdayLong}{Sa} % Sa, Samstag
+\newcommand{\weekdaySundayLong}{So} % So, Sonntag
+\newcommand{\weekdayMondayShort}{Mo}
+\newcommand{\weekdayTuesdayShort}{Di}
+\newcommand{\weekdayWednesdayShort}{Mi}
+\newcommand{\weekdayThursdayShort}{Do}
+\newcommand{\weekdayFridayShort}{Fr}
+\newcommand{\weekdaySaturdayShort}{Sa}
+\newcommand{\weekdaySundayShort}{So}
 
 % custom commands
 \newcommand{\lweekdaymarginpar}[1]{%

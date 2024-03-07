@@ -2,7 +2,7 @@
 
 % 2023-11-20 bis 2023-11-24
 
-\lweekdaymarginpar{Montag}
+\lweekdaymarginpar{\weekdayMondayLong}
 
 Am Montag nahm ich mir eine kurze Auszeit von der Report-Migration und wendete mich einem anderen Aspekt des Refactorings zu:
 Dem Tracking der genauen Matching-Konfigurationen von Schwachstellen, die aus verschiedenen Quellen identifiziert wurden.
@@ -13,7 +13,7 @@ Deshalb verbrachte ich den Tag damit, diese Daten in den verschiedenen Anreicher
 Diese Informationen konnte ich noch am Montag in das VAD integrieren.
 Bei dieser Gelegenheit wurde mir erneut bewusst, wie viel einfacher Anpassungen am VAD im Vergleich zum PDF-Report sind.
 
-\sweekdaymarginpar{Di, Mi, Do}
+\sweekdaymarginpar{\weekdayTuesdayShort, \weekdayWednesdayShort, \weekdayThursdayShort}
 
 In der Mitte der Woche konnte ich mich wieder vollständig auf die Integration des Modells in den Report konzentrieren.
 Dieser Prozess ist stets gleich: Für jedes der etwa 20 Velocity-Templates in unserem Prozess überprüfe ich den alten Datenzugriff und suche ich im neuen Modell nach einem entsprechenden Zugriff oder implementiere neue Methoden.
@@ -24,7 +24,7 @@ Eine zusätzliche Herausforderung war, dass ich immer wieder auf Templates stie�
 Um nicht bei jedem Test den Dita-Renderingprozess starten zu müssen, nutze ich das Tool \qt{OxygenXML}, das eine Live-Preview ohne Stilelemente erlaubt.
 Dennoch dauert es immer eine Weile, bis ich meinen Testdatensatz angepasst habe, um all diese Dokumente richtig testen zu können.
 
-\sweekdaymarginpar{Freitag}
+\sweekdaymarginpar{\weekdayFridayLong}
 
 Freitag begann mit einer unerwarteten Anfrage meines Chefs:
 Er fragte mich, ob ich Interesse hätte, alleine an einem Workshop zum CSAF-Standard\footnote{\url{https://web.archive.org/web/20240121120954/https://www.allianz-fuer-cybersicherheit.de/Webs/ACS/DE/Netzwerk-Formate/Veranstaltungen-und-Austausch/CSAFversum/CSAFversum_node.html}} (Common Security Advisory Framework) teilzunehmen, der vom Bundesamt für Sicherheit in der Informationstechnik (BSI) in München organisiert wird.

@@ -2,7 +2,7 @@
 
 % Woche 2 (2023-09-11 bis 2023-09-15)
 
-\lweekdaymarginpar{Montag}
+\lweekdaymarginpar{\weekdayMondayLong}
 
 Ich hatte nun CVSS 4.0 bei uns implementiert, aber wirklich verstanden hatte ich Theorie dahinter noch nicht.
 Ich verbrachte also den Montag damit, die Spezifikation\footnote{\url{htthttps://www.first.org/cvss/v4.0/specification-document}},
@@ -12,7 +12,7 @@ und den Code tiefergehender anzusehen, um zu verstehen, wie die Berechnung des S
 Ich konnte selbst nach einem ganzen Tag an Recherche keine zufriedenstellende Erklärung finden, wie die Berechnung in diesem Schritt funktioniert.
 Immerhin konnte ich durch weitere Randfall-Tests zwei Fehler in meiner Implementierung finden und beheben.
 
-\sweekdaymarginpar{Di, Mi}
+\sweekdaymarginpar{\weekdayTuesdayShort, \weekdayWednesdayShort}
 
 Eigentlich hatte ich geplant, mich Dienstag weiter mit CVSS 4.0 zu beschäftigen, doch es kam anders:
 In Abwesenheit eines Kollegen übernahm ich die Pflege von sog. \qt{Korrelationsdaten}, ein von uns gepflegter Datensatz, der Software-Komponenten automatisch Produkten in externen Datenbanken wie den CPEs der NVD\footnote{\url{https://nvd.nist.gov/products/cpe}} zuordnen kann.
@@ -24,7 +24,7 @@ Nur wenige Einträge mussten angepasst werden; die meisten waren bereits korrekt
 In den verbleibenden zwei Stunden diskutierte ich mit meinem Chef über das Abbilden von \qt{Vulnerability Chaining} in unseren Systemen – ein Thema, das wir auf Kundenwunsch in den kommenden Monaten angehen müssen, auch wenn es noch keine hohe Priorität hat.
 Wir haben dieses Thema nicht mehr in meinem Praktikum aufgenommen.
 
-\sweekdaymarginpar{Donnerstag}
+\sweekdaymarginpar{\weekdayThursdayLong}
 
 Donnerstag war mein Chef durch einen Kundenbesuch nicht im Büro.
 Da die Implementierung und Integration von CVSS 4.0 bis Wochenende abgeschlossen sein musste, musste ich mich mit den folgenden verbleibenden Aufgaben intensiv beschäftigen:
@@ -39,7 +39,7 @@ Da keine externe Datenquelle bisher CVSS 4.0 Vektoren bereitstellt, basierten ei
 Da ich nun noch einmal Zeit hatte, über meine Implementierung zu sehen, konnte ich viele Muster, die ich aus der Referenzimplementierung übernommen hatte, durch viele Refactoring-Operationen Code deduplizieren und die Berechnungen eleganter und objektorientierter gestalten.
 Am Ende des Tages stellte ich Pull Requests für die drei betroffenen Code-Projekte fertig.
 
-\sweekdaymarginpar{Freitag}
+\sweekdaymarginpar{\weekdayFridayLong}
 
 Nachdem die Integration glücklicherweise bereits am Donnerstag abgeschlossen war, widmete ich mich erneut dem Verständnis von CVSS 4.0.
 Unter anderem berechnete ich manuell mehrfach auf unterschiedliche Weisen die drei Beispiele der MacroVektor-Interpolation aus der Spezifikation, was mein Verständnis erheblich verbesserte.

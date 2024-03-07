@@ -2,7 +2,7 @@
 
 % Woche 7 (2023-10-16 bis 2023-10-20)
 
-\lweekdaymarginpar{Montag}
+\lweekdaymarginpar{\weekdayMondayLong}
 
 Montag stellte ich also eine erste, funktionierende Version der PowerShell Skripte fertig, die alle Use-Cases abdecken konnten.
 Ich habe hier nach dem Prinzip \qt{Lieber zuviel als zu wenig} gearbeitet, habe also redundante und zusätzliche Informationen gesammelt, da das nächste Meeting erst wieder am Freitag sein wird und ich nicht darauf warten könnte.
@@ -11,13 +11,13 @@ Das Meeting mit den Mitarbeitern von {\aeclientZEZESE} verlief sehr gut:
 Wir wurden live per Video-Call in das Test-Labor mitgenommen, wo das Ziel-Windows-Gerät vorhanden war.
 Meine Skripte wurden auf dem System ohne Komplikationen ausgeführt und nach Besprechungen über das weitere Vorgehen haben wir diese Daten auch übermittelt bekommen.
 
-\sweekdaymarginpar{Dienstag}
+\sweekdaymarginpar{\weekdayTuesdayLong}
 
 Den Dienstag habe ich dann begonnen, die Daten zunächst manuell auszuwerten und musste, wie erwartet, feststellen, dass noch einige Daten für ein vollständiges Bild fehlen.
 Vor allem zu den PNP-Devices gibt es im WMI-Interface sehr viele Subklassen, die je Details über eine gewisse Kategorie liefern können.
 Die Skripte habe ich den Tag lang angepasst, sodass sie nun wirklich alle benötigten Daten abfragen.
 
-\sweekdaymarginpar{Mi, Do}
+\sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort}
 
 Die folgenden beiden Tage habe ich damit verbracht, den zweiten Schritt der Windows-Inventar-Extraktion zu schreiben:
 einen Java-Prozess, der die JSON-Daten verwertet und daraus ein Inventar im proprietären Format der {\metaeffekt} erzeugt.
@@ -56,7 +56,7 @@ Get-WmiObject -Class Win32_Processor
 Natürlich habe ich auch die restlichen Daten noch verarbeitet und hatte zum Schluss über 30 verwendete PowerShell-Befehle, deren Daten ich zu dem Inventar umgewandelt habe.
 Donnerstagabend hatte ich also einen Prozess und ein vorläufiges Inventar, das wir am Freitag mit dem Kunden besprechen konnten.
 
-\sweekdaymarginpar{Freitag}
+\sweekdaymarginpar{\weekdayFridayLong}
 
 Dieser Freitag war ein ereignisreicher Tag:
 Die {\metaeffekt} hat einen Strategieworkshop gehalten, der das Vorgehen der nächsten 9--12 Monate angeben sollte.

@@ -2,7 +2,7 @@
 
 % Woche 9 (2023-10-30 bis 2023-11-03)
 
-\lweekdaymarginpar{Montag}
+\lweekdaymarginpar{\weekdayMondayLong}
 
 Diese Woche begann ich mit der Überarbeitung des Datenformats für Schwachstellen und Security Advisories.
 Das bisherige Datenformat besteht im Wesentlichen aus einer \codendt{Map<List<Map<String, String>\!>\!>}, wobei die einzelnen Ebenen zwar tatsächliche Instanzen mit weiteren Attributen und Methoden sind, aber sich nicht um das domänenspezifische  Parsen der Werte kümmern.
@@ -15,7 +15,7 @@ Es entsteht ein zusätzlicher Komplexitätsaufwand bei jeder Aufgabe, den man li
 
 Darum habe ich Montag ein System entworfen, das sich als Wrapper um die Zugriffe auf diese Klassen legt und dabei automatisch das korrekte (De-)Kodieren der Daten beim Ein- und Auslesen verwendet.
 
-\sweekdaymarginpar{Di, Do, Fr}
+\sweekdaymarginpar{\weekdayTuesdayShort, \weekdayThursdayShort, \weekdayFridayShort}
 
 Die Implementierung ist in zwei Schritten geplant, für jedes unserer betroffenen Module (core, artifact analysis).
 Den Rest dieser Woche konzentrierte ich mich auf die Umsetzung des geplanten Systems in Artifact Analysis.

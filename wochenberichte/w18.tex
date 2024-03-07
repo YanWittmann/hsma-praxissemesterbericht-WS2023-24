@@ -2,7 +2,7 @@
 
 % 2024-01-15 bis 2024-01-19
 
-\lweekdaymarginpar{Mo, Di}
+\lweekdaymarginpar{\weekdayMondayShort, \weekdayTuesdayShort}
 
 Den Beginn der Woche verbrache ich damit, die Implementierung von CVSS:4.0 in TypeScript abzuschließen.
 Wie auch schon für die vorherigen Versionen war das Definieren der CVSS-Metriken und ihrer möglichen Werte einer der aufwendigeren Teile, insbesondere bei den über 30 Metriken von CVSS:4.0.
@@ -14,7 +14,7 @@ Dieser Prozess lief natürlich nicht reibungslos, und ich musste oft Konstrukte 
 Kleinere Probleme hatte ich mit zirkulären Referenzen, die ich mit dem Tool madge\footnote{\url{https://www.npmjs.com/package/madge}} über einen Abhängigkeitsgraphen eliminieren konnte.
 Zur Lösung der Abhängigkeiten verlagerte ich einige Funktionen einer Basisklasse in ein Interface, um den Typ des Interfaces in einer anderen Klasse verwenden zu können, die auch in der Basisklasse verwendet wird.
 
-\sweekdaymarginpar{Mi, Do, Fr}
+\sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort, \weekdayFridayShort}
 
 Nachdem alle drei Versionen alle Tests bestanden hatten, konnte ich mich der Implementierung des Web-Interfaces zuwenden.
 Einige Wochen zuvor hatten mein Chef und ich bereits Prototypen für das Interface auf Papier entworfen.
