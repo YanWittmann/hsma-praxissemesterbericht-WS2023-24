@@ -1,5 +1,55 @@
 %! Author = Yan Wittmann
 
+
 \chapter{Projektbericht} \label{ch:projektbericht}
 
-Projektbericht
+In der Einleitung (Kapitel\ \ref{sec:projektbericht-projektziel}) wird zunächst auf die Abteilung im Unternehmen, die aktuelle Situation und die Ziele für das Projektsemester eingegangen.
+Bei den darauf folgenden Grundlagen (Kapitel\ \ref{sec:projektbericht-grundlagen}) werden die relevanten Themen, Begriffe und Standards erklärt.
+
+\section{Einleitung, Problemstellungen und Projektziel} \label{sec:projektbericht-projektziel}
+
+Die für dieses Praktikum relevante Abteilung in der {\metaeffekt} stellt ein automatisiertes Vulnerability Monitoring her und integriert es bei diversen Kunden, deren Wünsche und Anforderungen priorisiert in die Systeme zurückgeführt werden.
+Das Vulnerability Monitoring wird intern durch eine Aneinanderreihung von Prozessschritten modelliert, die auch als \qt{Inventory Enrichment Pipeline} bezeichnet wird.
+Die Prozessschritte erhalten jeweils ein Software-Inventar als Eingabe, welches sie auf eine bestimmte definierte Weise modifizieren und für den nächsten Schritt bereitstellen, sodass ein Inventar, das alle Schritte durchlaufen hat, alle nötigen Schwachstell-Informationen angereichert bekommen hat.
+Auf diese Pipeline wird im Kapitel\ \ref{subsec:projektbericht-grundlagen-vulnerability-monitoring} kurz eingegangen, sie soll allerdings nicht Hauptbestandteil dieses Berichts sein und dient nur zur besseren Einordnung der anderen Prozesse.
+
+In dem Praktikum liegt der Schwerpunkt vor allem auf dem CVSS-Standard\textsuperscript{\ref{subsec:projektbericht-grundlagen-cvss}}, vor allem die Verbesserung unseres Supports für neuere Versionen dieses und konzeptionelle Änderungen, wie wir mit diesen umgehen wollen.
+Konkret geht es um die folgenden Punkte:
+
+\begin{smitemize}
+    \item Die Veröffentlichung der neuesten Version 4.0 des CVSS-Standards am 31.\ Oktober 2023\footnote{\url{https://www.first.org/cvss/v4-0/}} wird über die nächsten Monate zur Folge haben, dass CVSS-Vektoren der Version 4.0 für Schwachstellen in den öffentlichen Datenbanken auftauchen werden, die wir in der Lage sein müssen, zu parsen und zu berechnen.
+    Es ist dazu also notwendig, die aktuelle Implementierung der Versionen 2.0 und 3.1 um die vierte zu erweitern.
+    Jedoch reicht hier nicht einfach die Implementierung der Berechnungslogik, um diesen Task abzuschließen, sie muss auch noch in die vorhandenen Systeme integriert und die Theorie dahinter verstanden werden, damit man gegenüber Kunden aussagekräftig die Unterschiede und die Vorteile begründen kann.
+    \item Über die Monate vor dem Praktikum ist es bereits immer deutlicher geworden, dass das Datenmodell hinter dem Vulnerability Monitoring fast komplett neu geschrieben werden muss, um neue Anforderungen und Erkenntnisse effizient und korrekt unterstützen zu können.
+    Die Anforderung an das Datenmodell, die hier relevant ist, ist eine bessere Art, die CVSS-Vektoren abzulegen und zu verarbeiten.
+    Es wurde erkannt, dass meistens nicht nur ein CVSS-Vektor einer Quelle pro Schwachstelle (CVE, \ldots) vorhanden ist, sondern mehrere, die von mehreren Organisationen und Institutionen vergeben werden, da ihre Meinungen über den Schweregrad voneinander abweichen können.
+    Bisher wird mit diesen zusätzlichen Vektoren nicht bewusst unterschiedlich umgegangen, es wird einfach der erste verarbeitet, der vorhanden ist.
+    Um diese Situation zu verbessern, soll ein System eingeführt werden, das über die einzelnen Schritte der Inventory Enrichment Pipeline nur die Vektoren aggregiert und noch nicht verarbeitet oder berechnet.
+    Erst zum Ende, wenn es darum geht die Reports (PDF, HTML) zu generieren, sollen die Vektoren ausgewählt, eventuell kombiniert und deren Scores berechnet werden.
+    Bei dem Überarbeiten des Datenmodells muss also darauf geachtet werden, diese Anforderung zu unterstützen.
+    Zudem muss ein CVSS-Selektor geschrieben werden, der die darzustellenden Vektoren berechnen kann.
+    \item Zuletzt ging es noch um die Implementierung des CVSS-Standards in TypeScript, die Open Source gestellt werden sollte und mit einem Web-UI als online verfügbarer, interaktiver CVSS-Rechners verfügbar sein soll.
+    Dieser soll dann aus den eigenen Reports verlinkt werden können.
+    Der Grund hierfür ist simpel: Es gibt bisher keinen online CVSS-Rechner, der alle unsere Anforderungen erfüllt.
+    Es gibt keinen Rechner, der alle Versionen zugleich unterstützt, keinen, der mehrere Vektoren gleichzeitig gut vergleichbar zulässt und leider haben viele der offiziellen Rechner auch Probleme, die URL-Parameter korrekt zu erkennen.
+\end{smitemize}
+
+In diesem Bericht wird ein Fokus auf die CVSS-seitigen Arbeiten gelegt, da sie den Großteil des Semesters eingenommen haben.
+
+\section{Grundlagen} \label{sec:projektbericht-grundlagen}
+
+\subsection{Software-Inventare} \label{subsec:projektbericht-grundlagen-inventories}
+
+\subsection{NVD / NIST} \label{subsec:projektbericht-grundlagen-nvd-nist}
+
+\subsection{CVE / CPE} \label{subsec:projektbericht-grundlagen-cve-cpe}
+
+\subsection{CPE Derivation} \label{subsec:projektbericht-grundlagen-cpe-derivation}
+
+\subsection{CVSS} \label{subsec:projektbericht-grundlagen-cvss}
+
+\subsection{Vulnerability Assessment} \label{subsec:projektbericht-grundlagen-vulnerability-assessment}
+
+\subsection{Automatisiertes Vulnerability Monitoring} \label{subsec:projektbericht-grundlagen-vulnerability-monitoring}
+
+Die relevanten Prozessschritte sind das automatische Zuordnen von CPEs zu den Produkten aus den Kundeninventaren (CPE Derivation\textsuperscript{\ref{subsec:projektbericht-grundlagen-cpe-derivation}})
