@@ -60,9 +60,9 @@ Damit ist die Schwachstelle für alle auf der Welt über eine API oder über ihr
 
 \subsection{CVE / CPE} \label{subsec:projektbericht-grundlagen-cve-cpe}
 
-Das CVE-System ist ein von dem CVE Project eingeführtes System, das Schwachstellen in Software- und Hardwareprodukten eindeutig identifiziert und beschreibt.
-Es ist ein Standard, der stark von der NVD des NIST unterstützt wird.
-Im CVE-System bekommt jede Schwachstelle, die von einem Forscher oder einer Organisation gefunden und veröffentlicht wird, eine eindeutige ID von der Form \qt{CVE-YYYY-NNNN} zugewiesen, wobei \qt{YYYY} das Jahr der Veröffentlichung und \qt{NNNN} eine eindeutige fortlaufende Nummer ist.
+\qt{CVE} ist ein von dem CVE Project eingeführtes System, das Schwachstellen in Software- und Hardwareprodukten eindeutig identifiziert und beschreibt.
+Der Standard wird stark von der NVD des NIST unterstützt.
+Im CVE-System bekommt jede Schwachstelle, die von einem Forscher oder einer Organisation gefunden und veröffentlicht wird, eine eindeutige ID von der Form \qt{CVE-YYYY-NNNN} zugewiesen, wobei \qt{YYYY} das Jahr der Veröffentlichung und \qt{NNNN} eine eindeutige, fortlaufende Nummer ist.
 CVE definiert eine Schwachstelle als:
 
 \begin{quote}
@@ -71,16 +71,41 @@ CVE definiert eine Schwachstelle als:
     \cite{nvdVulnerabilityDefinition}
 \end{quote}
 
-Es handelt sich also um eine \qt{Weakness}, eine theoretische Angriffsfläche, die durch Ausnutzen negative Auswirkungen auf die Vertraulichkeit, Integrität oder Verfügbarkeit eines Systems hat.
-Es soll kein CVE-Eintrag existieren, der keinen Einfluss auf Vertraulichkeit, Integrität oder Verfügbarkeit hat \cite{nvdVulnerabilityMetrics}.
+Eine Schwachstelle ist also eine Schwäche, eine theoretische Angriffsfläche, die durch Ausnutzen negative Auswirkungen auf die Vertraulichkeit, Integrität oder Verfügbarkeit eines Systems hat.
+Es soll kein CVE-Eintrag existieren, der keinen Einfluss auf die Vertraulichkeit, Integrität oder Verfügbarkeit eines Systems hat \cite{nvdVulnerabilityMetrics}.
 
+Jeder CVE werden gewisse Metadaten zugeordnet, wie Beschreibungen, Referenzen und (potenziell mehrere) CVSS-Vektoren zur Bewertung des Schweregrads, aber auch \qt{CPE}s, die Aussagen über die betroffenen Produkte machen und automatisierte Zuordnungen erlauben.
+Common Platform Enumeration (CPE) ist ein von der MITRE Corporation\footnote{\url{https://cpe.mitre.org/specification}} entwickeltes System, mit dem Soft- und Hardwareprodukte über den Hersteller, Produktnamen und Version eindeutig identifiziert werden können.
+Die CPE Naming Specification Version 2.3 \cite[Seite 37, Kapitel 6.2]{NISTIR7695} definiert die Syntax eines CPE-Strings, in der mindestens \qt{part} (Komponenten-Typ), \qt{vendor} (Hersteller) und \qt{product} (Produkt) gesetzt sein müssen:
 
-\subsection{CPE Derivation} \label{subsec:projektbericht-grundlagen-cpe-derivation}
+\code{cpe : 2.3 : part : vendor : product : version : update : edition}\newline\hphantom{\code{cpe}}\code{: language : sw_edition : target_sw : target_hw:other}
+
+Auf dem NVD Dashboard\footnote{\url{https://nvd.nist.gov/general/nvd-dashboard}} ist gelistet, dass es am 08.03.2024 insgesamt 240899 eindeutige CVEs und 1261617 CPEs gibt.
+Diese Zahl wächst exponentiell und zeigt, wie wichtig es ist, Schwachstellen automatisiert zu verarbeiten.
 
 \subsection{CVSS} \label{subsec:projektbericht-grundlagen-cvss}
 
-\subsection{Vulnerability Assessment} \label{subsec:projektbericht-grundlagen-vulnerability-assessment}
+Das Common Vulnerability Scoring System (CVSS) wird in seiner Version 4.0 \cite{CVSSv4.0Specification} von der FIRST\footnote{\url{https://www.first.org}} (Forum of Incident Response and Security Teams) als offener Standard für die Bewertung von Schwachstellen in Software und Hardware beschrieben.
+Der Standard definiert CVSS-Vektoren als eine Menge an Schlüssel-Wert Paaren, die entweder auf definierte Werte gesetzt oder gänzlich weggelassen werden können.
+
+Je nachdem, welche Werte auf welche Werte gesetzt wurden, können dann durch Rechenvorschriften aus diesen diverse Metriken als numerische Zahlenwerte zwischen 0 und 10 oder als Schweregrad-Kategorien \qt{Low}, \qt{Medium}, \qt{High} und \qt{Critical} berechnet werden.
+Ein CVSS-Vektor kann in textueller Form die Metriken abbilden und wird in der Regel folgendermaßen gebildet: \code{CVSS:VERSION/KEY:VALUE/KEY:VALUE/...}.\newline
+Ein Basisvektor der Version 3.1 mit einem Basis-Score von 6.0 (\qt{Medium}) kann beispielsweise so aussehen: \code{CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N}.
+Je höher ein Score ist, umso dringender ist die Aufmerksamkeit, die man einer betroffenen Schwachstelle entgegenbringen sollte, da sie direkt dem Schweregrad entsprechen.
+Scores der Vektoren lassen sich einfach durch online-Rechner\footnote{\url{https://metaeffekt.com/security/cvss/calculator}} oder andere Tools berechnen.
+
+Die einzelnen Metriken erlauben es, auf eine möglichst objektive Weise Eigenschaften einer Schwachstelle einzuordnen.
+Aus dem Vektor im Beispiel der Version 3.1 steht beispielsweise die Metrik \code{AV:L} für \qt{Attack Vector}, gesetzt auf den Wert \qt{Local}.
+Alternative Werte wären \qt{Network}, \qt{Adjacent Network} oder \qt{Physical}.
+Sie ordnet also einer Schwachstelle die Nähe zu, in der ein Angreifer sich befinden muss, um sie auszunutzen.
+
+Die unterschiedlichen definierten Metrik-Sets der Vektoren werden von unterschiedlichen Parteien gesetzt.
+Die Basis-Metriken werden immer von den Authoritarian vergeben, die die Schwachstellen und dazugehörigen CVSS-Vektoren herausgeben.
+Sie enthalten allgemeine Informationen, unabhängig von der Umgebung, in der die Schwachstelle auftritt.
+Die Temporalen-/Threat- und Environmental-Metriken hingegen werden von den Nutzern der Vektoren gesetzt, da sie von der Umgebung und aktuellen Situation abhängen, in der die Schwachstelle auftritt.
 
 \subsection{Automatisiertes Vulnerability Monitoring} \label{subsec:projektbericht-grundlagen-vulnerability-monitoring}
 
-Die relevanten Prozessschritte sind das automatische Zuordnen von CPEs zu den Produkten aus den Kundeninventaren (CPE Derivation\textsuperscript{\ref{subsec:projektbericht-grundlagen-cpe-derivation}})
+Die relevanten Prozessschritte sind das automatische Zuordnen von CPEs zu den Produkten aus den Kundeninventaren ...
+
+\subsection{Vulnerability Assessment} \label{subsec:projektbericht-grundlagen-vulnerability-assessment}

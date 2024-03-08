@@ -4,37 +4,37 @@
 
 \lweekdaymarginpar{\weekdayMondayLong}
 
-Der erste Arbeitstag meines Praktikums bei der {\metaeffekt} fiel mit dem Ende meiner Sommerpause und der für viele meiner Kollegen zusammen.
-Da ich bereits seit einiger Zeit im Unternehmen arbeite und meine eigenen Aufgabenbereiche habe, war eine ausführliche Einführung für mich nicht nötig.
-In dem Unternehmen ist mein Arbeitsbereich als Entwickler ein automatisiertes Vulnerability Monitoring in Java für unsere Kunden zu schreiben und zu betreuen.
-Als Haupt-Entwickler für dieses Gebiet bei uns bin ich auch oft für Kundenkontakt für Fragen, Anforderungen und Support in diesem Kontext zugewiesen.
-Ich verbrachte den Montag damit, einige während der Pause aufgetretene Fehler in den Systemen von Kundenprojekten zu korrigieren und Gespräche mit Kollegen zu führen, um anstehende Projekte und Tasks zu klären.
+Mein erster Arbeitstag im Praktikums bei der {\metaeffekt} fiel mit dem Ende der Sommerpause des Unternehmens zusammen.
+Da ich bereits seit einiger Zeit im Unternehmen arbeite und ich meine eigenständigen Aufgabenbereiche habe, war eine Einführung für mich nicht notwendig.
+Bei {\metaeffekt} ist mein Aufgabenbereich als Entwickler ein automatisiertes Vulnerability Monitoring für unsere Kunden in der Programmiersprache Java zu implementieren und zu betreuen.
+Als Hauptverantwortlicher für dieses Gebiet bin ich darüber hinaus für den Kundenkontakt für Fragen, Anforderungen und Unterstützung zuständig.
+Ich verbrachte den Montag damit, einige während der Sommerpause aufgetretene Fehler in den Systemen von Kundenprojekten zu korrigieren und Gespräche mit Kollegen zu führen, um anstehende Projekte und Aufgaben zu klären.
 
-Ein wichtiges Thema war die anstehende Veröffentlichung des CVSS 4.0-Standards, die für den 31.\ Oktober 2023\footnote{\url{https://www.first.org/cvss/v4-0/}} geplant ist.
-Unsere Software ist bereits in der Lage, die Scores für die CVSS-Versionen 2.0 und 3.1 durchzuführen, und wir möchten in der Lage sein, auch die neuen CVSS 4.0-Vektoren zu berechnen, sobald diese in den öffentlichen Datenbanken auftauchen.
-Mit meinem Chef und Betreuer für das Praktikum, Karsten Klein, habe ich zudem vereinbart, während meines Semesters tägliche Meetings mit ihm abzuhalten.
+Ein wichtiges Thema war die anstehende Veröffentlichung des CVSS 4.0-Standards, die für den 31.\ Oktober 2023\footnote{\url{https://www.first.org/cvss/v4-0/}} geplant war.
+Die Software-Implementierung der {\metaeffekt} ist bereits in der Lage, die Scores der CVSS-Versionen 2.0 und 3.1 zu berechnen, und wir müssen in der Lage sein, auch die neuen CVSS 4.0-Vektoren zu berechnen, sobald offizielle Datenquellen diese auch bei sich integrieren.
+Mit meinem Chef und Betreuer für das Praktikum, Karsten Klein, habe ich zudem vereinbart, während meines Praxis-Semesters tägliche Meetings mit ihm abzuhalten.
 
 \sweekdaymarginpar{\weekdayTuesdayLong}
 
 Am Dienstag startete ich damit, die zu dem Zeitpunkt noch unfertige Dokumentation und Beispiele von CVSS 4.0 zu studieren.
-Ich stellte schnell fest, dass es mehr Unterschiede als Gemeinsamkeiten zu den vorherigen Versionen gibt, insbesondere in Bezug auf die Berechnung und Theorie hinter dieser.
-Ich notierte dennoch meine Erkenntnisse in unserem internen Confluence Wiki.
-Auf dem offiziellen RedHat GitHub-Repository\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator}} (die stark an der Entwicklung beteiligt waren) fand ich den Quellcode einer Referenz-JavaScript-Implementierung, die noch sehr nützlich werden sollte.
+Ich stellte schnell fest, dass es mehr Unterschiede als Gemeinsamkeiten zu den vorherigen Versionen gibt, insbesondere in Bezug auf die mathematischen Hintergründe.
+Ich dokumentierte dennoch meine Erkenntnisse in unserem internen Confluence Wiki.
+Auf dem offiziellen RedHat GitHub-Repository\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator}} fand ich den Quellcode einer Referenz-JavaScript-Implementierung, die noch sehr nützlich werden sollte.
 
 \sweekdaymarginpar{\weekdayWednesdayLong}
 
 Am Mittwoch begann ich mit einem ersten Versuch einer Implementierung der CVSS 4.0-Berechnungen.
-Wie ich bereits gestern erahnt hatte, ist die Berechnung bei 4.0 deutlich mathematischer und mit vielen Konzepten, wie Hamming-Distanzen zwischen Vektoren und der Interpolation und Skalierung von mehrdimensionalen Räumen, versehen.
-Doch dank der JavaScript-Implementierung konnte ich Mittwoch das Grundgerüst für meine Implementierung in Java vorbereiten.
+Wie ich bereits gestern vermutet hatte, ist die Berechnung bei 4.0 mathematisch deutlich komplexer, mit Hamming-Distanzen zwischen Vektoren und der Interpolation und Skalierung von mehrdimensionalen Räumen, versehen.
+Dank der RedHat JavaScript-Implementierung konnte ich Mittwoch das Grundgerüst für meine Implementierung in Java vorbereiten.
 
 \sweekdaymarginpar{\weekdayThursdayLong}
 
-Der Donnerstag startete mit der Behebung einer \qt{OutOfMemoryError}-Exception in einem Kundenprojekt, die auftrat, einer unserer Schwachstellen-Reports aus einer großen Menge an Daten generiert wurde.
-Das Problem war, dass während der Serialisierung in ein HTML-Dokument das interne Modell, und damit auch der Speicherbedarf, kurzzeitig dupliziert wurde.
-Ich konnte das Problem lösen, indem ich einen FileAppender verwendet habe, der den HTML-String des Reports direkt in eine Datei schreibt, anstatt ihn wie zuvor im Speicher zu halten.
+Der Donnerstag startete mit der Behebung einer \qt{OutOfMemoryError}-Exception im Code eines unserer Reports in einem Kundenprojekt, die auftrat, wenn eine zu große Menge an Daten verarbeitet wurde.
+Das Problem war, dass während der Serialisierung in ein HTML-Dokument das interne Modell (damit auch der Speicherbedarf) kurzzeitig dupliziert wurde.
+Ich konnte das Problem lösen, indem ich einen FileAppender verwende, der den HTML-String des Reports direkt in eine Datei schreibt, anstatt ihn wie zuvor im Speicher zu halten.
 
-Der Hauptteil des Tages war jedoch weiterhin CVSS 4.0 zugeordnet.
-Leider musste ich mittendrin feststellen, dass die Referenzimplementierung und die Spezifikation im aktuellen Zustand voneinander abweichen, was bei einem unveröffentlichten Standard zwar verständlich, aber nicht hilfreich ist.
+Der Hauptteil meines Tages war jedoch der Untersuchung von CVSS 4.0 zugeordnet.
+Leider musste ich im Verlauf feststellen, dass die Referenzimplementierung und die Spezifikation im aktuellen Zustand voneinander abweichen, was bei einem unveröffentlichten Standard zwar verständlich, aber nicht hilfreich ist.
 Ich meldete dieses Problem zusammen mit inhaltlichen Fragen in einem GitHub-Issue\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator/issues/32}} und beendete den Tag mit einer teilweise funktionierenden Implementierung.
 
 \sweekdaymarginpar{\weekdayFridayLong}

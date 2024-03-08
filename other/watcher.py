@@ -37,14 +37,18 @@ while True:
         print("copy", praksem_bib_file, out_praksem_bib_file)
         subprocess.run(["copy", str(praksem_bib_file), str(out_praksem_bib_file)], shell=True)
 
-        subprocess.run(["C:/Users/yan20/AppData/Local/Programs/MiKTeX/miktex/bin/x64/pdflatex", "-file-line-error", "-interaction=nonstopmode", "-synctex=1", "-output-format=pdf", "-output-directory=I:/projects/praxissemester/out", "praksem.tex"], shell=True)
+        try:
+            pdflatex_output = subprocess.check_output(["C:/Users/yan20/AppData/Local/Programs/MiKTeX/miktex/bin/x64/pdflatex", "-file-line-error", "-interaction=nonstopmode", "-synctex=1", "-output-format=pdf", "-output-directory=I:/projects/praxissemester/out", "praksem.tex"], shell=True, text=True, encoding='utf-8')
+        except subprocess.CalledProcessError as e:
+            pdflatex_output = e.output
+            print(pdflatex_output)
 
         # Check if the bib file was updated
         new_timestamp = os.path.getmtime(bib_file)
         with open(bib_timestamp_file, 'r', encoding='utf-8') as f:
             old_timestamp = f.read().strip()
 
-        if str(new_timestamp) != old_timestamp:
+        if str(new_timestamp) != old_timestamp or "run biber" in pdflatex_output.lower():
             with open(bib_timestamp_file, 'w', encoding='utf-8') as f:
                 f.write(str(new_timestamp))
 

@@ -3,7 +3,7 @@
 
 % Deutsch
 \usepackage[german]{babel} % deutsch und deutsche Rechtschreibung
-\usepackage[backend=biber, style=numeric]{biblatex} % Literaturverzeichnis
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex} % Literaturverzeichnis (sortiert nach Reihenfolge des Auftretens)
 \addbibresource{praksem.bib}
 \usepackage[utf8]{inputenc} % Unicode Text
 \usepackage[T1]{fontenc} % Umlaute und deutsches Trennen
@@ -62,8 +62,8 @@
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 %\fancyhead[L]{\phv \leftmark}
-\fancyhead[R,LO]{\phv \nouppercase{\leftmark}}
-\fancyhead[L,RO]{\phv \thepage}
+\fancyhead[RH,LO]{\phv \nouppercase{\leftmark}}
+\fancyhead[LH,RO]{\phv \thepage}
 % Unten besser auf alles Verzichten
 %\fancyfoot[L]{\textsf{\small \kurztitel}}
 \fancyfoot[C]{\ } % keine Seitenzahl unten
