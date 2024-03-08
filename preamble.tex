@@ -8,7 +8,6 @@
 \usepackage[utf8]{inputenc} % Unicode Text
 \usepackage[T1]{fontenc} % Umlaute und deutsches Trennen
 \usepackage{textcomp} % Euro
-\usepackage[hyphens]{url}
 \input{hyphenations} % eigene Hyphenations, die für das Dokument gelten
 \usepackage{amssymb} % Symbole
 \usepackage{emptypage} % Wirklich leer bei leeren Seiten
@@ -50,7 +49,7 @@
 
 % Seitenlayout
 \newcommand{\seitenseitenabstand}{22mm} % 30mm
-\usepackage[paper=a4paper,width=14.8cm,left=\seitenseitenabstand,right=\seitenseitenabstand,height=23cm]{geometry}
+\usepackage[paper=a4paper,left=\seitenseitenabstand,right=\seitenseitenabstand,height=23cm]{geometry}
 \usepackage{setspace}
 % \linespread{1.15}
 \linespread{1.1}
@@ -63,8 +62,8 @@
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 %\fancyhead[L]{\phv \leftmark}
-\fancyhead[RE,LO]{\phv \nouppercase{\leftmark}}
-\fancyhead[LE,RO]{\phv \thepage}
+\fancyhead[R,LO]{\phv \nouppercase{\leftmark}}
+\fancyhead[L,RO]{\phv \thepage}
 % Unten besser auf alles Verzichten
 %\fancyfoot[L]{\textsf{\small \kurztitel}}
 \fancyfoot[C]{\ } % keine Seitenzahl unten
@@ -93,7 +92,7 @@
 \setlength{\epigraphrule}{0pt} % kein Trennstrich
 
 % damit wir nicht so viel tippen müssen, nur für Demo 
-\usepackage{blindtext}
+% \usepackage{blindtext}
 
 % ifthen für sperrvermerk
 \newif\ifsperrvermerk
