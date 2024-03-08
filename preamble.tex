@@ -3,7 +3,9 @@
 
 % Deutsch
 \usepackage[german]{babel} % deutsch und deutsche Rechtschreibung
-\usepackage[utf8]{inputenc} % Unicode Text 
+\usepackage[backend=biber, style=numeric]{biblatex} % Literaturverzeichnis
+\addbibresource{praksem.bib}
+\usepackage[utf8]{inputenc} % Unicode Text
 \usepackage[T1]{fontenc} % Umlaute und deutsches Trennen
 \usepackage{textcomp} % Euro
 \usepackage[hyphens]{url}
@@ -47,7 +49,7 @@
 \floatname{listing}{Listing}
 
 % Seitenlayout
-\newcommand{\seitenseitenabstand}{25mm} % 30mm
+\newcommand{\seitenseitenabstand}{22mm} % 30mm
 \usepackage[paper=a4paper,width=14.8cm,left=\seitenseitenabstand,right=\seitenseitenabstand,height=23cm]{geometry}
 \usepackage{setspace}
 % \linespread{1.15}

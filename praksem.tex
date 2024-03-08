@@ -71,7 +71,7 @@
     \listoffigures % Liste der Abbildungen
 %\begingroup % aahh nicht noch ein pagebreak
 %\let\clearpage\relax %
-    \listoftables % Liste der Tabellen
+    % \listoftables % Liste der Tabellen
 %\endgroup
 
 % Glossar kommt auch ans Ende
@@ -81,8 +81,9 @@
 %\newpage
 
     \addcontentsline{toc}{chapter}{Literaturverzeichnis}
-    \bibliographystyle{plain} % Literaturverzeichnis
-    \bibliography{praksem}
+    %\bibliographystyle{plain}
+    %\bibliography{praksem}
+    \printbibliography
 % \bibliography{praksem,online} # wenn man zwei Dateien hätte
 
 % Das wäre die Alternative mit geteilten Quellen (preamble muss auch

@@ -14,15 +14,15 @@ Das Vulnerability Monitoring wird intern durch eine Aneinanderreihung von Prozes
 Die Prozessschritte erhalten jeweils ein Software-Inventar als Eingabe, welches sie auf eine bestimmte definierte Weise modifizieren und für den nächsten Schritt bereitstellen, sodass ein Inventar, das alle Schritte durchlaufen hat, alle nötigen Schwachstell-Informationen angereichert bekommen hat.
 Auf diese Pipeline wird im Kapitel\ \ref{subsec:projektbericht-grundlagen-vulnerability-monitoring} kurz eingegangen, sie soll allerdings nicht Hauptbestandteil dieses Berichts sein und dient nur zur besseren Einordnung der anderen Prozesse.
 
-In dem Praktikum liegt der Schwerpunkt vor allem auf dem CVSS-Standard\textsuperscript{\ref{subsec:projektbericht-grundlagen-cvss}}, vor allem die Verbesserung unseres Supports für neuere Versionen dieses und konzeptionelle Änderungen, wie wir mit diesen umgehen wollen.
+In dem Praktikum liegt der Schwerpunkt vor allem auf dem CVSS-Standard\textsuperscript{\ref{subsec:projektbericht-grundlagen-cvss}}, insbesondere in der Verbesserung unseres Supports für neuere Versionen dieses und in konzeptionelle Änderungen, wie das System mit diesen umgehen sollte.
 Konkret geht es um die folgenden Punkte:
 
 \begin{smitemize}
-    \item Die Veröffentlichung der neuesten Version 4.0 des CVSS-Standards am 31.\ Oktober 2023\footnote{\url{https://www.first.org/cvss/v4-0/}} wird über die nächsten Monate zur Folge haben, dass CVSS-Vektoren der Version 4.0 für Schwachstellen in den öffentlichen Datenbanken auftauchen werden, die wir in der Lage sein müssen, zu parsen und zu berechnen.
+    \item Die Veröffentlichung der neuesten Version 4.0 des CVSS-Standards am 31.\ Oktober 2023\footnote{\url{https://www.first.org/cvss/v4-0/}} hat bereits und wird über die nächsten Monate zur Folge haben, dass CVSS-Vektoren der Version 4.0 für Schwachstellen in den öffentlichen Datenbanken auftauchen werden, die die {\metaeffekt} in der Lage sein muss, zu parsen und zu berechnen.
     Es ist dazu also notwendig, die aktuelle Implementierung der Versionen 2.0 und 3.1 um die vierte zu erweitern.
-    Jedoch reicht hier nicht einfach die Implementierung der Berechnungslogik, um diesen Task abzuschließen, sie muss auch noch in die vorhandenen Systeme integriert und die Theorie dahinter verstanden werden, damit man gegenüber Kunden aussagekräftig die Unterschiede und die Vorteile begründen kann.
+    Zu der Implementierung der Berechnungslogik muss sie auch noch in die vorhandenen Systeme integriert und die Theorie dahinter verstanden werden, auch damit man gegenüber Kunden aussagekräftig die Unterschiede und die Vorteile begründen kann.
     \item Über die Monate vor dem Praktikum ist es bereits immer deutlicher geworden, dass das Datenmodell hinter dem Vulnerability Monitoring fast komplett neu geschrieben werden muss, um neue Anforderungen und Erkenntnisse effizient und korrekt unterstützen zu können.
-    Die Anforderung an das Datenmodell, die hier relevant ist, ist eine bessere Art, die CVSS-Vektoren abzulegen und zu verarbeiten.
+    Die relevante Anforderung an das Datenmodell ist es, die Art und Weise, wie die CVSS-Vektoren abzulegen und verarbeitet werden, komplett neu zu planen und zu schreiben.
     Es wurde erkannt, dass meistens nicht nur ein CVSS-Vektor einer Quelle pro Schwachstelle (CVE, \ldots) vorhanden ist, sondern mehrere, die von mehreren Organisationen und Institutionen vergeben werden, da ihre Meinungen über den Schweregrad voneinander abweichen können.
     Bisher wird mit diesen zusätzlichen Vektoren nicht bewusst unterschiedlich umgegangen, es wird einfach der erste verarbeitet, der vorhanden ist.
     Um diese Situation zu verbessern, soll ein System eingeführt werden, das über die einzelnen Schritte der Inventory Enrichment Pipeline nur die Vektoren aggregiert und noch nicht verarbeitet oder berechnet.
@@ -36,6 +36,9 @@ Konkret geht es um die folgenden Punkte:
 \end{smitemize}
 
 In diesem Bericht wird ein Fokus auf die CVSS-seitigen Arbeiten im Unternehmen gelegt, da sie den Großteil des Semesters eingenommen haben.
+
+
+% Grundlagen
 
 
 \section{Grundlagen} \label{sec:projektbericht-grundlagen}
@@ -57,12 +60,20 @@ Damit ist die Schwachstelle für alle auf der Welt über eine API oder über ihr
 
 \subsection{CVE / CPE} \label{subsec:projektbericht-grundlagen-cve-cpe}
 
-Das CVE-System ist ein von der usw usw TODO.
+Das CVE-System ist ein von dem CVE Project eingeführtes System, das Schwachstellen in Software- und Hardwareprodukten eindeutig identifiziert und beschreibt.
+Es ist ein Standard, der stark von der NVD des NIST unterstützt wird.
+Im CVE-System bekommt jede Schwachstelle, die von einem Forscher oder einer Organisation gefunden und veröffentlicht wird, eine eindeutige ID von der Form \qt{CVE-YYYY-NNNN} zugewiesen, wobei \qt{YYYY} das Jahr der Veröffentlichung und \qt{NNNN} eine eindeutige fortlaufende Nummer ist.
+CVE definiert eine Schwachstelle als:
 
 \begin{quote}
     A weakness in the computational logic (e.g., code) found in software and hardware components that, when exploited, results in a negative impact to confidentiality, integrity, or availability.
     Mitigation of the vulnerabilities in this context typically involves coding changes, but could also include specification changes or even specification deprecations (e.g., removal of affected protocols or functionality in their entirety).
+    \cite{nvdVulnerabilityDefinition}
 \end{quote}
+
+Es handelt sich also um eine \qt{Weakness}, eine theoretische Angriffsfläche, die durch Ausnutzen negative Auswirkungen auf die Vertraulichkeit, Integrität oder Verfügbarkeit eines Systems hat.
+Es soll kein CVE-Eintrag existieren, der keinen Einfluss auf Vertraulichkeit, Integrität oder Verfügbarkeit hat \cite{nvdVulnerabilityMetrics}.
+
 
 \subsection{CPE Derivation} \label{subsec:projektbericht-grundlagen-cpe-derivation}
 
