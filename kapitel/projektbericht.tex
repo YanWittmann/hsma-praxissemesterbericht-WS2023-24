@@ -104,25 +104,26 @@ Einer Schwachstelle können von verschiedenen Parteien potenziell mehrere, unter
 
 \subsection{Automatisiertes Vulnerability Monitoring} \label{subsec:projektbericht-grundlagen-vulnerability-monitoring}
 
-Das Ziel des von mir entwickelten bei der {\metaeffekt} eingesetzten Vulnerability Monitoring ist es nicht nur, zu einem Software-Inventar die zugehörigen Schwachstellen (\qt{Vulnerabilities}) zu finden, sondern auch zu diesen einige Ratgeber (\qt{Security Advisories}) zu finden, die als Hilfestellung zum Verständnis und zur Priorisierung bei der manuellen Bewertung dienen.
-Dies passiert hauptsächlich in zwei Schritten, die in mehrere weitere unterteilt werden können.
-Der in Grafik \ref{fig:vulnerability-monitoring-overview-figure} abgebildete Prozessablauf wird im Folgenden beschrieben.
-Der initiale Input für den Prozess ist natürlich ein Inventar, gefüllt mit einer Liste an Software-Komponenten und ihren Metadaten, zu denen es die Schwachstellen zu finden gilt.
+Das bei der {\metaeffekt} eingesetzte automatisierte Vulnerability Monitoring, hat das Ziel, für ein gegebenes Software-Inventar nicht nur die relevanten Schwachstellen (\qt{Vulnerabilities}) zu identifizieren, sondern auch zugehörige Ratgeber (\qt{Security Advisories}) als Hilfestellung zu der darauf folgenden manuellen Bewertung bereitzustellen.
+Der Prozess, dargestellt in Grafik \ref{fig:vulnerability-monitoring-overview-figure}, in zwei Hauptphasen mit mehreren Unterschritten gegliedert, wird im Folgenden beschrieben.
+Als Eingabe dient in jedem Fall ein Inventar gefüllt mit einer Liste an Software-Komponenten und deren Metadaten, wie Version, Quelle und Ökosystem-spezifischen Informationen.
 
-Externe Schwachstell-Datenbanken verwenden immer eine abstrahierte Darstellung von echten Produkten und Software-Komponenten, um intern auf Schwachstellen zu verweisen.
-Dieses Mapping von echten Komponenten zu diesen Produkten ist nicht immer trivial.
-Bei der NVD sind die Produkte die in Kapitel \ref{subsec:projektbericht-grundlagen-cve-cpe} beschriebenen CPEs, bei GitHub Security Advisories\footnote{\url{https://github.com/advisories}} mit dem OSV-Schema\footnote{\url{https://osv.dev}} sind es die Repräsentationen, die auch in bekannten Paketmanagern verwendet werden und bei Microsoft (MSRC)\footnote{\url{https://msrc.microsoft.com/update-guide}} sind es numerische Identifikatoren, die nur durch Zugriff und Extraktion aller monatlichen Zusammenfassungen zugänglich sind.
-Das Vulnerability Monitoring versucht, durch diverse Algorithmen, diese Zuordnungen automatisiert durchzuführen, was allerdings nicht immer möglich ist.
+Der erste Prozessschritt ist die Identifikation von Schwachstellen und wird getrennt voneinander auf alle Komponenten im Inventar angewandt.
+Die in unserem Prozess verwendeten externen Schwachstellendatenbanken nutzen abstrahierte Darstellungen von Produkten und Software-Komponenten für ihre internen Verweise zwischen Produkten und Schwachstellen.
+Beispielsweise verwendet die NVD CPEs (siehe Kapitel \ref{subsec:projektbericht-grundlagen-cve-cpe}), GitHub Security Advisories\footnote{\url{https://github.com/advisories}} folgen dem OSV-Schema\footnote{\url{https://osv.dev}} mit Ökosystem-abhängigen Informationen, und Microsoft (MSRC)\footnote{\url{https://msrc.microsoft.com/update-guide}} arbeitet mit numerischen Identifikatoren, die nur durch Download und Extraktion aller monatlichen Zusammenfassungen über ihre API zugänglich sind.
+Die Zuordnung unserer realen Komponenten zu diesen abstrahierten Produkten stellt daher immer eine Herausforderung dar.
+Unser Vulnerability Monitoring setzt verschiedene Algorithmen ein, um diese Zuordnungen so weit wie möglich automatisch vorzunehmen, was jedoch nicht immer fehlerfrei gelingt.
+Falsch positive und falsch negative Ergebnisse erfordern dann eine manuelle Korrektur durch einen gepflegten Datensatz (\qt{Korrelationsdaten}), was einen erheblichen Zeitaufwand bedeutet.
 
-Die dadurch entstehenden false-positives und false-negatives müssen dann durch einen manuell gepflegten Datensatz (\qt{Korrelationsdaten}) korrigiert werden, was ein zeitintensiver Prozess ist.
-Mit einem erfolgreich korrelierten Inventar können dann Abfragen auf die jeweiligen Datenbanken gestartet werden, um die Schwachstellen durch Produkt- und Versions-Abgleiche zu den Komponenten zu finden.
-Dieses Zwischeninventar kann bereits als Ausgabe verwendet werden, jedoch wird meistens ein weiterer Schritt dahinter geschaltet, der zusätzliche Abfragen auf einen weitaus größeren Satz an Datenbanken startet, um den gefundenen Schwachstellen Ratgeber zuzuordnen.
-Diese Abfragen sind in der Regel deutlich einfacher, da sie die betroffenen Schwachstell-Identifikatoren 1:1 referenzieren.
-Dieses Ergebnisinventar kann nun zur Erstellung von Reports und Statistiken verwendet werden.
+Wenn dieser Schritt erfolgreich abgeschlossen ist, können Abfragen an die jeweiligen Datenbanken gestartet werden, um Schwachstellen durch Produkt- und Versionsabgleichen zu identifizieren.
+Dieses Zwischeninventar mit Schwachstellinformationen kann bereits für Berichte genutzt werden, jedoch wird meistens ein weiterer Schritt dahinter geschaltet:
+Weitere Abfragen an einen größeren Satz an Datenbanken werden gestartet, um zu den gefundenen Schwachstellen entsprechende Ratgeber zuzuordnen.
+Diese Abfragen sind in der Regel einfacher, da die Ratgeber-Einträge meistens direkt auf die betroffenen Schwachstellen-IDs Bezug nehmen.
+Das Ergebnisinventar kann dann als Grundlage für die Erstellung von Reports und Statistiken benutzt werden.
 
 \begin{figure}[htbp] % here, top, bottom, separate page
     \centering
-    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/vulnerability-monitoring-overview.svg}
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/vulnerability-monitoring-overview}
     \caption{Schwachstellsuche mit einem Software-Inventar}
     \label{fig:vulnerability-monitoring-overview-figure}
 \end{figure}
