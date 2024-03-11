@@ -85,24 +85,46 @@ Diese Zahl wächst exponentiell und zeigt, wie wichtig es ist, Schwachstellen au
 
 \subsection{CVSS} \label{subsec:projektbericht-grundlagen-cvss}
 
-Das Common Vulnerability Scoring System (CVSS) wird in Version 4.0 \cite{CVSSv4.0Specification} von der FIRST\footnote{\url{https://www.first.org}} (Forum of Incident Response and Security Teams) als ein offener Standard für die Bewertung der Sicherheitsanfälligkeit von Software- und Hardwarekomponenten beschrieben.
-Dieser Standard legt fest, wie CVSS-Vektoren, definiert als Sammlungen von Schlüssel-Wert Paaren, zur möglichst objektiven Darstellung von Schwachstelleneigenschaften genutzt werden können.
-Solche Vektoren können textuell als strings der Form \code{CVSS:VERSION/KEY:VALUE/KEY:VALUE/...} formatiert werden, wobei jedes Paar durch ein \qt{/} getrennt und von einem \qt{CVSS:} gefolgt von der Vektor-Version ge-prefixed werden.
+Das Common Vulnerability Scoring System (CVSS) wird in Version 4.0 \cite{CVSSv4.0Specification} vom FIRST\footnote{\url{https://www.first.org}} (Forum of Incident Response and Security Teams) als ein offener Standard für die Bewertung der Sicherheitsanfälligkeit von Software- und Hardwarekomponenten beschrieben.
+Dieser Standard legt fest, wie sog\. CVSS-Vektoren, definiert als Sammlung von Schlüssel-Wert Paaren, zur möglichst objektiven Darstellung von Schwachstelleneigenschaften genutzt werden können.
+Solche Vektoren können textuell als \code{CVSS:VERSION/KEY:VALUE/KEY:VALUE/...} formatiert werden, wobei jedes Wertepaar durch \qt{/} getrennt und mit \qt{CVSS:} gefolgt von der Vektor-Version beginnen muss.
 
 Ein Beispiel für einen Basisvektor in Version 3.1, der einen mittleren Schweregrad (\qt{Medium}) mit einem Score von 6.0 darstellt, kann folgendermaßen aussehen: \code{CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N}.
-Die Scores, die aus diesen Vektoren berechnet werden, reichen von 0 bis 10 und ordnen die Schwachstellen in die Kategorien \qt{Low}, \qt{Medium}, \qt{High} und \qt{Critical} ein, wobei höhere Werte eine dringendere Bewertung erfordern.
-Diese Berechnungen lassen sich leicht mit Online-Rechnern\footnote{\url{https://metaeffekt.com/security/cvss/calculator}} oder Software-Tools durchführen.
+Allgemein reichen die Scores, die aus diesen Vektoren berechnet werden, von 0 bis 10 und ordnen die Schwachstellen in die Kategorien \qt{Low}, \qt{Medium}, \qt{High} und \qt{Critical} ein, wobei höhere Werte eine dringendere Bewertung erfordern.
+Diese Berechnungen lassen sich leicht mit Online-Rechnern\footnote{\url{https://metaeffekt.com/security/cvss/calculator}} oder Software-Tools, verfügbar in allen populären Programmiersprachen, durchführen.
 
 Die versionsabhängigen Metriken der Vektoren ordnen jeweils eine Charakteristik einer Schwachstelle einem Wert zu.
 So steht beispielsweise \code{AV:L} für einen \qt{Attack Vector} mit dem Wert \qt{Local}, was die räumliche Nähe beschreibt, die ein Angreifer benötigt, um die Schwachstelle auszunutzen.
-Andere Werte wie \qt{Network} (aus dem Internet ausnutzbar, höchster Schweregrad), \qt{Adjacent Network} oder \qt{Physical} (physikalischer Zugang benötigt, am weigsten schlimm) spezifizieren weitere Angriffsszenarien.
+Andere Werte wie \qt{Network} (aus dem Internet ausnutzbar, höchster Schweregrad), \qt{Adjacent Network} oder \qt{Physical} (physikalischer Zugang benötigt, am weigsten schlimm) spezifizieren weitere Angriffsszenarien für diese Metrik.
 
-Zusätzlich zu den Basismetriken, die von den Herausgebern der Schwachstelleninformationen festgelegt werden und allgemeine, umgebungsunabhängige Daten enthalten, gibt es noch die Temporalen/Threat- und Environmental-Metriken.
-Diese Metriken reflektieren die spezifische Umgebung und den Kontext, in dem die Schwachstelle existiert, und werden in betroffenen Projekten von den Anwendern kontextabhängig gesetzt.
-Damit erlaubt es CVSS, eine initiale, kontextunabhängige Bewertung eines Systems mit seinen Abhängigkeiten, aber durch Hinzufügen von Kontextinformationen auch eine kontextualisierte Sicht auf ein System zu erhalten.
+Zusätzlich zu den allgemeinen, umgebungsunabhängigen Basismetriken, die von den Herausgebern der Schwachstelleninformationen festgelegt werden, gibt es noch die \qt{Temporal}/\qt{Threat}- und \qt{Environmental}-Metriken.
+Diese Metriken reflektieren die spezifische Umgebung und den Kontext, in dem eine Schwachstelle existiert, und werden in betroffenen Projekten von den Anwendern kontextabhängig gesetzt.
+Damit erlaubt es CVSS, eine initiale, kontextunabhängige Bewertung eines Systems, und durch Hinzufügen von Kontextinformationen auch eine kontextualisierte Sicht auf das System zu erhalten.
+Einer Schwachstelle können von verschiedenen Parteien potenziell mehrere, unterschiedliche Vektoren zugeordnet werden, dieser Aspekt wird später wichtig.
 
 \subsection{Automatisiertes Vulnerability Monitoring} \label{subsec:projektbericht-grundlagen-vulnerability-monitoring}
 
-Die relevanten Prozessschritte sind das automatische Zuordnen von CPEs zu den Produkten aus den Kundeninventaren ...
+Das Ziel des von mir entwickelten bei der {\metaeffekt} eingesetzten Vulnerability Monitoring ist es nicht nur, zu einem Software-Inventar die zugehörigen Schwachstellen (\qt{Vulnerabilities}) zu finden, sondern auch zu diesen einige Ratgeber (\qt{Security Advisories}) zu finden, die als Hilfestellung zum Verständnis und zur Priorisierung bei der manuellen Bewertung dienen.
+Dies passiert hauptsächlich in zwei Schritten, die in mehrere weitere unterteilt werden können.
+Der in Grafik \ref{fig:vulnerability-monitoring-overview-figure} abgebildete Prozessablauf wird im Folgenden beschrieben.
+Der initiale Input für den Prozess ist natürlich ein Inventar, gefüllt mit einer Liste an Software-Komponenten und ihren Metadaten, zu denen es die Schwachstellen zu finden gilt.
+
+Externe Schwachstell-Datenbanken verwenden immer eine abstrahierte Darstellung von echten Produkten und Software-Komponenten, um intern auf Schwachstellen zu verweisen.
+Dieses Mapping von echten Komponenten zu diesen Produkten ist nicht immer trivial.
+Bei der NVD sind die Produkte die in Kapitel \ref{subsec:projektbericht-grundlagen-cve-cpe} beschriebenen CPEs, bei GitHub Security Advisories\footnote{\url{https://github.com/advisories}} mit dem OSV-Schema\footnote{\url{https://osv.dev}} sind es die Repräsentationen, die auch in bekannten Paketmanagern verwendet werden und bei Microsoft (MSRC)\footnote{\url{https://msrc.microsoft.com/update-guide}} sind es numerische Identifikatoren, die nur durch Zugriff und Extraktion aller monatlichen Zusammenfassungen zugänglich sind.
+Das Vulnerability Monitoring versucht, durch diverse Algorithmen, diese Zuordnungen automatisiert durchzuführen, was allerdings nicht immer möglich ist.
+
+Die dadurch entstehenden false-positives und false-negatives müssen dann durch einen manuell gepflegten Datensatz (\qt{Korrelationsdaten}) korrigiert werden, was ein zeitintensiver Prozess ist.
+Mit einem erfolgreich korrelierten Inventar können dann Abfragen auf die jeweiligen Datenbanken gestartet werden, um die Schwachstellen durch Produkt- und Versions-Abgleiche zu den Komponenten zu finden.
+Dieses Zwischeninventar kann bereits als Ausgabe verwendet werden, jedoch wird meistens ein weiterer Schritt dahinter geschaltet, der zusätzliche Abfragen auf einen weitaus größeren Satz an Datenbanken startet, um den gefundenen Schwachstellen Ratgeber zuzuordnen.
+Diese Abfragen sind in der Regel deutlich einfacher, da sie die betroffenen Schwachstell-Identifikatoren 1:1 referenzieren.
+Dieses Ergebnisinventar kann nun zur Erstellung von Reports und Statistiken verwendet werden.
+
+\begin{figure}[htbp] % here, top, bottom, separate page
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/vulnerability-monitoring-overview.svg}
+    \caption{Schwachstellsuche mit einem Software-Inventar}
+    \label{fig:vulnerability-monitoring-overview-figure}
+\end{figure}
 
 \subsection{Vulnerability Assessment} \label{subsec:projektbericht-grundlagen-vulnerability-assessment}
