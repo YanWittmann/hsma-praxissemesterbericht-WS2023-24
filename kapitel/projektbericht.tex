@@ -94,8 +94,8 @@ Allgemein reichen die Scores, die aus diesen Vektoren berechnet werden, von 0 bi
 Diese Berechnungen lassen sich leicht mit Online-Rechnern\footnote{\url{https://metaeffekt.com/security/cvss/calculator}} oder Software-Tools, verfügbar in allen populären Programmiersprachen, durchführen.
 
 Die versionsabhängigen Metriken der Vektoren ordnen jeweils eine Charakteristik einer Schwachstelle einem Wert zu.
-So steht beispielsweise \code{AV:L} für einen \qt{Attack Vector} mit dem Wert \qt{Local}, was die räumliche Nähe beschreibt, die ein Angreifer benötigt, um die Schwachstelle auszunutzen.
-Andere Werte wie \qt{Network} (aus dem Internet ausnutzbar, höchster Schweregrad), \qt{Adjacent Network} oder \qt{Physical} (physikalischer Zugang benötigt, am weigsten schlimm) spezifizieren weitere Angriffsszenarien für diese Metrik.
+So steht beispielsweise \code{AV:L} für einen \qt{Attack Vector} mit dem Wert \qt{Adjacent Network}, was die räumliche Nähe beschreibt, die ein Angreifer benötigt, um die Schwachstelle auszunutzen.
+Andere Werte wie \qt{Network} (aus dem Internet ausnutzbar, höchster Schweregrad), \qt{Local} oder \qt{Physical} (physikalischer Zugang benötigt, am weigsten schlimm) spezifizieren weitere Angriffsszenarien für diese Metrik.
 
 Zusätzlich zu den allgemeinen, umgebungsunabhängigen Basismetriken, die von den Herausgebern der Schwachstelleninformationen festgelegt werden, gibt es noch die \qt{Temporal}/\qt{Threat}- und \qt{Environmental}-Metriken.
 Diese Metriken reflektieren die spezifische Umgebung und den Kontext, in dem eine Schwachstelle existiert, und werden in betroffenen Projekten von den Anwendern kontextabhängig gesetzt.
@@ -128,4 +128,53 @@ Das Ergebnisinventar kann dann als Grundlage für die Erstellung von Reports und
     \label{fig:vulnerability-monitoring-overview-figure}
 \end{figure}
 
-\subsection{Vulnerability Assessment} \label{subsec:projektbericht-grundlagen-vulnerability-assessment}
+\subsection{Schwachstellen-Priorisierung durch CVSS} \label{subsec:projektbericht-grundlagen-vulnerability-assessment}
+
+Wenn eine Liste an Schwachstellen durch den Prozess in \ref{subsec:projektbericht-grundlagen-vulnerability-monitoring} als Minimalanforderung in einem Projekt für ein Inventar erfasst wurde, muss nun ein zweiter Schritt folgen:
+Die manuelle Bewertung der Schwachstellen, indem eine Einschätzung, ein Status und erforderliche Maßnahmen angegeben werden.
+Jedoch kann es sowohl bei großen, aber auch schon bei kleinen Projekten mit kritischen Abhängigkeiten zu einer großen Menge an Schwachstellen kommen (1000 und aufwärts), die oftmals nicht alle sofort von einer Person oder einem Bewertungs-Team durchgearbeitet werden können.
+Es werden also objektive und automatisierbare Faktoren benötigt, anhand denen die Schwachstellen möglichst ohne weiteres Zutun in eine priorisierte Liste eingeordnet werden können, um die kritischsten zuerst abarbeiten zu können.
+
+Diese Faktoren sind Projekt- und Umgebungsspezifisch und können stark variieren.
+In diesem Kapitel wird nur CVSS als Priorisierungsfaktor betrachtet, wie sie in der CVSS-Spezifikation beschrieben werden \code{[TODO: CITATION NEEDED]}.
+In Kapitel \ref{subsec:projektbericht-grundlagen-cvss} wurde bereits auf die Metrik-Gruppen eingegangen.
+Da jede Schwachstelle aus dem CVE-System und den meisten anderen Systemen mindestens einen CVSS-Vektor von den Herausgebern angehängt bekommen hat, kann bereits ohne großen Mehraufwand eine nach dem daraus errechneten Basis-Score sortierte Liste als initiale Reihenfolge dienen.
+
+Vor allem die Environmental-Metrikgruppe kann nun zur Kontextualisierung von Schwachstellen in einem Projekt verwendet werden.
+Das Beispiel bezüglich des \qt{Attack Vector}s in \ref{subsec:projektbericht-grundlagen-cvss}, bei dem \code{AV} auf \code{L} kann hier weiter getrieben werden:
+Wenn eine aus einem lokalen Netzwerk ausnutzbare Schwachstelle in einer Applikation vorhanden ist, die keinerlei Netzwerkzugang hat, dann kann diese auch nicht aus einem Netzwerk ausgenutzt werden, sondern eventuell nur durch physikalischen Zugriff.
+Allgemein kann dann also eine globale, Inventar-weite CVSS-Vektoränderung von \code{AV:P} angewendet werden, aus der eine neue, kontextualisierte Liste an Schwachstellen hervorgeht, die nun akkurater die tatsächlichen Risiken eines Systems darstellen.
+Weitere Metriken wie das Risiko eines Verlusts an Konfidentialität, Integrität oder Verfügbarkeit können für weitere Anpassungen verwendet werden.
+
+
+% Lösungswege
+
+
+\section{Lösungsweg} \label{sec:projektbericht-loesungsweg}
+
+Dieses Kapitel wird in drei Unterkapitel gegliedert, die sich jeweils auf eine der drei Problemstellungen aus Kapitel \ref{sec:projektbericht-projektziel} beziehen.
+
+\subsection{Implementierung von CVSS 4.0} \label{subsec:projektbericht-loesungsweg-cvss-4-implementierung}
+
+\subsection{CVSS-Vektor Management und Selektion} \label{subsec:projektbericht-loesungsweg-cvss-management-selektor}
+
+Um das Problem von multiplen CVSS-Vektoren pro Schwachstelle zu lösen, TODO
+
+Da es mehrere Datenquellen gibt, die potentiell jeweils sogar mehrere unterschiedliche CVSS-Vektoren für die selbe Schwachstelle angeben, muss ein System entworfen werden, in dem die Vektoren über den Verlauf des Prozesses des Vulnerability-Monitorings auf eine Weise aggregiert werden, die es im Nachhinein erlaubt, die exakte Quelle der Vektoren nachvollziehbar zu halten und einen oder mehrere Vektoren zur effektiven Verwendung auswählbar macht.
+Eine grobe Übersicht über einige möglichen Vektoren aus externen Datenquellen:
+
+\begin{itemize}
+    \item NVD:
+    Organisationen und Institutionen können, als sogenannte CVE Naming Authorities (CNA) registriert, für CVEs beliebige CVSS-Vektoren veröffentlichen.
+    Eine öffentlich verfügbare Liste an CNAs ist online mit Metadaten in einem Web-Interface verfügbar.
+    Hier müssen also alle Vektoren mit aufgenommen werden, die angegeben sind.
+    \item MSRC:
+    Stellt für jede für sie relevante CVE pro betroffenen Produkt über die numerische Produkt-Id einen CVSS-Vektor zur Verfügung.
+    Hier müssen mindestens alle betroffenen Vektoren mit der Produkt-Id als Bedingung aufgenommen werden.
+    \item CERT-SEI und GHSA: Stellen jeweils einen Vektor zur Verfügung.
+\end{itemize}
+
+Ein System für eine kontinuierlich aggregierende Liste an CVSS-Vektoren wird also benötigt, das die Quelle (source), den Vektor an sich und eine optionale Anwendbarkeitsbedingung (condition) ablegen kann.
+
+
+\subsection{Universal CVSS Calculator} \label{subsec:projektbericht-loesungsweg-typescript-cvss-online-calculator}
