@@ -187,15 +187,15 @@ Das System muss allerdings auch kombinierte Vektoren und deren kombinierte Quell
 Hierfür wird eine Erweiterung des Formats eingeführt, bei dem die Zeichenfolge \qt{ + } als Trennung für mehrere Quellen dienen kann, wie in Listing \ref{lst:cvss-source-format-combined} zu sehen.
 Natürlich macht es dies nötig, auch Plus-Zeichen (\qt{+}) in den Quellen mit \qt{\\+} zu ersetzen.
 Die Vektor-Version muss dennoch nur einmal angegeben werden, da es unmöglich ist, Vektoren unterschiedlicher Version miteinander zu kombinieren.
-Laut Format-Definition müssen die Quellen ist die Reihenfolge der Quellen signifikant, da die erste Quelle den ursprünglichen Vektor repräsentiert und die darauf folgenden, in gelisteter Reihenfolge, auf diesen angewandt wurden,
+Laut Format-Definition müssen die Quellen ist die Reihenfolge der Quellen signifikant, da die erste Quelle den ursprünglichen Vektor repräsentiert und die darauf folgenden, in gelisteter Reihenfolge, auf diesen angewandt wurden.
 
-\begin{lstlisting}[language={}, label={lst:cvss-source-format}, caption={CVSS Sources Format}]
+\begin{lstlisting}[language={}, label={lst:cvss-source-format}, caption={CVSS-Quellen Format}]
 CvssVersion HostingEntity
 CvssVersion HostingEntity-IssuingEntity
 CvssVersion HostingEntity-IssuerRole-IssuingEntity
 \end{lstlisting}
 
-\begin{lstlisting}[language={}, label={lst:cvss-source-format-combined}, caption={CVSS Sources Format}]
+\begin{lstlisting}[language={}, label={lst:cvss-source-format-combined}, caption={CVSS-Quellen Format (Kombiniert)}]
 CvssVersion HostingEntity-IssuerRole-IssuingEntity + HostingEntity-IssuerRole-IssuingEntity + ...
 \end{lstlisting}
 
@@ -284,7 +284,7 @@ Die nun gesammelten Vektoren werden nun den Selektionsprozess durchlaufen, wie a
 \begin{figure}[htbp] % here, top, bottom, separate page
     \centering
     \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection}
-    \caption{Selektionsvorgang für CVSS-Vektoren zur Reduktion auf einen pro Selektor}
+    \caption{Selektionsvorgang für CVSS-Vektoren}
     \label{fig:cvss-selection-process-selection}
 \end{figure}
 
