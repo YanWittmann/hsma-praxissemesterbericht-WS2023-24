@@ -31,12 +31,6 @@ Begonnen habe ich mit dem Einführen eines Systems (Listing \ref{lst:cvss-source
 Dabei wird eine Quelle in die Entität aufgeteilt, die den Vektor herausgibt (\code{HostingEntity}), und die, die ihn erstellt hat (\code{IssuingEntity}).
 Wenn die Rolle des \code{IssuingEntity} auf dem \code{HostingEntity} bekannt ist, wird diese mit der \code{IssuerRole} angegeben.
 
-\begin{lstlisting}[language={}, label={lst:cvss-source-format}, caption={CVSS Sources Format}]
-CvssVersion HostingEntity
-CvssVersion HostingEntity-IssuingEntity
-CvssVersion HostingEntity-IssuerRole-IssuingEntity
-\end{lstlisting}
-
 Die Entitäten werden durch Bindestriche getrennt, sind bis auf das \code{HostingEntity} optional und werden durch die CVSS-Version ge-prefixt.
 Intern kann dieses Format dann in eine Datenstruktur geparst werden.
 Viele CVSS-Provider führen eine Liste ihrer \qt{IssuingEntity}, wie z.B.\ die NVD\footnote{\url{https://nvd.nist.gov/vuln/cvmap/search}} oder CVE.org\footnote{\url{https://www.cve.org/PartnerInformation/ListofPartners}} mit ihren CVE Numbering Authorities (CNA).

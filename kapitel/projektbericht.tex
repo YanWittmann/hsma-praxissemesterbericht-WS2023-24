@@ -156,25 +156,113 @@ Dieses Kapitel wird in drei Unterkapitel gegliedert, die sich jeweils auf eine d
 
 \subsection{Implementierung von CVSS 4.0} \label{subsec:projektbericht-loesungsweg-cvss-4-implementierung}
 
-\subsection{CVSS-Vektor Management und Selektion} \label{subsec:projektbericht-loesungsweg-cvss-management-selektor}
+\subsection{CVSS-Vektor Quellenmanagement} \label{subsec:projektbericht-loesungsweg-cvss-source-management}
 
-Um das Problem von multiplen CVSS-Vektoren pro Schwachstelle zu lösen, TODO
-
-Da es mehrere Datenquellen gibt, die potentiell jeweils sogar mehrere unterschiedliche CVSS-Vektoren für die selbe Schwachstelle angeben, muss ein System entworfen werden, in dem die Vektoren über den Verlauf des Prozesses des Vulnerability-Monitorings auf eine Weise aggregiert werden, die es im Nachhinein erlaubt, die exakte Quelle der Vektoren nachvollziehbar zu halten und einen oder mehrere Vektoren zur effektiven Verwendung auswählbar macht.
-Eine grobe Übersicht über einige möglichen Vektoren aus externen Datenquellen:
+Um das Problem von multiplen CVSS-Vektoren pro Schwachstelle zu lösen, muss zunächst ein System entworfen werden, mit dem eine Quelle eines CVSS-Vektors eindeutig nach Aufnahme weiterhin identifiziert werden kann.
+Einige Anforderungen an das Format sind, dass sie in einen einfachen menschenlesbaren String serialisiert und von diesem wieder deserialisiert werden kann, aber auch die Eindeutigkeit der Quellen so hoch ist, dass sich zwei in irgendeiner Art unterschiedliche Quellen auch in der textuellen Repräsentation unterscheiden und aus einem externen Datensatz eindeutig weitere Metadaten hinzugefügt werden können.
+Um dieses Format zu bilden, wurden unter anderem die folgenden Quellen berücksichtigt:
 
 \begin{itemize}
     \item NVD:
-    Organisationen und Institutionen können, als sogenannte CVE Naming Authorities (CNA) registriert, für CVEs beliebige CVSS-Vektoren veröffentlichen.
-    Eine öffentlich verfügbare Liste an CNAs ist online mit Metadaten in einem Web-Interface verfügbar.
-    Hier müssen also alle Vektoren mit aufgenommen werden, die angegeben sind.
+    Organisationen und Institutionen können, wenn sie als sogenannte CVE Naming Authorities (CNA) registriert sind, für CVEs beliebige CVSS-Vektoren veröffentlichen.
+    Eine öffentlich verfügbare Liste an CNAs ist online [TODO: URL] mit Metadaten verfügbar.
     \item MSRC:
-    Stellt für jede für sie relevante CVE pro betroffenen Produkt über die numerische Produkt-Id einen CVSS-Vektor zur Verfügung.
-    Hier müssen mindestens alle betroffenen Vektoren mit der Produkt-Id als Bedingung aufgenommen werden.
-    \item CERT-SEI und GHSA: Stellen jeweils einen Vektor zur Verfügung.
+    Sie stellen für jede für Microsoft relevante Schwachstelle und pro betroffene (numerische) Produkt-Id einen CVSS-Vektor zur Verfügung.
+    \item CERT-SEI und GHSA: Stellen jeweils einen Vektor pro referenzierter Schwachstelle zur Verfügung.
 \end{itemize}
 
-Ein System für eine kontinuierlich aggregierende Liste an CVSS-Vektoren wird also benötigt, das die Quelle (source), den Vektor an sich und eine optionale Anwendbarkeitsbedingung (condition) ablegen kann.
+Aus diesen Anforderungen wurde das in Listing \ref{lst:cvss-source-format} abgebildete Format entworfen, wobei jede der drei Optionen gültig ist.
+Eine Quelle besteht immer aus der Vektor-Version (CvssVersion) und der Entität, die den Vektor auf ihrer Platform zur Verfügung stellen (HostingEntity).
+Eine Entität kann sich beispielsweise auf die NVD, MSRC, GHSA, usw\ldots beziehen.
+Wenn die herausgebende Entität (HostingEntity) und die Entität, die den Vektor initial zur Verfügung gestellt hat (IssuingEntity), sich unterscheiden, müssen diese beide mit angegeben werden.
+In gewissen externen Schwachstelldatenbanken werden die Issuing Entities unter einem gewissen Rollennamen geführt, wie die CNAs bei der NVD\.
+In diesem Fall muss auch die IssuerRole in der Mitte angegeben werden.
 
+Zum Ablegen dieser Werte getrennt voneinander kann eine beliebige Datenstruktur genutzt werden, falls die Quelle jedoch als String serialisiert werden soll, muss sie auf eine besondere Weise formatiert werden:
+In den Entities und im Rollenbezeichner müssen zunächst alle Bindestriche (\qt{-}) mit einem \qt{\\}-Symbol escaped werden und alle restlichen \qt{\\} durch \qt{\\\\}.
+Damit ist es möglich, die in Listing \ref{lst:cvss-source-format} angegeben Bindestriche als Trennzeichen für die einzelnen Elemente zu verwenden.
+Da eine CVSS-Version kein Leerzeichen enthält, kann hier einfach das erste Leerzeichen als Trennung zwischen Version und den restlichen Elementen verwendet werden.
+
+Das System muss allerdings auch kombinierte Vektoren und deren kombinierte Quellen unterstützen.
+Hierfür wird eine Erweiterung des Formats eingeführt, bei dem die Zeichenfolge \qt{ + } als Trennung für mehrere Quellen dienen kann, wie in Listing \ref{lst:cvss-source-format-combined} zu sehen.
+Natürlich macht es dies nötig, auch Plus-Zeichen (\qt{+}) in den Quellen mit \qt{\\+} zu ersetzen.
+Die Vektor-Version muss dennoch nur einmal angegeben werden, da es unmöglich ist, Vektoren unterschiedlicher Version miteinander zu kombinieren.
+Laut Format-Definition müssen die Quellen ist die Reihenfolge der Quellen signifikant, da die erste Quelle den ursprünglichen Vektor repräsentiert und die darauf folgenden, in gelisteter Reihenfolge, auf diesen angewandt wurden,
+
+\begin{lstlisting}[language={}, label={lst:cvss-source-format}, caption={CVSS Sources Format}]
+CvssVersion HostingEntity
+CvssVersion HostingEntity-IssuingEntity
+CvssVersion HostingEntity-IssuerRole-IssuingEntity
+\end{lstlisting}
+
+\begin{lstlisting}[language={}, label={lst:cvss-source-format-combined}, caption={CVSS Sources Format}]
+CvssVersion HostingEntity-IssuerRole-IssuingEntity + HostingEntity-IssuerRole-IssuingEntity + ...
+\end{lstlisting}
+
+Einige Beispiele für Quellen sind in Listing \ref{lst:cvss-source-format-examples} zu finden.
+Dieses Format wird in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} weiter verwendet.
+
+\begin{lstlisting}[language={}, label={lst:cvss-source-format-examples}, caption={CVSS Sources Format}]
+CVSS:3.1 Microsoft Corporation
+CVSS:2.0 Assessment-all
+CVSS:2.0 NVD-CNA-NVD
+CVSS:3.1 NVD-CNA-Microsoft Corporation
+CVSS:4.0 Assessment-lower
+\end{lstlisting}
+
+Um den einzelnen Entitäten Metadaten, wie die E-Mail Adressen der zuständigen Institutionen und Organisationen oder URLs zu deren Homepages oder Datenquellen, zuordnen zu können, muss ein Datensatz aller bekannter Datenquellen aufgebaut werden, der diesen zugeordnet werden kann.
+Hierfür wurde ein Prozess entworfen, der automatisiert die Liste aller CNAs der NVD\footnote{\url{https://nvd.nist.gov/vuln/cvmap/search}} und einem Mirror davon, gehostet auf CVE.org\footnote{\url{https://www.cve.org/PartnerInformation/ListofPartners}}, abfragt und daraus eine JSON-Datei generiert, in der diese Informationen abgelegt und später wieder eingelesen werden können.
+Zu einigen ausgewählten Entitäten wird ein zusätzlicher, manueller Datensatz gepflegt, der weitere Informationen zu diesen trägt.
+
+\subsection{CVSS-Vektor Selektion} \label{subsec:projektbericht-loesungsweg-cvss-selection}
+
+Mit dem in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-source-management} erklärten Format werden ab Generation 3 des Vulnerability Monitorings der {\metaeffekt} alle Vektoren zu den gefundenen Schwachstellen mit in das Inventar der Komponenten aufgenommen.
+Generation 2 hat diese Multiplizität der Vektoren ignoriert und als Nebeneffekt des zuständigen Codes ein \qt{First-Come-First-Serve}-Verfahren für Vektoren verwendet, was eine bewusste Entscheidung eines interessierten Bewertungsteams von Anfang an ausschloss.
+Mit diesem neuen System, bei dem zunächst alle Vektoren aggregiert und erst in den Schritten ausgewertet werden, in denen sie visualisiert werden müssen, kann also zu jedem Zeitpunkt die genaue Quelle eines Vektors nachvollzogen werden.
+Wie die Selektion der CVSS-Vektoren funktioniert, wird in diesem Kapitel erklärt.
+
+Relevant ist auch noch, dass zu einer Schwachstelle pro Vektor-Version optional noch eine Bewertung angehängt werden kann.
+Dies führt zu den initialen (ab sofort als \qt{initial} bezeichnet) Vektoren auch noch modifizierte Vektoren ein (\qt{context}), die getrennt voneinander betrachtet werden müssen, da beide unterschiedliche Informationen vermitteln.
+
+Das Ziel dieses Prozesses ist es, zwei Vektoren aus der potenziell großen Menge an Vektoren unterschiedlicher Versionen zu erhalten, einen für initial und einen für context.
+Der Prozess muss komplett modular und konfigurierbar sein, er muss es erlauben zwischen verschiedenen Quellen priorisiert zu unterscheiden, Vektoren unterschiedlicher Quellen miteinander (potenziell bedingt) zu kombinieren und muss Logik enthalten, in bestimmten Fällen auch keinen Vektor zurückzugeben.
+Da jeder Selektor allerdings pro CVSS-Version einen Vektor zurückgibt und nicht nur einen, da er auf jeder Version unabhängig voneinander operiert, muss ein weiterer Schritt dahintergeschaltet werden, der aus diesen dann einen finalen auswählt.
+Allgemein soll der Prozess also folgendermaßen sowohl für den effektiven initial-, als auch für den context-Vektor ablaufen:
+
+\begin{enumerate}
+    \item Ansammeln aller CVSS-Vektoren einer Schwachstelle.
+    Dies inkludiert zunächst alle Vektoren, die direkt von der Schwachstelle selbst referenziert werden, also von den Schwachstellen-Herausgebern angehängt wurden.
+    Dann werden alle Security Advisories ausgewertet, die von der Schwachstelle referenziert werden, um deren Vektoren auch hinzuzufügen.
+    Hier ist zu beachten, dass manche Vektoren nur bedingt hinzugefügt werden können, wie bei den Microsoft-Vektoren, die nur dann anwendbar sind, wenn eine entsprechende Produkt-Id auf einer Software-Komponente vorhanden ist.
+    \item Nutze einen Selektor, um aus allen aggregierten Vektoren eine reduzierte Menge zu bilden, die pro Version nur einen Vektor enthält.
+    \item Eine weitere Regel wird dann benutzt, um zwischen den unterschiedlichen Versionen zu entscheiden und nur einen zurückzugeben, der dann für weitere Berechnungen verwendet werden kann.
+\end{enumerate}
+
+Um die Einordnung des Themas zu vereinfachen, wird dieser Prozess anhand eines Beispiels mit dem Betriebssystem \qt{Windows 10 Pro} mit frei erdachten, jedoch realistischen Schwachstellen, Security Advisories und Vektor-Quellen durchgeführt.
+Da das System eine Eingabe braucht, wird zunächst, begleitet durch Schaubild \ref{fig:cvss-selection-process-collection}, ein angereichertes Inventar gebaut.
+Dieses Betriebssystem, als Komponente, durchläuft die Inventory Enrichment Pipeline, wie in Kapitel \ref{subsec:projektbericht-grundlagen-vulnerability-monitoring} beschrieben, und bekommt damit die gefundenen Schwachstellen und Security Advisories angehängt.
+Diese haben jeweils wieder potentiell mehrere CVSS-Vektoren, die sie wiederrum der Komponente beitragen können.
+Zudem werden alle Vektor-Modifikationen von manuellen Bewertungen als \qt{Assessment}-Vektoren ebenfalls mitaufgenommen.
+Diese Ergebnisliste an Vektoren dient nun dem eigentlichen Auswahlprozess als Eingabe und wird im Folgenden erklärt.
+
+\begin{figure}[htbp] % here, top, bottom, separate page
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-collection}
+    \caption{Initialer Zuordnungs- und Sammelungsschritt für Schwachstelldaten und CVSS-Vektoren}
+    \label{fig:cvss-selection-process-collection}
+\end{figure}
+
+Die nun gesammelten Vektoren werden nun den Selektionsprozess durchlaufen, wie in Schaubild \ref{fig:cvss-selection-process-selection} zu verfolgen.
+
+\begin{enumerate}
+    \item TODO
+\end{enumerate}
+
+\begin{figure}[htbp] % here, top, bottom, separate page
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection}
+    \caption{Selektionsvorgang für CVSS-Vektoren zur Reduktion auf einen pro Selektor}
+    \label{fig:cvss-selection-process-selection}
+\end{figure}
 
 \subsection{Universal CVSS Calculator} \label{subsec:projektbericht-loesungsweg-typescript-cvss-online-calculator}
