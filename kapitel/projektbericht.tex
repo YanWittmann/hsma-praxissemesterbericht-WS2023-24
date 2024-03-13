@@ -216,10 +216,29 @@ Zu einigen ausgewählten Entitäten wird ein zusätzlicher, manueller Datensatz 
 
 \subsection{CVSS-Vektor Selektion} \label{subsec:projektbericht-loesungsweg-cvss-selection}
 
-Mit dem in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-source-management} erklärten Format werden ab Generation 3 des Vulnerability Monitorings der {\metaeffekt} alle Vektoren zu den gefundenen Schwachstellen mit in das Inventar der Komponenten aufgenommen.
-Generation 2 hat diese Multiplizität der Vektoren ignoriert und als Nebeneffekt des zuständigen Codes ein \qt{First-Come-First-Serve}-Verfahren für Vektoren verwendet, was eine bewusste Entscheidung eines interessierten Bewertungsteams von Anfang an ausschloss.
+Mit dem Format aus Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-source-management} werden ab Generation 3 des Vulnerability Monitorings der {\metaeffekt} ALLE Vektoren zu den gefundenen Schwachstellen mit in das Inventar der Komponenten aufgenommen.
+Generation 2 dieses Systems hat diese Multiplizität der Vektoren einfach übergangen, und als Nebeneffekt des zuständigen Codes ein \qt{First-Come-First-Serve}-Verfahren für die Vektoren angewendet, was eine bewusste Entscheidung eines interessierten Bewertungsteams von Anfang an ausschloss.
 Mit diesem neuen System, bei dem zunächst alle Vektoren aggregiert und erst in den Schritten ausgewertet werden, in denen sie visualisiert werden müssen, kann also zu jedem Zeitpunkt die genaue Quelle eines Vektors nachvollzogen werden.
-Wie die Selektion der CVSS-Vektoren funktioniert, wird in diesem Kapitel erklärt.
+Die Funktionsweise der CVSS-Vektor-Selektion wird in diesem Kapitel erklärt.
+
+Konzeptionell ist vor Beginn erneut zu betonen, dass die Auswahl der, von den vorhergegangenen Prozessschritten angesammelten, Vektoren wirklich erst ab den Schritten geschieht, in denen sie auf egal welcher Art und Weise dargestellt oder für weitere Berechnungen benötigt werden.
+Die Selektion bezieht sich immer auf die Vektoren einer einzigen, vollständigen Schwachstelle.
+Dieser Prozess wird in zwei Teile geteilt, da für einige Use-Cases bereits das Zwischenergebnis von Interesse ist.
+
+Ein Schritt, der vor der Auswahl stattfinden muss, ist es, erst die relevanten Vektoren einer Schwachstelle zusammenzusammeln.
+Hierfür gibt es einige Fälle die beachtet werden müssen:
+Natürlich werden alle Vektoren, die direkt auf der Schwachstelle sind, direkt hinzugefügt.
+Einige Vektoren werden nicht von der Schwachstelle selbst, sondern von referenzierten Security Advisories beigetragen, also müssen auch diese eingesammelt werden.
+Doch nicht immer sind alle Vektoren anwendbar, zum Beispiel bei Vektoren von Microsoft gibt es Bedingungen, wann ein Vektor anwendbar ist.
+Diese Bedingungen müssen hier erst ausgewertet werden, wodurch Vektoren eventuell herausgefiltert werden.
+Zudem kann es sein, dass ein projektinternes Bewertungsteam eigene Vektoren für eine Schwachstelle vergeben hat, diese müssen natürlich auch berücksichtigt werden.
+
+Nachdem nun alle Vektoren angesammelt wurden, kann die Selektion losgehen.
+Die beiden Schritte, die diese Selektion ausmachen, sind die Folgenden:
+
+... siehe enumerate unten ... TODO
+
+---
 
 Relevant ist auch noch, dass zu einer Schwachstelle pro Vektor-Version optional noch eine Bewertung angehängt werden kann.
 Dies führt zu den initialen (ab sofort als \qt{initial} bezeichnet) Vektoren auch noch modifizierte Vektoren ein (\qt{context}), die getrennt voneinander betrachtet werden müssen, da beide unterschiedliche Informationen vermitteln.
@@ -252,10 +271,14 @@ Diese Ergebnisliste an Vektoren dient nun dem eigentlichen Auswahlprozess als Ei
     \label{fig:cvss-selection-process-collection}
 \end{figure}
 
-Die nun gesammelten Vektoren werden nun den Selektionsprozess durchlaufen, wie in Schaubild \ref{fig:cvss-selection-process-selection} zu verfolgen.
+Die nun gesammelten Vektoren werden nun den Selektionsprozess durchlaufen, wie auch bei einem realen Fall, in Schaubild \ref{fig:cvss-selection-process-selection} zu verfolgen.
 
 \begin{enumerate}
-    \item TODO
+    \item Zunächst müssen alle Vektoren, die im vorherigen Schritt gesammelt wurden, auf Anwendbarkeit gefiltert.
+    Hierbei fällt einer der Vektoren von Microsoft weg, da er nicht mit der Produkt-Id aus der Komponente übereinstimmt.
+    Die restlichen Vektoren werden einfach übernommen, da sie entweder keine Bedingung enthalten oder die Bedingung zutrifft.
+    \item Danach werden die beiden Selektoren ausgewertet, mit dem Ziel, je einen (eventuell kombinierten) Vektor pro Version zu erhalten.
+    TODO
 \end{enumerate}
 
 \begin{figure}[htbp] % here, top, bottom, separate page
