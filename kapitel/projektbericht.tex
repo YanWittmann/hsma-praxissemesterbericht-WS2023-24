@@ -152,7 +152,7 @@ Weitere Metriken wie das Risiko eines Verlusts an Konfidentialität, Integrität
 
 \section{Lösungsweg} \label{sec:projektbericht-loesungsweg}
 
-Dieses Kapitel wird in drei Unterkapitel gegliedert, die sich jeweils auf eine der drei Problemstellungen aus Kapitel \ref{sec:projektbericht-projektziel} beziehen.
+Dieses Kapitel wird in mehrere Unterkapitel gegliedert, die sich auf die Problemstellungen aus Kapitel \ref{sec:projektbericht-projektziel} beziehen.
 
 \subsection{Implementierung von CVSS 4.0} \label{subsec:projektbericht-loesungsweg-cvss-4-implementierung}
 
@@ -195,12 +195,12 @@ CvssVersion HostingEntity-IssuingEntity
 CvssVersion HostingEntity-IssuerRole-IssuingEntity
 \end{lstlisting}
 
-\begin{lstlisting}[language={}, label={lst:cvss-source-format-combined}, caption={CVSS-Quellen Format (Kombiniert)}]
+\begin{lstlisting}[language={}, label={lst:cvss-source-format-combined}, caption={CVSS-Quellen Format \(Kombiniert\)}]
 CvssVersion HostingEntity-IssuerRole-IssuingEntity + HostingEntity-IssuerRole-IssuingEntity + ...
 \end{lstlisting}
 
 Einige Beispiele für Quellen sind in Listing \ref{lst:cvss-source-format-examples} zu finden.
-Dieses Format wird in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} weiter verwendet.
+Dieses Format wird in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} als Basis zur Verwaltung und Selektion von Vektoren verwendet.
 
 \begin{lstlisting}[language={}, label={lst:cvss-source-format-examples}, caption={CVSS Sources Format}]
 CVSS:3.1 Microsoft Corporation
@@ -236,27 +236,27 @@ Zudem kann es sein, dass ein projektinternes Bewertungsteam eigene Vektoren für
 Um die Einordnung des Themas zu vereinfachen, wird dieser Prozess beispielhaft in Schaubild \ref{fig:cvss-selection-process-collection} mit dem Betriebssystem \qt{Windows 10 Pro} mit frei erdachten, jedoch realistischen Schwachstellen, Security Advisories und Vektor-Quellen durchgeführt.
 Dieses betroffene Betriebssystem durchläuft als Komponente die Inventory Enrichment Pipeline, wie in Kapitel \ref{subsec:projektbericht-grundlagen-vulnerability-monitoring} beschrieben, und bekommt damit die gefundenen Schwachstellen und Security Advisories angehängt.
 Nicht nur die Schwachstelle und die Security Advisories wurden mit CVSS-Vektoren versehen, sondern gab es auch mehrere Vektor-Modifikationen von manuellen Bewertungen als \qt{Assessment}-Vektoren.
+Das Beispiel wird in Kapitel \ref{subsubsec:projektbericht-loesungsweg-cvss-selection-example} mit der Selektion der Vektoren weitergeführt.
 
 \begin{figure}[htbp] % here, top, bottom, separate page
-\centering
-\includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-collection}
-\caption{Beispiel: Initialer Zuordnungs- und Sammelungsschritt für Schwachstelldaten und CVSS-Vektoren}
-\label{fig:cvss-selection-process-collection}
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-collection}
+    \caption{Beispiel: Initialer Zuordnungs- und Sammelungsschritt für Schwachstelldaten und CVSS-Vektoren}
+    \label{fig:cvss-selection-process-collection}
 \end{figure}
 
 Nachdem alle Vektoren angesammelt wurden, kann die Selektion gestartet werden, die, wie bereits erklärt, in zwei Teile aufgeteilt ist.
 Wichtig ist zudem, dass der Auswahlprozess in der Realität zwei Mal stattfinden muss, einmal für einen \qt{initial} und einen \qt{context} Selektor.
 Der Grund dafür ist, dass es für Kunden wichtig ist, die Nachvollziehbarkeit, welcher Vektor und Score von den externen Datenquellen gekommen ist und wie sie diesen durch ihre \qt{assessment}-Vektormodifikationen verändert haben.
-In Schaubild \ref{fig:cvss-selection-process-selection} ist dieser gesamte Prozess einmal abgebildet.
 
 \begin{enumerate}
-\item Detaillierte Erklärungen sind in Kapitel \ref{subsubsec:projektbericht-loesungsweg-cvss-selection-rules-1} zu finden.
-Nutze einen Selektor, um aus allen aggregierten Vektoren eine reduzierte Menge zu bilden, die pro Version nur einen Vektor enthält.
-Diese Vektoren werden für Radardiagramme als Übersicht und zur Aufschlüsselung der unterschiedlichen Einschätzungen und Interpretationen zwischen den Versionen verwendet.
-Dieser Schritt macht den Hauptteil der Berechnungslogik aus, da er hoch anpassbar sein soll.
-\item Detaillierte Erklärungen sind in Kapitel \ref{subsubsec:projektbericht-loesungsweg-cvss-selection-rules-2} zu finden.
-Eine weitere Regel wird dann auf diesem ersten Ergebnis benutzt, um zwischen den unterschiedlichen Versionen zu entscheiden und einen als effektiven Vektor für die Schwachstelle zu bestimmen.
-Dieser wird für die Repräsentation der Schwachstelle in weiteren Diagrammen und Tabellen verwendet, da eine Differenzierung zwischen Versionen auf solch einem höheren Betrachtungslevel nicht sinnvoll oder relevant ist.
+    \item
+    Nutze einen Selektor, um aus allen aggregierten Vektoren eine reduzierte Menge zu bilden, die pro Version nur einen Vektor enthält.
+    Diese Vektoren werden für Radardiagramme als Übersicht und zur Aufschlüsselung der unterschiedlichen Einschätzungen und Interpretationen zwischen den Versionen verwendet.
+    Dieser Schritt macht den Hauptteil der Berechnungslogik aus, da er hoch anpassbar sein soll.
+    \item
+    Eine weitere Regel wird dann auf diesem ersten Ergebnis benutzt, um zwischen den unterschiedlichen Versionen zu entscheiden und einen als effektiven Vektor für die Schwachstelle zu bestimmen.
+    Dieser wird für die Repräsentation der Schwachstelle in weiteren Diagrammen und Tabellen verwendet, da eine Differenzierung zwischen Versionen auf solch einem höheren Betrachtungslevel nicht sinnvoll oder relevant ist.
 \end{enumerate}
 
 \subsubsection{Schritt 1: Selektionsregeln} \label{subsubsec:projektbericht-loesungsweg-cvss-selection-rules-1}
@@ -265,53 +265,62 @@ Allgemein ist der Selektionsschritt in drei Abschnitte aufteilbar.
 Der erste sucht in potenziell mehreren Schritten, definiert durch gekapselte Regeln, Vektoren aus der aggregierten Menge an Vektoren heraus und kombiniert diese auf eine definierbare Weise.
 Die darauf folgenden beiden Schritte dienen zur Auswertung des Ergebnisvektors, um diesen eventuell noch einmal zu manipulieren oder etwa in bestimmten Situationen gar keinen zurückzugeben.
 
-Ein Beispiel für diese Schritte kann in Schaubild \ref{fig:cvss-selection-process-selection} gefunden werden.
-Ein Auszu der Klasse mit ihren Attributen, die für die Selektion aus Schritt 1 zuständig ist, kann in Listing \ref{lst:cvss-selector-class-attributes} gesehen werden.
+Ein Auszug der relevanten Klasse mit ihren Attributen, die für die Selektion aus Schritt 1 zuständig sind, kann in Listing \ref{lst:cvss-selector-class-attributes} gefunden werden.
+Der volle Quellcode mit der zusätzlichen Selektionslogik kann auf dem öffentlichen Repository\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/24a26dd37ab6f9087e2fdc1b338857b404fa835e/libraries/ae-security/src/main/java/org/metaeffekt/core/security/cvss/processor/CvssSelector.java}} gefunden werden.
+Eine weitere Anfrorderung für dieses Prozess ist es, komplett als JSON-Objekt serialisierbar zu sein, aus dem dann wieder eine identische Java-Objektstruktur aufgebaut werden kann.
+Im Quellcode werden darum einige Konvertierungsmethoden zur Verfügung gestellt.
 
 \begin{lstlisting}[language=Java, label={lst:cvss-selector-class-attributes}, caption={CVSS-Selektor Klassen}]
-public class CvssSelector implements Cloneable {
-    private final List<CvssRule> rules;
-    private final List<SelectorStatsEvaluator> statsEvaluatorActions;
-    private final List<SelectorVectorEvaluator> selectorVectorEvaluators;
+public class CvssSelector {
+    // Diese Attribute werden in den folgenden Sektionen erklärt:
+    List<CvssRule> rules; // 1.1
+    List<SelectorStatsEvaluator> statsEvaluatorActions; // 1.2
+    List<SelectorVectorEvaluator> selectorVectorEvaluators; // 1.3
 
-    public static class CvssRule implements Cloneable {
-        private final SourceSelector sourceSelector;
-        private final MergingMethod mergingMethod;
-        private final List<SelectorStatsCollector> statsCollectors;
-        private final List<SelectorVectorEvaluator> vectorEvaluators;
+    public static class CvssRule {
+        SourceSelector sourceSelector;
+        MergingMethod mergingMethod;
+        List<SelectorStatsCollector> statsCollectors;
+        List<SelectorVectorEvaluator> vectorEvaluators;
     }
 
-    public static class SourceSelector implements Cloneable {
-        private final List<SourceSelectorEntry> preferredSources;
+    public static class SourceSelector {
+        List<SourceSelectorEntry> preferredSources;
     }
 
-    public static class SourceSelectorEntry implements Cloneable {
-        private final List<SourceSelectorEntryEntry<CvssEntity>> hostingEntities;
-        private final List<SourceSelectorEntryEntry<CvssEntity>> issuingEntities;
-        private final List<SourceSelectorEntryEntry<CvssIssuingEntityRole>> issuingEntityRoles;
+    public static class SourceSelectorEntry {
+        List<SourceSelectorEntryEntry<CvssEntity>> hostingEntities;
+        List<SourceSelectorEntryEntry<CvssEntity>> issuingEntities;
+        List<SourceSelectorEntryEntry<CvssIssuingEntityRole>> issuingEntityRoles;
     }
 
-    public static class SourceSelectorEntryEntry<T extends CvssSource.EntityNameProvider> implements Cloneable {
-        private final T value;
-        private final boolean inverted;
+    public static class SourceSelectorEntryEntry<T extends CvssSource.EntityNameProvider> {
+        T value;
+        boolean inverted;
     }
 
-    public static class SelectorStatsCollector implements Cloneable {
-        private final String attributeName;
-        private final StatsCollectorProvider provider;
-        private final StatsCollectorSetType setType;
+    public static class SelectorStatsCollector {
+        String attributeName;
+        StatsCollectorProvider provider;
+        StatsCollectorSetType setType;
     }
 
-    public static class SelectorVectorEvaluator implements Cloneable {
-        private final Map<VectorEvaluatorOperation, Boolean> operations; // AND; can be inverted
-        private final EvaluatorAction action;
+    public static class SelectorVectorEvaluator {
+        // operations are combined using AND
+        // individual operations can be inverted by setting value to true
+        Map<VectorEvaluatorOperation, Boolean> operations;
+        EvaluatorAction action;
     }
 
-    public static class SelectorStatsEvaluator implements Cloneable {
-        private final String attributeName;
-        private final StatsEvaluatorOperation comparator;
-        private final EvaluatorAction action;
-        private final Integer comparisonValue;
+    public static class SelectorStatsEvaluator {
+        String attributeName;
+        StatsEvaluatorOperation comparator;
+        EvaluatorAction action;
+        Integer comparisonValue;
+    }
+
+    public enum MergingMethod {
+        ALL, LOWER, HIGHER, OVERWRITE
     }
 
     public enum StatsCollectorProvider {
@@ -336,58 +345,120 @@ public class CvssSelector implements Cloneable {
 }
 \end{lstlisting}
 
-\paragraph{Regeln zur Vektor-Selektion und Kombination}
+\paragraph{Schritt 1.1: Regeln zur Vektor-Selektion und -Kombination}
 
-\paragraph{Statistics Evaluators (Statistik-Auswerter)}
+Die Logik zur Vektor-Selektion und -Kombination besteht aus einer sequenziellen Menge an Regeln, die jeweils definieren, welchen Vektor sie auswählen, wie damit umgegangen werden soll, falls einer/keiner gefunden wurde und ob nutzerdefinierte Variablen modifiziert werden sollen.
+Zunächst werden die im Code in der Klasse \code{SourceSelector} als \code{SourceSelectorEntry} benannten Regeleinträge erlkärt.
+Diese Klassen verwendet die Vektor-Quellennotation, wie in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-source-management} aufgeführt, zur Eingrenzung des Vektors, der ausgewält werden soll.
+Die einzelnen Einträge erlauben es, Hosting- und Issuing-Entities und eine Issuing Role anzugeben, mit Sonderwerten von \qt{*} für das matchen von beliebigen, aber nicht-leeren Werten und \qt{null}, um einen leeren Wert zu verlangen, die gegen jeden Vektor der Eingangsvektoren gehalten werden.
+Das Ergebnis kann optional durch einen weiteren Parameter bei jeder Auswertung invertiert werden, um komplexere Abfragen zu erlauben.
+Der erste erfolgreiche Eintrag, der einen Vektor findet, wird an die obere Ebene zurückgegeben, was die Definition von fallback-Strategien ermöglicht.
 
-\paragraph{Vector Evaluators}
+% Horizontal is this instance, vertical is the parameter.
+% |       | ANY | value | null |
+% |-------|-----|-------|------|
+% | ANY   | Y   | Y     | Y    |
+% | value | Y   | ==    | N    |
+% | null  | N   | N     | Y    |
+
+Wenn von den Selektoren ein Vektor zurückgegeben wurde, wird über eine \code{MergingMethod} definiert, auf welche Art dieser auf den der vorherigen Regel angewendet werden sollte.
+Die häufigste Methode ist \code{ALL}, welche einfach alle Metriken, die von dem gefundenen Vektor definiert sind, auf dem vorherigen setzt.
+Weitere Optionen sind \code{HIGHER} und \code{LOWER}, welche Metriken nur dann anwenden, wenn der daraus entstehende Vektor einen gleichen oder höheren/niedrigeren Score, je nach Methode, hervorbringt.
+Dies ist nützlich bei Assessment-Vektoren (vom Bewertungsteam ausgestellten), die global auf ein gesamtes Inventar zur begründeten Herunterstufung der Schwachstellen angewendet werden sollen, wie, wenn die Applikation vom Internet komplett abgeschirmt ist oder eine andere Metrik für einen Kontext nicht relevant ist.
+Die letzte Option ist \code{OVERWRITE}, welche einfach vollständig den vorherigen Vektor durch den neuen ersetzt.
+
+Beim Anwenden dieser Vektoren werden über die \code{SelectorStatsCollector} verschiedene ganzzahlig numerische Statistiken in benutzerdefinierte Variablen für die \qt{Statistics Evaluators} in Schritt 1.2 getrackt.
+Beispielsweise kann ein \qt{Statistics Collector} erstellt werden, der trackt, ob ein Vektor von einer gewissen Regel gefunden wurde (präsenz-Check), oder wie viele Metriken von diesem angewandt wurden (wurde der Vektor modifiziert?), was bei den Methoden \code{HIGHER} und \code{LOWER} nützlich sein kann.
+Diese Variablen werden bis zum Schritt 1.2 gesichert, bei dem sie ausgewertet werden können.
+
+Zuletzt können pro Regel noch einige Checks mit \code{SelectorVectorEvaluator} durchgeführt werden.
+Diese können Aktionen über \code{EvaluatorAction} auslösen, wie den Prozess komplett scheitern zu lassen, einen leeren Vektor zurückzugeben, diese Regel zu überspringen oder an der vorherigen Regel abzubrechen.
+Diese Checks können optional invertiert werden.
+
+\paragraph{Schritt 1.2: Statistics Evaluators (Statistik-Auswerter)}
+
+Nun, da in Schritt 1.1 von den Regeln ein einziger, kombinierter Vektor gebaut wurde, können optional einige der \qt{Statistics Collectors} über die \code{SelectorStatsEvaluator} ausgewertet werden.
+Hier werden die typischen numerische Vergleichsmethoden wie größer, kleiner, Gleichheit, und so weiter zur Verfügung gestellt, um auch hier die Aktionen aus \code{EvaluatorAction} ausführen zu können.
+
+\paragraph{Schritt 1.3: Vector Evaluators}
+
+Abschließende Checks auf dem Ergebnisvektor können wieder über die \code{SelectorVectorEvaluator} durchgeführt werden und über \code{EvaluatorAction} Aktionen auslösen, wie bereits in Schritt 1.1 erklärt.
+Dieser Prozess wird, wie bereits erklärt, im Prozess der {\metaeffekt} einmal pro Vektorversion (2.0, 3.1, 4.0) mit je zwei Selektoren (initial, context) durchgeführt und ergibt damit kombinatorisch eine Menge von bis zu sechs Vektoren.
 
 \subsubsection{Schritt 2: Versions-Selektionsregeln} \label{subsubsec:projektbericht-loesungsweg-cvss-selection-rules-2}
 
-Dieser Schritt ist wesentlich einfacher gestaltet, da er nur noch angeben muss, von welcher Vektor-Version der effektive Vektor sein soll.
-Die Optionen hier sind die Folgenden TODO.
+Dieser Schritt ist wesentlich einfacher als Schritt 1, da er nur noch angeben muss, von welcher Vektor-Version der effektive Vektor gewählt werden soll.
+Die verfügbaren Werte sind in Listing \ref{lst:cvss-selector-version-selector} zu sehen.
+Es gibt zwei Kategorien, einmal auf die Vektorversion (mit latest, oldest und den einzelnen version 2, 3 und 4) und einmal auf die Werte der Scores (höchster, niedrigster) bezogenen.
+Die zwei Meistverwendeten sind \code{LATEST}, gefolgt von \code{HIGHEST}.
 
----
+\begin{lstlisting}[language=Java, label={lst:cvss-selector-version-selector}, caption={CVSS-Selektor Klassen}]
+public enum CvssScoreVersionSelectionPolicy {
+    HIGHEST, LOWEST, LATEST, OLDEST, V2, V3, V4
+}
+\end{lstlisting}
 
-Relevant ist auch noch, dass zu einer Schwachstelle pro Vektor-Version optional noch eine Bewertung angehängt werden kann.
-Dies führt zu den initialen (ab sofort als \qt{initial} bezeichnet) Vektoren auch noch modifizierte Vektoren ein (\qt{context}), die getrennt voneinander betrachtet werden müssen, da beide unterschiedliche Informationen vermitteln.
+\subsubsection{Beispiel zur Vektorselektion} \label{subsubsec:projektbericht-loesungsweg-cvss-selection-example}
 
-Das Ziel dieses Prozesses ist es, zwei Vektoren aus der potenziell großen Menge an Vektoren unterschiedlicher Versionen zu erhalten, einen für initial und einen für context.
-Der Prozess muss komplett modular und konfigurierbar sein, er muss es erlauben zwischen verschiedenen Quellen priorisiert zu unterscheiden, Vektoren unterschiedlicher Quellen miteinander (potenziell bedingt) zu kombinieren und muss Logik enthalten, in bestimmten Fällen auch keinen Vektor zurückzugeben.
-Da jeder Selektor allerdings pro CVSS-Version einen Vektor zurückgibt und nicht nur einen, da er auf jeder Version unabhängig voneinander operiert, muss ein weiterer Schritt dahintergeschaltet werden, der aus diesen dann einen finalen auswählt.
-Allgemein soll der Prozess also folgendermaßen sowohl für den effektiven initial-, als auch für den context-Vektor ablaufen:
+Das Beispiel, begonnen unter Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} im Schaubild \ref{fig:cvss-selection-process-collection} wird hier mit den aggregierten Vektoren fortgeführt.
+Um die Selektion durchzuführen werden die beiden folgenden Selektoren für initial und context verwendet, die dank einer \code{CvssSelector.explain()}-Methode als menschenlesbarer Text dargestellt werden können.
+Diese gezeigten und verwendeten Selektoren sind auch die, die als Standard-Werte im Produktionscode\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/1f0a1f6ac5e8343e10ea182794faf534bdfb3310/libraries/ae-inventory-processor/src/main/java/org/metaeffekt/core/inventory/processor/report/configuration/CentralSecurityPolicyConfiguration.java#L568}} eingetragen sind.
 
-\begin{enumerate}
-\item Ansammeln aller CVSS-Vektoren einer Schwachstelle.
-Dies inkludiert zunächst alle Vektoren, die direkt von der Schwachstelle selbst referenziert werden, also von den Schwachstellen-Herausgebern angehängt wurden.
-Dann werden alle Security Advisories ausgewertet, die von der Schwachstelle referenziert werden, um deren Vektoren auch hinzuzufügen.
-Hier ist zu beachten, dass manche Vektoren nur bedingt hinzugefügt werden können, wie bei den Microsoft-Vektoren, die nur dann anwendbar sind, wenn eine entsprechende Produkt-Id auf einer Software-Komponente vorhanden ist.
-\item Nutze einen Selektor, um aus allen aggregierten Vektoren eine reduzierte Menge zu bilden, die pro Version nur einen Vektor enthält.
-\item Eine weitere Regel wird dann benutzt, um zwischen den unterschiedlichen Versionen zu entscheiden und nur einen zurückzugeben, der dann für weitere Berechnungen verwendet werden kann.
-\end{enumerate}
+\paragraph{CVSS-Selektor \qt{initial}} \label{par:projektbericht-loesungsweg-cvss-selection-example-selector-initial}
 
-Um die Einordnung des Themas zu vereinfachen, wird dieser Prozess anhand eines Beispiels mit dem Betriebssystem \qt{Windows 10 Pro} mit frei erdachten, jedoch realistischen Schwachstellen, Security Advisories und Vektor-Quellen durchgeführt.
-Da das System eine Eingabe braucht, wird zunächst, begleitet durch Schaubild \ref{fig:cvss-selection-process-collection}, ein angereichertes Inventar gebaut.
-Dieses Betriebssystem, als Komponente, durchläuft die Inventory Enrichment Pipeline, wie in Kapitel \ref{subsec:projektbericht-grundlagen-vulnerability-monitoring} beschrieben, und bekommt damit die gefundenen Schwachstellen und Security Advisories angehängt.
-Diese haben jeweils wieder potentiell mehrere CVSS-Vektoren, die sie wiederrum der Komponente beitragen können.
-Zudem werden alle Vektor-Modifikationen von manuellen Bewertungen als \qt{Assessment}-Vektoren ebenfalls mitaufgenommen.
-Diese Ergebnisliste an Vektoren dient nun dem eigentlichen Auswahlprozess als Eingabe und wird im Folgenden erklärt.
+The [initial] CVSS Selector contains [1] rule that will be applied in the following order:\newline
+- The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]\newline
+From the selected vector, [all] vector components are applied to the resulting vector.
 
-Die nun gesammelten Vektoren werden nun den Selektionsprozess durchlaufen, wie auch bei einem realen Fall, in Schaubild \ref{fig:cvss-selection-process-selection} zu verfolgen.
+\paragraph{CVSS-Selektor \qt{context}} \label{par:projektbericht-loesungsweg-cvss-selection-example-selector-context}
 
-\begin{enumerate}
-\item Zunächst müssen alle Vektoren, die im vorherigen Schritt gesammelt wurden, auf Anwendbarkeit gefiltert.
-Hierbei fällt einer der Vektoren von Microsoft weg, da er nicht mit der Produkt-Id aus der Komponente übereinstimmt.
-Die restlichen Vektoren werden einfach übernommen, da sie entweder keine Bedingung enthalten oder die Bedingung zutrifft.
-\item Danach werden die beiden Selektoren ausgewertet, mit dem Ziel, je einen (eventuell kombinierten) Vektor pro Version zu erhalten.
-TODO
-\end{enumerate}
+The [context] CVSS Selector contains [4] rules that will be applied in the following order:\newline
+- The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]\newline
+From the selected vector, [all] vector components are applied to the resulting vector.\newline
+- If present, the [Assessment-*-all] vector is selected.\newline
+From the selected vector, [all] vector components are applied to the resulting vector.\newline
+The following [1] statistics collector will also be applied to the selected vector:\newline
+- If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].\newline
+- If present, the [Assessment-*-lower] vector is selected.\newline
+From the selected vector, only vector components that lead to a [lower or equal] score on the resulting vector are applied.\newline
+The following [1] statistics collector will also be applied to the selected vector:\newline
+- If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].\newline
+- If present, the [Assessment-*-higher] vector is selected.\newline
+From the selected vector, only vector components that lead to a [higher or equal] score on the resulting vector are applied.\newline
+The following [1] statistics collector will also be applied to the selected vector:\newline
+- If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].
+
+After finishing the cvss selection, [1] statistics evaluator will be applied to the resulting vector:\newline
+- If the stats collector attribute [assessment] is [equal] to [0], then [no vector is returned].\newline
+Additionally, [1] vector evaluator will be applied to the resulting vector:\newline
+- If the resulting vector is [not base fully defined], then [no vector is returned].
+
+\paragraph{Schritt 1: Aggregieren der Vektoren} \label{par:projektbericht-loesungsweg-cvss-selection-example-step-1}
 
 \begin{figure}[htbp] % here, top, bottom, separate page
-\centering
-\includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection}
-\caption{Selektionsvorgang für CVSS-Vektoren}
-\label{fig:cvss-selection-process-selection}
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-1}
+    \caption{Aggregierung der CVSS-Vektoren}
+    \label{fig:cvss-selection-process-selection-1}
 \end{figure}
+
+Dieser Abschnitt bezieht sich auf Schaubild \ref{fig:cvss-selection-process-selection-1}.
+Zunächst muss, als Eingabe für die Selektionsschritte, eine Menge an Vektoren gesammelt werden.
+Da sich dieses Beispiel auf die Schwachstelle \qt{CVE-2020-1234} aus dem vorhergegangenen Beispiel bezieht, werden auf jeden Fall alle Vektoren der Schwachstelle selbst und der referenzierten manuellen Bewertungen (\qt{Assessments}) aufgenommen.
+Die Vektoren der Security Advisories können jedoch mit Bedingungen versehen sein, welche erst ausgewertet werden müssen.
+In diesem Fall wird der Vektor, der sich auf die \qt{MS Product ID 1234} bezieht, herausgenommen, da auf der Komponente die andere Id \qt{5678} geführt wird.
+Microsoft gibt pro Produkt nur einen Vektor heraus, was dies erklärt.
+
+\paragraph{Schritt 2: Anwenden der CVSS-Selektoren} \label{par:projektbericht-loesungsweg-cvss-selection-example-step-2}
+
+\begin{figure}[htbp] % here, top, bottom, separate page
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-1}
+    \caption{Aggregierung der CVSS-Vektoren}
+    \label{fig:cvss-selection-process-selection-2}
+\end{figure}
+
+Dieser Abschnitt bezieht sich auf Schaubild \ref{fig:cvss-selection-process-selection-2}.
+TODO.
 
 \subsection{Universal CVSS Calculator} \label{subsec:projektbericht-loesungsweg-typescript-cvss-online-calculator}

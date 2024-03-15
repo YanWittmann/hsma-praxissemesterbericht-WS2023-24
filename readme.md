@@ -23,6 +23,10 @@ sudo apt update
 sudo apt install texlive-full
 
 git clone https://github.com/rmainer/latex-listings-powershell
+
+pdflatex praksem.tex
+biber praksem
+pdflatex praksem.tex
 pdflatex praksem.tex
 ```
 
