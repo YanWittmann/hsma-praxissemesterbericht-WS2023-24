@@ -69,6 +69,16 @@
 \fancyfoot[C]{\ } % keine Seitenzahl unten
 %\fancyfoot[R]{\textsf{\small Technische Informatik}}
 
+% Include subsubsections in the Table of Contents
+% -1 for part
+%  0 for chapter (only in report and book document classes)
+%  1 for section
+%  2 for subsection
+%  3 for subsubsection
+%  4 for paragraph
+%  5 for subparagraph
+\setcounter{tocdepth}{3}
+
 % Theorem-Umgebungen
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{satz}{Satz}[chapter]

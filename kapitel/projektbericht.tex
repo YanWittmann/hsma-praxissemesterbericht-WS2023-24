@@ -266,13 +266,13 @@ Der erste sucht in potenziell mehreren Schritten, definiert durch gekapselte Reg
 Die darauf folgenden beiden Schritte dienen zur Auswertung des Ergebnisvektors, um diesen eventuell noch einmal zu manipulieren oder etwa in bestimmten Situationen gar keinen zurückzugeben.
 
 Ein Auszug der relevanten Klasse mit ihren Attributen, die für die Selektion aus Schritt 1 zuständig sind, kann in Listing \ref{lst:cvss-selector-class-attributes} gefunden werden.
-Der volle Quellcode mit der zusätzlichen Selektionslogik kann auf dem öffentlichen Repository\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/24a26dd37ab6f9087e2fdc1b338857b404fa835e/libraries/ae-security/src/main/java/org/metaeffekt/core/security/cvss/processor/CvssSelector.java}} gefunden werden.
-Eine weitere Anfrorderung für dieses Prozess ist es, komplett als JSON-Objekt serialisierbar zu sein, aus dem dann wieder eine identische Java-Objektstruktur aufgebaut werden kann.
+Der volle Quellcode mit der vollen Logik kann auf dem öffentlichen Repository\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/24a26dd37ab6f9087e2fdc1b338857b404fa835e/libraries/ae-security/src/main/java/org/metaeffekt/core/security/cvss/processor/CvssSelector.java}} gefunden werden.
+Eine weitere Anforderung für das dahinterliegende Datenmodell der Selektoren ist es, komplett als JSON-Objekt serialisierbar zu sein, aus dem dann wieder eine identische Java-Objektstruktur aufgebaut werden kann.
 Im Quellcode werden darum einige Konvertierungsmethoden zur Verfügung gestellt.
 
 \begin{lstlisting}[language=Java, label={lst:cvss-selector-class-attributes}, caption={CVSS-Selektor Klassen}]
 public class CvssSelector {
-    // Diese Attribute werden in den folgenden Sektionen erklärt:
+    // Die folgenden Unterkapitel gehen auf diese Attributen ein:
     List<CvssRule> rules; // 1.1
     List<SelectorStatsEvaluator> statsEvaluatorActions; // 1.2
     List<SelectorVectorEvaluator> selectorVectorEvaluators; // 1.3
@@ -345,7 +345,7 @@ public class CvssSelector {
 }
 \end{lstlisting}
 
-\paragraph{Schritt 1.1: Regeln zur Vektor-Selektion und -Kombination}
+\paragraph{Schritt 1.1: Regeln zur Vektor-Selektion und -Kombination} \label{par:projektbericht-loesungsweg-cvss-selection-rules-1-1}
 
 Die Logik zur Vektor-Selektion und -Kombination besteht aus einer sequenziellen Menge an Regeln, die jeweils definieren, welchen Vektor sie auswählen, wie damit umgegangen werden soll, falls einer/keiner gefunden wurde und ob nutzerdefinierte Variablen modifiziert werden sollen.
 Zunächst werden die im Code in der Klasse \code{SourceSelector} als \code{SourceSelectorEntry} benannten Regeleinträge erlkärt.
@@ -377,13 +377,14 @@ Diese Checks können optional invertiert werden.
 
 \paragraph{Schritt 1.2: Statistics Evaluators (Statistik-Auswerter)}
 
-Nun, da in Schritt 1.1 von den Regeln ein einziger, kombinierter Vektor gebaut wurde, können optional einige der \qt{Statistics Collectors} über die \code{SelectorStatsEvaluator} ausgewertet werden.
+Nun, da in Schritt 1.1 (Unterkapitel von \ref{par:projektbericht-loesungsweg-cvss-selection-rules-1-1}) von den Regeln ein einziger, kombinierter Vektor gebaut wurde, können optional einige der \qt{Statistics Collectors} über die \code{SelectorStatsEvaluator} ausgewertet werden.
 Hier werden die typischen numerische Vergleichsmethoden wie größer, kleiner, Gleichheit, und so weiter zur Verfügung gestellt, um auch hier die Aktionen aus \code{EvaluatorAction} ausführen zu können.
 
 \paragraph{Schritt 1.3: Vector Evaluators}
 
 Abschließende Checks auf dem Ergebnisvektor können wieder über die \code{SelectorVectorEvaluator} durchgeführt werden und über \code{EvaluatorAction} Aktionen auslösen, wie bereits in Schritt 1.1 erklärt.
-Dieser Prozess wird, wie bereits erklärt, im Prozess der {\metaeffekt} einmal pro Vektorversion (2.0, 3.1, 4.0) mit je zwei Selektoren (initial, context) durchgeführt und ergibt damit kombinatorisch eine Menge von bis zu sechs Vektoren.
+
+Dieser komplette Prozess wird bei der {\metaeffekt} je einmal pro Vektorversion (2.0, 3.1, 4.0) mit jeweils zwei Selektoren (initial, context) durchgeführt und ergibt damit kombinatorisch eine Menge von bis zu sechs Vektoren.
 
 \subsubsection{Schritt 2: Versions-Selektionsregeln} \label{subsubsec:projektbericht-loesungsweg-cvss-selection-rules-2}
 
@@ -392,46 +393,58 @@ Die verfügbaren Werte sind in Listing \ref{lst:cvss-selector-version-selector} 
 Es gibt zwei Kategorien, einmal auf die Vektorversion (mit latest, oldest und den einzelnen version 2, 3 und 4) und einmal auf die Werte der Scores (höchster, niedrigster) bezogenen.
 Die zwei Meistverwendeten sind \code{LATEST}, gefolgt von \code{HIGHEST}.
 
-\begin{lstlisting}[language=Java, label={lst:cvss-selector-version-selector}, caption={CVSS-Selektor Klassen}]
+\begin{lstlisting}[language=Java, label={lst:cvss-selector-version-selector}, caption={Gültige Werte für die Versions-Selektion}]
 public enum CvssScoreVersionSelectionPolicy {
     HIGHEST, LOWEST, LATEST, OLDEST, V2, V3, V4
 }
 \end{lstlisting}
 
+Nach anwenden dieser beiden Schritte ist die Selektion vollständig durchgeführt.
+Im folgenden Abschnitt wird diser Prozess anhand eines Beispiels demonstriert.
+
 \subsubsection{Beispiel zur Vektorselektion} \label{subsubsec:projektbericht-loesungsweg-cvss-selection-example}
 
 Das Beispiel, begonnen unter Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} im Schaubild \ref{fig:cvss-selection-process-collection} wird hier mit den aggregierten Vektoren fortgeführt.
 Um die Selektion durchzuführen werden die beiden folgenden Selektoren für initial und context verwendet, die dank einer \code{CvssSelector.explain()}-Methode als menschenlesbarer Text dargestellt werden können.
-Diese gezeigten und verwendeten Selektoren sind auch die, die als Standard-Werte im Produktionscode\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/1f0a1f6ac5e8343e10ea182794faf534bdfb3310/libraries/ae-inventory-processor/src/main/java/org/metaeffekt/core/inventory/processor/report/configuration/CentralSecurityPolicyConfiguration.java#L568}} eingetragen sind.
+Diese gezeigten und verwendeten Selektoren sind auch die, die als Standard-Werte im Produktionscode\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/1f0a1f6ac5e8343e10ea182794faf534bdfb3310/libraries/ae-inventory-processor/src/main/java/org/metaeffekt/core/inventory/processor/report/configuration/CentralSecurityPolicyConfiguration.java\#L568}} eingetragen sind.
 
 \paragraph{CVSS-Selektor \qt{initial}} \label{par:projektbericht-loesungsweg-cvss-selection-example-selector-initial}
 
-The [initial] CVSS Selector contains [1] rule that will be applied in the following order:\newline
-- The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]\newline
-From the selected vector, [all] vector components are applied to the resulting vector.
+In Listing \ref{lst:cvss-selector-version-selector-example-initial} ist der Selektor aufgeführt, der im Folgenden als \qt{initial} bezeichnet wird.
+
+\begin{lstlisting}[language={}, label={lst:cvss-selector-version-selector-example-initial}, caption={Initialer CVSS-Selektor}]
+The [initial] CVSS Selector contains [1] rule that will be applied in the following order:
+- The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]
+  From the selected vector, [all] vector components are applied to the resulting vector.
+\end{lstlisting}
 
 \paragraph{CVSS-Selektor \qt{context}} \label{par:projektbericht-loesungsweg-cvss-selection-example-selector-context}
 
-The [context] CVSS Selector contains [4] rules that will be applied in the following order:\newline
-- The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]\newline
-From the selected vector, [all] vector components are applied to the resulting vector.\newline
-- If present, the [Assessment-*-all] vector is selected.\newline
-From the selected vector, [all] vector components are applied to the resulting vector.\newline
-The following [1] statistics collector will also be applied to the selected vector:\newline
-- If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].\newline
-- If present, the [Assessment-*-lower] vector is selected.\newline
-From the selected vector, only vector components that lead to a [lower or equal] score on the resulting vector are applied.\newline
-The following [1] statistics collector will also be applied to the selected vector:\newline
-- If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].\newline
-- If present, the [Assessment-*-higher] vector is selected.\newline
-From the selected vector, only vector components that lead to a [higher or equal] score on the resulting vector are applied.\newline
-The following [1] statistics collector will also be applied to the selected vector:\newline
-- If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].
+In Listing \ref{lst:cvss-selector-version-selector-example-context} ist der Selektor aufgeführt, der im Folgenden als \qt{context} bezeichnet wird.
+Er enthält die Basisregel des \qt{initial}-Selektors, und wird durch Regeln bezüglich der Assessment-Vektoren ergänzt, um eine kontextualisierte Sicht zu ermög.
 
-After finishing the cvss selection, [1] statistics evaluator will be applied to the resulting vector:\newline
-- If the stats collector attribute [assessment] is [equal] to [0], then [no vector is returned].\newline
-Additionally, [1] vector evaluator will be applied to the resulting vector:\newline
+\begin{lstlisting}[language={}, label={lst:cvss-selector-version-selector-example-context}, caption={Initialer CVSS-Selektor}]
+The [context] CVSS Selector contains [4] rules that will be applied in the following order:
+- The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]
+  From the selected vector, [all] vector components are applied to the resulting vector.
+- If present, the [Assessment-*-all] vector is selected.
+  From the selected vector, [all] vector components are applied to the resulting vector.
+  The following [1] statistics collector will also be applied to the selected vector:
+  - If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].
+- If present, the [Assessment-*-lower] vector is selected.
+  From the selected vector, only vector components that lead to a [lower or equal] score on the resulting vector are applied.
+  The following [1] statistics collector will also be applied to the selected vector:
+  - If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].
+- If present, the [Assessment-*-higher] vector is selected.
+  From the selected vector, only vector components that lead to a [higher or equal] score on the resulting vector are applied.
+  The following [1] statistics collector will also be applied to the selected vector:
+  - If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].
+
+After finishing the cvss selection, [1] statistics evaluator will be applied to the resulting vector:
+- If the stats collector attribute [assessment] is [equal] to [0], then [no vector is returned].
+Additionally, [1] vector evaluator will be applied to the resulting vector:
 - If the resulting vector is [not base fully defined], then [no vector is returned].
+\end{lstlisting}
 
 \paragraph{Schritt 1: Aggregieren der Vektoren} \label{par:projektbericht-loesungsweg-cvss-selection-example-step-1}
 
@@ -443,6 +456,7 @@ Additionally, [1] vector evaluator will be applied to the resulting vector:\newl
 \end{figure}
 
 Dieser Abschnitt bezieht sich auf Schaubild \ref{fig:cvss-selection-process-selection-1}.
+
 Zunächst muss, als Eingabe für die Selektionsschritte, eine Menge an Vektoren gesammelt werden.
 Da sich dieses Beispiel auf die Schwachstelle \qt{CVE-2020-1234} aus dem vorhergegangenen Beispiel bezieht, werden auf jeden Fall alle Vektoren der Schwachstelle selbst und der referenzierten manuellen Bewertungen (\qt{Assessments}) aufgenommen.
 Die Vektoren der Security Advisories können jedoch mit Bedingungen versehen sein, welche erst ausgewertet werden müssen.
@@ -453,12 +467,25 @@ Microsoft gibt pro Produkt nur einen Vektor heraus, was dies erklärt.
 
 \begin{figure}[htbp] % here, top, bottom, separate page
     \centering
-    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-1}
-    \caption{Aggregierung der CVSS-Vektoren}
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-2}
+    \caption{Auswerten der CVSS-Selektoren}
     \label{fig:cvss-selection-process-selection-2}
 \end{figure}
 
-Dieser Abschnitt bezieht sich auf Schaubild \ref{fig:cvss-selection-process-selection-2}.
-TODO.
+\begin{figure}[htbp] % here, top, bottom, separate page
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-3}
+    \caption{Ergebnisse der CVSS-Selektion}
+    \label{fig:cvss-selection-process-selection-3}
+\end{figure}
+
+\paragraph{Schritt 3: Anwenden der Versions-Selektion} \label{par:projektbericht-loesungsweg-cvss-selection-example-step-4}
+
+\begin{figure}[htbp] % here, top, bottom, separate page
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-4}
+    \caption{Anwenden der Versions-Selektion}
+    \label{fig:cvss-selection-process-selection-4}
+\end{figure}
 
 \subsection{Universal CVSS Calculator} \label{subsec:projektbericht-loesungsweg-typescript-cvss-online-calculator}
