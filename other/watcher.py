@@ -1,4 +1,5 @@
 import os
+import re
 import subprocess
 import time
 from pathlib import Path
@@ -29,8 +30,27 @@ while True:
 
     # Compare the new snapshot with the previous one
     if not filecmp.cmp(temp_file, temp_file_new, shallow=False):
-        print("Change detected. Executing commands...")
+        print("Change detected")
+
+        # find differences between the two files
+        with open(temp_file, 'r', encoding='utf-8') as f:
+            old_snapshot = f.readlines()
+        with open(temp_file_new, 'r', encoding='utf-8') as f:
+            new_snapshot = f.readlines()
+        diff = [line for line in new_snapshot if line not in old_snapshot]
+        diff = [re.sub(' +', ' ', line) for line in diff]
+        diff = [line.split('\n')[0] for line in diff]
+        for line in diff:
+            if re.match(r"^(\d+) Dir\(s\) (\d+) bytes free$", line):
+                print("False alarm: ", line)
+                continue
+            else:
+                print(" ", line)
+
+        os.chdir(directory / "res" / "grafiken")
+        subprocess.run(["python", "svg2pdf.py"], shell=True)
         os.chdir(directory)
+        create_snapshot(directory, temp_file_new)
 
         praksem_bib_file = directory / "praksem.bib"
         out_praksem_bib_file = Path("I:/projects/praxissemester/out") / "praksem.bib"
@@ -38,25 +58,36 @@ while True:
         subprocess.run(["copy", str(praksem_bib_file), str(out_praksem_bib_file)], shell=True)
 
         try:
-            pdflatex_output = subprocess.check_output(["C:/Users/yan20/AppData/Local/Programs/MiKTeX/miktex/bin/x64/pdflatex", "-file-line-error", "-interaction=nonstopmode", "-synctex=1", "-output-format=pdf", "-output-directory=I:/projects/praxissemester/out", "praksem.tex"], shell=True, text=True, encoding='utf-8')
+            pdflatex_output_bytes = subprocess.check_output(
+                ["C:/Users/yan20/AppData/Local/Programs/MiKTeX/miktex/bin/x64/pdflatex", "-file-line-error", "-interaction=nonstopmode", "-synctex=1", "-output-format=pdf", "-output-directory=I:/projects/praxissemester/out", "praksem.tex"],
+                shell=True
+            )
+            pdflatex_output = pdflatex_output_bytes.decode('utf-8', errors='replace')
+            print("got pdflatex_output with length", len(pdflatex_output))
         except subprocess.CalledProcessError as e:
             pdflatex_output = e.output
             print(pdflatex_output)
+        except Exception as e:
+            pdflatex_output = str(e)
+            print(e)
 
         # Check if the bib file was updated
         new_timestamp = os.path.getmtime(bib_file)
         with open(bib_timestamp_file, 'r', encoding='utf-8') as f:
             old_timestamp = f.read().strip()
 
-        if str(new_timestamp) != old_timestamp or "run biber" in pdflatex_output.lower():
-            with open(bib_timestamp_file, 'w', encoding='utf-8') as f:
-                f.write(str(new_timestamp))
+        try:
+            if str(new_timestamp) != old_timestamp or "run biber" in pdflatex_output.lower():
+                with open(bib_timestamp_file, 'w', encoding='utf-8') as f:
+                    f.write(str(new_timestamp))
 
-            os.chdir(Path("I:/projects/praxissemester/out"))
-            subprocess.run(["C:/Users/yan20/AppData/Local/Programs/MiKTeX/miktex/bin/x64/biber", "praksem"], shell=True)
-            os.chdir(directory)
-            for _ in range(2):  # Run pdflatex twice
-                subprocess.run(["C:/Users/yan20/AppData/Local/Programs/MiKTeX/miktex/bin/x64/pdflatex", "-file-line-error", "-interaction=nonstopmode", "-synctex=1", "-output-format=pdf", "-output-directory=I:/projects/praxissemester/out", "praksem.tex"], shell=True)
+                os.chdir(Path("I:/projects/praxissemester/out"))
+                subprocess.run(["C:/Users/yan20/AppData/Local/Programs/MiKTeX/miktex/bin/x64/biber", "praksem"], shell=True)
+                os.chdir(directory)
+                for _ in range(2):  # Run pdflatex twice
+                    subprocess.run(["C:/Users/yan20/AppData/Local/Programs/MiKTeX/miktex/bin/x64/pdflatex", "-file-line-error", "-interaction=nonstopmode", "-synctex=1", "-output-format=pdf", "-output-directory=I:/projects/praxissemester/out", "praksem.tex"], shell=True)
+        except Exception as e:
+            print("Error while running biber and pdflatex:", e)
 
         # Update the snapshot
         temp_file_new.replace(temp_file)

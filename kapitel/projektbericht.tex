@@ -404,47 +404,53 @@ Im folgenden Abschnitt wird diser Prozess anhand eines Beispiels demonstriert.
 
 \subsubsection{Beispiel zur Vektorselektion} \label{subsubsec:projektbericht-loesungsweg-cvss-selection-example}
 
-Das Beispiel, begonnen unter Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} im Schaubild \ref{fig:cvss-selection-process-collection} wird hier mit den aggregierten Vektoren fortgeführt.
+Das Beispiel, begonnen unter Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} im Schaubild \ref{fig:cvss-selection-process-collection}, wird hier mit den aggregierten Vektoren fortgeführt.
 Um die Selektion durchzuführen werden die beiden folgenden Selektoren für initial und context verwendet, die dank einer \code{CvssSelector.explain()}-Methode als menschenlesbarer Text dargestellt werden können.
 Diese gezeigten und verwendeten Selektoren sind auch die, die als Standard-Werte im Produktionscode\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/1f0a1f6ac5e8343e10ea182794faf534bdfb3310/libraries/ae-inventory-processor/src/main/java/org/metaeffekt/core/inventory/processor/report/configuration/CentralSecurityPolicyConfiguration.java\#L568}} eingetragen sind.
 
 \paragraph{CVSS-Selektor \qt{initial}} \label{par:projektbericht-loesungsweg-cvss-selection-example-selector-initial}
 
-In Listing \ref{lst:cvss-selector-version-selector-example-initial} ist der Selektor aufgeführt, der im Folgenden als \qt{initial} bezeichnet wird.
+Dies ist der Selektor, der im Folgenden als \qt{initial} bezeichnet wird.
 
-\begin{lstlisting}[language={}, label={lst:cvss-selector-version-selector-example-initial}, caption={Initialer CVSS-Selektor}]
-The [initial] CVSS Selector contains [1] rule that will be applied in the following order:
-- The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]
-  From the selected vector, [all] vector components are applied to the resulting vector.
-\end{lstlisting}
+\noindent The CVSS Selector contains 1 rule that will be applied in the following order:
+\begin{enumerate}[noitemsep]
+    \setlist{nolistsep}
+    \item The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]. From the selected vector, all vector components are applied to the resulting vector.
+\end{enumerate}
 
 \paragraph{CVSS-Selektor \qt{context}} \label{par:projektbericht-loesungsweg-cvss-selection-example-selector-context}
 
-In Listing \ref{lst:cvss-selector-version-selector-example-context} ist der Selektor aufgeführt, der im Folgenden als \qt{context} bezeichnet wird.
-Er enthält die Basisregel des \qt{initial}-Selektors, und wird durch Regeln bezüglich der Assessment-Vektoren ergänzt, um eine kontextualisierte Sicht zu ermög.
+Dies ist der Selektor, der im Folgenden als \qt{context} bezeichnet wird.
+Er enthält die Basisregel des \qt{initial}-Selektors, und wird durch Regeln bezüglich der Assessment-Vektoren ergänzt, um eine kontextualisierte Sicht zu ermöglichen.
 
-\begin{lstlisting}[language={}, label={lst:cvss-selector-version-selector-example-context}, caption={Initialer CVSS-Selektor}]
-The [context] CVSS Selector contains [4] rules that will be applied in the following order:
-- The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]
-  From the selected vector, [all] vector components are applied to the resulting vector.
-- If present, the [Assessment-*-all] vector is selected.
-  From the selected vector, [all] vector components are applied to the resulting vector.
-  The following [1] statistics collector will also be applied to the selected vector:
-  - If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].
-- If present, the [Assessment-*-lower] vector is selected.
-  From the selected vector, only vector components that lead to a [lower or equal] score on the resulting vector are applied.
-  The following [1] statistics collector will also be applied to the selected vector:
-  - If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].
-- If present, the [Assessment-*-higher] vector is selected.
-  From the selected vector, only vector components that lead to a [higher or equal] score on the resulting vector are applied.
-  The following [1] statistics collector will also be applied to the selected vector:
-  - If a vector is returned from the selection, [1] is added to the stats collector attribute [assessment].
+\noindent The CVSS Selector contains 4 rules that will be applied in the following order:
+\begin{enumerate}[noitemsep]
+    \setlist{nolistsep}
+    \item The first matching vector is selected: [NVD-CNA-NVD], [Microsoft Corporation-*-*], [NVD-CNA-Microsoft Corporation], [GitHub, Inc.-*-*], [NVD-CNA-GitHub, Inc.], [NVD-*-*], [CERT-SEI-*-*], [not:Assessment-*-*]. From the selected vector, all vector components are applied to the resulting vector.
+    \item If present, the [Assessment-*-all] vector is selected. From the selected vector, all vector components are applied to the resulting vector. The following 1 statistics collector will also be applied to the selected vector:
+    \begin{itemize}[noitemsep]
+        \item If a vector is returned from the selection, 1 is added to the stats collector attribute [assessment].
+    \end{itemize}
+    \item If present, the [Assessment-*-lower] vector is selected. From the selected vector, only vector components that lead to a lower or equal score on the resulting vector are applied. The following 1 statistics collector will also be applied to the selected vector:
+    \begin{itemize}[noitemsep]
+        \item If a vector is returned from the selection, 1 is added to the stats collector attribute [assessment].
+    \end{itemize}
+    \item If present, the [Assessment-*-higher] vector is selected. From the selected vector, only vector components that lead to a higher or equal score on the resulting vector are applied. The following 1 statistics collector will also be applied to the selected vector:
+    \begin{itemize}[noitemsep]
+        \item If a vector is returned from the selection, 1 is added to the stats collector attribute [assessment].
+    \end{itemize}
+\end{enumerate}
 
-After finishing the cvss selection, [1] statistics evaluator will be applied to the resulting vector:
-- If the stats collector attribute [assessment] is [equal] to [0], then [no vector is returned].
-Additionally, [1] vector evaluator will be applied to the resulting vector:
-- If the resulting vector is [not base fully defined], then [no vector is returned].
-\end{lstlisting}
+\noindent After finishing the CVSS selection, 1 statistics evaluator will be applied to the resulting vector:
+\begin{itemize}[noitemsep]
+    \setlist{nolistsep}
+    \item If the stats collector attribute [assessment] is equal to 0, then no vector is returned.
+\end{itemize}
+Additionally, 1 vector evaluator will be applied to the resulting vector:
+\begin{itemize}[noitemsep]
+    \setlist{nolistsep}
+    \item If the resulting vector is not base fully defined, then no vector is returned.
+\end{itemize}
 
 \paragraph{Schritt 1: Aggregieren der Vektoren} \label{par:projektbericht-loesungsweg-cvss-selection-example-step-1}
 
@@ -483,7 +489,7 @@ Microsoft gibt pro Produkt nur einen Vektor heraus, was dies erklärt.
 
 \begin{figure}[htbp] % here, top, bottom, separate page
     \centering
-    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-4}
+    \includegraphics[width=0.7\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-4}
     \caption{Anwenden der Versions-Selektion}
     \label{fig:cvss-selection-process-selection-4}
 \end{figure}
