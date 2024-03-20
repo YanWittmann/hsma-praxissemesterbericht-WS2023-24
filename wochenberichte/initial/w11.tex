@@ -1,0 +1,36 @@
+\section{Woche 11 - Transferieren der Datenklassen nach Core} \label{sec:bericht-wo-11-initial}
+
+% 2023-11-13 bis 2023-11-17
+
+\lweekdaymarginpar{\weekdayMondayLong}
+
+Ende letzter Woche hatte ich also alle CVSS-bezogenen Features implementiert und in den Anreicherungsprozess integriert, sodass das System nun in der Lage war, CVSS-Vektoren von beliebigen Datenquellen aufzunehmen und deren Quellen nachvollziehbar zu halten.
+Diesen Montag nutzte ich, um diese Vektoren und deren berechneten Scores im VAD, einem unserer Reporting-Outputs, anzuzeigen.
+Um die effektiven Vektoren zu berechnen, musste ich auch die CVSS-Selektion anwenden, was erstaunlich gut funktionierte.
+
+\sweekdaymarginpar{\weekdayTuesdayLong}
+
+Dienstagmorgen besprach ich mit meinem Chef die Integration dieser Änderungen in den PDF-Report unseres Core-Projekts.
+Wir konnten zwar zu dem Schluss kommen, dass es für die Codebasis sinnvoll wäre, sowohl das Datenmodell als auch das Reporting in separate Projekte auszulagern.
+Wie so oft in der Informatik entschieden wir uns aufgrund von Zeitmangel jedoch für einen einfacheren Weg:
+Wir kopierten Teile der Klassen in das andere Projekt, um auch dort Zugriff auf die Parsing-Logik zu haben.
+
+Noch am Dienstag konnte ich die relevanten Klassen in das Core-Projekt übernehmen und testen.
+Dafür legte ich eine Namenskonvention für die kopierten Klassen fest und vermerkte jeweils deren ursprüngliche Herkunft, um zukünftige synchronisationen zu vereinfachen.
+
+\sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort}
+
+Mittwoch und Donnerstag merkte ich, dass das Datenmodell hinter dem PDF-Report mit dem kopierten Datenmodell auszutauschen doch nicht so einfach ist, wie erhofft.
+Ich musste darum einige Abschnitte im Datenmodell komplett neu implementieren.
+Die größte Herausforderung war es allerdings, das aktualisierte Modell in den Report an sich einzubinden.
+Wir verwenden Apache Velocity, um ein Template-XML-Format mit relevanten Daten zu füllen und Dita-Chapters zu generieren, die dann von einem Dita mit weiteren Style-Dokumenten zu einem PDF gerendert werden können.
+Nicht nur, dass ich mich jedes Mal wieder neu in Velocity einarbeiten muss, wenn ich wieder am Report arbeite, sondern musste ich hier nun auch fast jede Zeile Logik in diesen Templates auf das neue Modell umstellen, was vor allem sehr Zeitintensiv war.
+
+\sweekdaymarginpar{\weekdayFridayLong}
+
+Bis Freitagmittag konnte ich die Migration des Reports zwar noch lange nicht abschließen, allerdings war am Nachmittag ein Meeting mit einer Mitarbeiterin von \aeclientZEZESE\ geplant.
+Das Treffen zielte darauf ab, die Nutzung unseres VADs und die Bewertung von Schwachstellen mit Unterstützung unseres Systems zu besprechen.
+Als Vorbereitung auf das Meeting erstellte ich eine HTML-Seite, die die verschiedenen öffentlichen JSON-Schema-Dateien unseres Prozesses dynamisch in verschiedenen Versionen zusammenfasst, Beispiele und Dokumentation anzeigt und Links zu den entsprechenden Versionen (oder \qt{latest}) generiert.
+
+Das Meeting verlief sehr angenehm.
+Wir kamen gut miteinander aus, und da sie hauptsächlich für das Verfassen von Dokumentationen und die interne Betreuung und das Verständnis unseres Prozesses bei ihnen verantwortlich ist, hat sie sich natürlich darüber gefreut, mit dem Hauptentwickler dieses Systems zu sprechen.

@@ -1,0 +1,34 @@
+\section{Woche 6 - Daten-Korrelation \headerand PowerShell Skripte} \label{sec:bericht-wo-6}
+
+% Woche 6 (2023-10-09 bis 2023-10-13)
+
+\lweekdaymarginpar{\weekdayMondayShort, \weekdayTuesdayShort, \weekdayWednesdayShort}
+
+Da mein Kollege nicht das gesamte Inventar den Rest der Woche fertig bekommen würde, spielte sich diese Woche ähnlich wie letzte ab, in der ich meinen Kollegen bei der Arbeit unterstützte.
+So konnte ich das Tool, das ich für diese Arbeit vor meinem Praktikum geschrieben hatte, selbst einmal anwenden und entdeckte einige Verbesserungsmöglichkeiten, die ich gleich umsetzte.
+Das Tool (\qt{Correlation Utilities}) selbst ist Webapplikation, die mit einem lokal gehosteten Server, in Spring Boot implementiert, interagiert.
+Das Ziel des Tools ist es, den Prozess des Mappings von unseren internen Produkten zu denen externer Datenbanken zu unterstützen.
+Es aggregiert relevante Informationen automatisiert und macht Empfehlungen, wie am besten mit Fällen umgegangen werden sollte.
+
+Dank des Tools besteht nun bereits fast keine Notwendigkeit, das ursprungs-Inventar zu durchsuchen oder Internet-Suchen zu starten.
+Jedoch ist es noch nicht perfekt und ich habe es über die drei Tage mit einigen weiteren Features versehen.
+Bis Mittwochabend hatten mein Kollege und ich die Hälfte der Daten durchgearbeitet und validiert, den Rest sollte mein Kollege nun bis zum Ende der nächsten Woche erledigen.
+
+\sweekdaymarginpar{\weekdayThursdayLong}
+
+Donnerstag hatten mein Chef und ich morgens einen zweistündigen Termin mit einem unserer Kunden, {\aeclientZEZESE}, bei dem es um die automatisierte Erstellung einer SBOM (Software Bill of Materials) mit allen installierten Programmen, Treibern und Hardware-Devices auf Windows-Systemen ging.
+Dieser Prozess sollte zweigeteilt sein:
+Zunächst sollten über PowerShell-Skripte über Windows-Integrierte Features viele verschiedene Datenquellen angezapft und die rohen Ergebnisse in einem maschinenlesbaren Format in Dateien geschrieben werden.
+Danach würde ein Maven-Plugin diese Daten analysieren und ein Inventar erzeugen.
+
+Bis nächsten Montag sollten bereits erste Versionen der Skripte stehen.
+Mein Arbeitslaptop selbst ist ein MacBook, also hat mir mein Chef einen zusätzlichen Windows-Laptop zum Entwickeln zur Verfügung gestellt.
+An diesem habe mich zunächst einmal darüber informiert, wie man am besten an Windows-Systeminformationen gelangen kann.
+Diese ersten Erkenntnisse habe ich zunächst in unserem internen Confluence niedergeschrieben, wo ich auch sonst meine Dokumentation ablege.
+
+\sweekdaymarginpar{\weekdayFridayLong}
+
+Freitag habe mich schnell wieder an das Thema gesetzt und mit den Ergebnissen meiner gestrigen Recherche angefangen, erste Skripte zu schreiben.
+Die Use-Cases sind das Sammeln von registrierten Programmen aus dem Store oder über Installers, von Sub-Trees von der Registry, einer Liste an Pfaden im Dateisystem, Systeminformationen wie die Windows-Version und installierte Patches, alle PNP-Devices (\qt{Plug and Play}) und alle Treiber.
+Ich habe also mit Befehlen wie \code{Get-WmiObject} und seine über 1300 abfragbaren Datenklassen, \code{Get-Computerinfo} und weiteren etwas herumexperimentiert und tatsächlich fast die Hälfte der Use-Cases noch an diesem Tag durch verschiedene Skripte abdecken können.
+Natürlich gab es auch wieder ein Weekly, bei dem ich über meine Erkenntnisse meinem Chef und Team-Mitgliedern berichten konnte.

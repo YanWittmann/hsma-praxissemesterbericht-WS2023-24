@@ -2,6 +2,7 @@
 \usepackage{color}
 \usepackage{caption}
 \usepackage{translit}
+\usepackage{amsmath}
 % dasselbe Template wie Thesis mit nur leichten Anpassungen
 % Nehmen Sie das Thesis-Template für die Thesis!
 % Lesen Sie Hinweise zum Umgang mit LaTeX und zum Schreiben
@@ -35,6 +36,10 @@
 \newcommand{\kurztitel}{Praxisbericht}
 % \sperrvermerktrue % Kommentar am Anfang der Zeile löschen für Sperrvermerk
 
+% entweder der vollständige oder der gekürzte Bericht
+\newif\ifshortenedReport
+\shortenedReporttrue
+
 % Wenn jemand unbedingt ein Glossar will, die nächsten drei Zeilen...
 %\usepackage{glossaries} % oder schlimmer mit [toc], damit es im TOC auftaucht
 %\makeglossaries
@@ -53,18 +58,34 @@
 
     \end{abstract}
 
+    \ifshortenedReport
+    \begin{center}
+        \fbox{
+            \begin{minipage}{0.9\textwidth}
+                \textbf{Hinweis:}
+                Dieser Bericht wurde aus Gründen der Übersichtlichkeit und der maximalen Seitenzahl gekürzt.
+                Der vollständige Bericht ist alternativ auf Abfrage verfügbar.
+            \end{minipage}
+        }
+    \end{center}
+    \fi
+
     \tableofcontents
 
 
     \include{kapitel/einleitung}
 
-    \include{wochenberichte/wochenberichte}
+    \ifshortenedReport
+    \include{wochenberichte/shortened/wochenberichte}
+    \else
+    \include{wochenberichte/initial/wochenberichte}
+    \fi
 
     \include{kapitel/projektbericht}
 
-     \include{kapitel/ausblick}
+    \include{kapitel/ausblick}
 
-     \include{kapitel/ergebnisse}
+    \include{kapitel/ergebnisse}
 
     \newpage
 

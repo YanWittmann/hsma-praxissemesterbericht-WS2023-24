@@ -1,0 +1,43 @@
+\section{Woche 1 - Einarbeitung in CVSS 4.0} \label{sec:bericht-wo-1}
+
+% Woche 1 (2023-09-04 bis 2023-09-08)
+
+\lweekdaymarginpar{\weekdayMondayLong}
+
+Mein erster Arbeitstag im Praktikums bei der {\metaeffekt} fiel mit dem Ende der Sommerpause des Unternehmens zusammen.
+Da ich bereits seit einiger Zeit im Unternehmen arbeite und ich meine eigenständigen Aufgabenbereiche habe, war eine Einführung für mich nicht notwendig.
+Bei {\metaeffekt} ist mein Aufgabenbereich als Entwickler ein automatisiertes Vulnerability Monitoring für unsere Kunden in der Programmiersprache Java zu implementieren und zu betreuen.
+Ich verbrachte den Montag damit, einige während der Sommerpause aufgetretene Fehler in den Systemen von Kundenprojekten zu korrigieren und Gespräche mit Kollegen zu führen.
+
+Ein näherkommendes Thema war die anstehende Veröffentlichung des CVSS 4.0-Standards, die für den 31.\ Oktober 2023\footnote{\url{https://www.first.org/cvss/v4-0/}} geplant war.
+Zu den CVSS-Versionen 2.0 und 3.1 soll auch unser System CVSS 4.0-Vektoren berechnen können.
+Mit Karsten Klein, meinem Chef und Betreuer für das Praktikum, habe ich zudem vereinbart, während meines Praxis-Semesters zusätzliche tägliche Meetings mit ihm abzuhalten.
+
+\sweekdaymarginpar{\weekdayTuesdayLong}
+
+Am Dienstag startete ich damit, die zu dem Zeitpunkt noch unfertige Dokumentation und Beispiele von CVSS 4.0 zu studieren.
+In diesen wurde die offizielle Referenzimplementierung\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator}} referenziert, die später noch sehr nützlich werden würde.
+Ich dokumentierte meine Erkenntnisse über die Gemeinsamkeiten und Unterschiede in unserem internen Confluence Wiki.
+
+\sweekdaymarginpar{\weekdayWednesdayLong}
+
+Am Mittwoch begann ich mit einem ersten Versuch einer Implementierung der CVSS 4.0-Berechnungen.
+Wie ich bereits gestern vermutet hatte, ist die Berechnung bei 4.0 mathematisch deutlich komplexer, mit Hamming-Distanzen zwischen Vektoren und der Interpolation und Skalierung von mehrdimensionalen Räumen, versehen.
+Dank der RedHat JavaScript-Implementierung konnte ich Mittwoch das Grundgerüst für meine Implementierung in Java vorbereiten.
+
+\sweekdaymarginpar{\weekdayThursdayLong}
+
+Donnerstag musste ich feststellen, dass die Referenzimplementierung und die Spezifikation voneinander abweichen, was bei einem unveröffentlichten Standard zwar verständlich, aber nicht hilfreich ist.
+Ich meldete dieses Problem zusammen mit inhaltlichen Fragen in einem GitHub-Issue\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator/issues/32}} und begann den Rest des Tages bereits, die Implementierung zu schreiben.
+
+\sweekdaymarginpar{\weekdayFridayLong}
+
+Am Freitag erhielt ich bereits Antworten darauf:
+Wie erwartet ist die online-Spezifikation nicht aktuell.
+Den Rest des Tages konnte ich meine Implementierung so weit fertigstellen, dass ich sie durch einen Test-Datensatz tatsächlich bereits validieren konnte.
+Als Nächstes wollte ich mein Verständnis von CVSS 4.0 verbessern, bevor ich die neue Version noch richtig in unsere Systeme integriert muss.
+
+Leider hat den restlichen Tag eine \qt{OutOfMemoryError}-Exception in einem Kundenprojekt meine Zeit eingenommen, die auftrat, wenn eine zu große Menge an Daten verarbeitet wurde.
+Ich konnte das Problem, dass während der Serialisierung in ein HTML-Dokument das interne Modell (damit auch der Speicherbedarf) kurzzeitig dupliziert wurde, jedoch schnell beheben.
+Freitagmittag findet bei der {\metaeffekt} ein wöchentliches Meeting statt (\qt{Weekly}), hier berichtete ich über meine Erfahrungen mit der Implementierung von CVSS 4.0.
+So beendete ich meine erste Praktikumswoche.

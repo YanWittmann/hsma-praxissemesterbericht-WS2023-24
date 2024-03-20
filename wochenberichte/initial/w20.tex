@@ -1,0 +1,33 @@
+\section{Woche 20 - BSI-Meeting \headerand Integration von Generation 3} \label{sec:bericht-wo-20-initial}
+
+% 2024-01-29 bis 2024-02-02
+
+\lweekdaymarginpar{\weekdayMondayLong}
+
+Montag war ein interessanter Tag, denn heute hatten wir ein Meeting mit Repräsentanten vom BSI bezüglich des CSAF-Standards und unseres CVSS-Rechners.
+Beteiligt war vor allem Thomas Schmidt\footnote{\url{https://www.it-meets-industry.de/de/referent-thomas-schmidt}}, welcher bereits Leiter des CSAF-Workshops in München Ende letzten Jahres war, und Herr Von Samson.
+
+Hierfür habe ich den Morgen eine Demo unseres Toolings vorbereitet, welche wir dann am Nachmittag zusammen mit vorbereiteten Fragen durchgesprochen haben.
+Insgesamt war es ein sehr konstruktives Meeting, aus dem wir viele weitere Tasks ableiten konnten, vor allem zu Ansätzen zur Integration von CSAF in unseren Workflow.
+Thomas Schmidt hat die folgenden Tage noch einige Issues auf unserem Repository des CVSS-Rechners auf GitHub erstellt, die ich Ende der Woche angehen würde.
+
+\sweekdaymarginpar{\weekdayTuesdayShort, \weekdayWednesdayShort, \weekdayThursdayShort}
+
+Die restliche Woche habe ich mich mit der Integration von Generation 3 unseres Monitorings bei den Kunden beschäftigt.
+Einer unserer Problempunkte war es bisher, dass teilweise Kunden noch auf Generation 1 standen, diese wollten wir nun alle zusammen einheitlich auf Generation 3 heben.
+Insgesamt mussten drei Projekte fürs Erste ge-upgraded werden.
+
+Dafür habe ich von meinem Chef nacheinander Zugriff auf je einen Kundenlaptop bekommen, bei denen je ein- oder mehrere Git-Projekte mit unserem Tooling, welche in deren Pipelines verwendet werden.
+Der Prozess war immer der gleiche:
+die vorhandenen Versionen und Konfigurationen mussten alle der Reihe nach aktualisiert werden, sodass sie dem neuen Format entsprechen.
+Hier war der Migrationsguide, den ich zuvor (für genau diese Situation) verfasst hatte, viel wert.
+
+Es gab natürlich unzählige Komplikationen und genauso viele Änderungen, die noch am Code gemacht werden mussten, die hier aufgelistet den Rahmen sprengen würden.
+Mittwochs bin ich auch etwas länger geblieben, aber Donnerstagnachmittag waren alle Projekte aktualisiert und liefen durch.
+
+\sweekdaymarginpar{\weekdayFridayLong}
+
+Freitag bin ich die Issues\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-universal-cvss-calculator/issues?q=is\%3Aissue+is\%3Aclosed}} von Thomas durchgegangen und habe die ersten davon bearbeitet.
+Hier gab es nichts, das Probleme bereitet hätte (bis auf Issue \#2, hier hat sich das FIRST\footnote{\url{https://www.first.org/cvss}} bis Praktikumsende nicht zurückgemeldet).
+
+Zudem gab es nach unserem Weekly ein Meeting mit dem Kunden, der die Assessment-Workshops plant bezüglich der Generation 3, der Änderungen und es bei ihnen final in ihre Pipeline zu integrieren.

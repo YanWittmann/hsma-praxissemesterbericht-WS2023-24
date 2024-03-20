@@ -4,31 +4,21 @@
 
 \lweekdaymarginpar{\weekdayMondayLong}
 
-Ich hatte nun CVSS 4.0 bei uns implementiert, aber wirklich verstanden hatte ich die Theorie dahinter noch nicht.
 Ich verbrachte den Montag damit, die Spezifikation\footnote{\url{htthttps://www.first.org/cvss/v4.0/specification-document}},
 die Entwicklungsgeschichte\footnote{\url{https://www.first.org/cvss/v4.0/user-guide\#New-Scoring-System-Development}}
-und den Code tiefergehender anzusehen, um zu verstehen, wie die Berechnung des Scores funktioniert.
-Über den ersten Schritt der Berechnung mit den MacroVektoren hatte ich ein bereits ein gutes Verständnis, meine Unklarheiten lagen eher in dem zweiten Schritt mit der Interpolation zwischen den einzelnen MacroVektoren.
+und den Code im Kontext der Berechnung der Scores tiefergehender zu verstehen.
+Den ersten Schritt mit den MacroVektoren hatte ich ein bereits gut verstanden, das Problem war eher der zweiten Schritt mit der Interpolation zwischen den einzelnen MacroVektoren.
 Ich konnte selbst nach einem ganzen Tag an Recherche keine zufriedenstellende Erklärung finden, wie die Berechnung in diesem Schritt funktioniert.
-Immerhin konnte ich durch weitere Randfall-Tests zwei Fehler in meiner Implementierung finden und beheben.
 
 \sweekdaymarginpar{\weekdayTuesdayShort, \weekdayWednesdayShort}
 
-In Abwesenheit eines Kollegen übernahm ich Dienstag seine Aufgabe, die Pflege von sog. \qt{Korrelationsdaten}, ein von uns gepflegter Datensatz, der Software-Komponenten automatisch Produkten in externen Datenbanken wie den CPEs der NVD\footnote{\url{https://nvd.nist.gov/products/cpe}} zuordnen kann.
-Dazu konnte ich ein von mir entwickeltes Tool nutzen, das ich kurz vor meinem Praktikum als Web-UI über Spring Boot neu aufgesetzt hatte, basierend auf umfangreichem Feedback des Kollegen.
-
-In den verbleibenden zwei Stunden diskutierte ich mit meinem Chef über das Abbilden von \qt{Vulnerability Chaining} in unseren Systemen – ein Thema, das wir auf Kundenwunsch in den kommenden Monaten angehen müssen, auch wenn es noch keine hohe Priorität hat.
+In Abwesenheit eines Kollegen übernahm ich Dienstag seine Aufgabe, die Pflege von sog. \qt{Korrelationsdaten} (siehe Kap. \ref{subsec:projektbericht-grundlagen-vulnerability-monitoring}).
+Dazu konnte ich ein von mir entwickeltes Tool nutzen, das ich kurz vor meinem Praktikum als Web-UI über Spring Boot neu aufgesetzt hatte.
 
 \sweekdaymarginpar{\weekdayThursdayLong}
 
-Donnerstag war mein Chef durch einen Kundenbesuch nicht im Büro.
 Da die Implementierung und Integration von CVSS 4.0 bis Wochenende abgeschlossen sein musste, musste ich mich mit den folgenden verbleibenden Aufgaben intensiv beschäftigen:
-
-\begin{smitemize}
-    \item Parsing der Vektoren aus verschiedenen Quellen/Formaten
-    \item Korrektes Verarbeiten der Berechnung von Scores und Modifizieren von Vektoren
-    \item Anzeigen der Ergebnisse in unseren HTML- und PDF-Reports
-\end{smitemize}
+Das Parsing der Vektoren aus verschiedenen Quellen/Formaten, das korrekte Verarbeiten der Berechnung von Scores und Modifizieren von Vektoren und das Anzeigen der Ergebnisse in unseren HTML- und PDF-Reports.
 
 Da keine externe Datenquelle bisher CVSS 4.0 Vektoren bereitstellt, basierten einige meiner Annahmen über deren Formate auf Vermutungen, die später eventuell noch angepasst werden müssen.
 Ich nutzte den Rest des Tages, um viele Code-Muster, die ich aus der Referenzimplementierung übernommen hatte, durch Refactoring-Operationen eleganter und objektorientierter zu gestalten und Code zu deduplizieren.

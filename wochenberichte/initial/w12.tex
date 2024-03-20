@@ -1,0 +1,38 @@
+\section{Woche 12 - Integration des Datenmodells in PDF-Report} \label{sec:bericht-wo-12-initial}
+
+% 2023-11-20 bis 2023-11-24
+
+\lweekdaymarginpar{\weekdayMondayLong}
+
+Am Montag nahm ich mir eine kurze Auszeit von der Report-Migration und wendete mich einem anderen Aspekt des Refactorings zu:
+Dem Tracking der genauen Matching-Konfigurationen von Schwachstellen, die aus verschiedenen Quellen identifiziert wurden.
+Bisher beschränkt sich unser System auf das Tracking der \qt{CPE}-Informationen, allerdings ohne die dazugehörigen Versionsbereiche und auch nur bei diesen, nicht anderen Quellen.
+In der Vergangenheit war das ausreichend, da nur die NVD als Datenquelle diente, aber mittlerweile kommen auch GitHub, Microsoft und andere hinzu.
+
+Deshalb verbrachte ich den Tag damit, diese Daten in den verschiedenen Anreicherungsschritten in das von vor zwei Wochen implementierte Tracking-System einzupflegen.
+Diese Informationen konnte ich noch am Montag in das VAD integrieren.
+Bei dieser Gelegenheit wurde mir erneut bewusst, wie viel einfacher Anpassungen am VAD im Vergleich zum PDF-Report sind.
+
+\sweekdaymarginpar{\weekdayTuesdayShort, \weekdayWednesdayShort, \weekdayThursdayShort}
+
+In der Mitte der Woche konnte ich mich wieder vollständig auf die Integration des Modells in den Report konzentrieren.
+Dieser Prozess ist stets gleich: Für jedes der etwa 20 Velocity-Templates in unserem Prozess überprüfe ich den alten Datenzugriff und suche ich im neuen Modell nach einem entsprechenden Zugriff oder implementiere neue Methoden.
+Diese Änderungen mache ich entweder in den Adapterklassen, die als Schnittstelle zwischen Report und Modell dienen, oder direkt im Modell selbst.
+In letzterem Fall muss ich die Änderungen sowohl in Core als auch in Artifact Analysis vornehmen.
+
+Eine zusätzliche Herausforderung war, dass ich immer wieder auf Templates stieß, die ich zuvor noch nie gesehen habe und die ich erst verstehen musste.
+Um nicht bei jedem Test den Dita-Renderingprozess starten zu müssen, nutze ich das Tool \qt{OxygenXML}, das eine Live-Preview ohne Stilelemente erlaubt.
+Dennoch dauert es immer eine Weile, bis ich meinen Testdatensatz angepasst habe, um all diese Dokumente richtig testen zu können.
+
+\sweekdaymarginpar{\weekdayFridayLong}
+
+Freitag begann mit einer unerwarteten Anfrage meines Chefs:
+Er fragte mich, ob ich Interesse hätte, alleine an einem Workshop zum CSAF-Standard\footnote{\url{https://web.archive.org/web/20240121120954/https://www.allianz-fuer-cybersicherheit.de/Webs/ACS/DE/Netzwerk-Formate/Veranstaltungen-und-Austausch/CSAFversum/CSAFversum_node.html}} (Common Security Advisory Framework) teilzunehmen, der vom Bundesamt für Sicherheit in der Informationstechnik (BSI) in München organisiert wird.
+Nach einer kurzen Recherche zu CSAF fand ich heraus, dass es sich dabei um ein Schema handelt, ähnlich wie OSV\footnote{\url{https://osv.dev}}, das es Herstellern ermöglicht, Security Advisories und Informationen zu Schwachstellen in ihren Produkten zu veröffentlichen.
+
+Der Hintergrund dieser Anfrage war, dass mein Chef plant, dass ich diesen Standard irgendwann in unser System integriere.
+Da ich sowohl die Integration von CSAF als sinnvoll erachte, als auch persönlich mich auf eine Reise nach München freuen würde, stimmte ich dem Vorschlag zunächst einmal zu.
+
+Den Rest des Freitags habe ich eine weitere Anfrage meines Chefs bearbeitet:
+Das Anlegen von Korrelationsdaten für ein dringendes Inventar.
+Dieser Prozess ist nicht besonders spannend, daher war ich froh, nach dem wöchentlichen Meeting ins Wochenende starten zu können.

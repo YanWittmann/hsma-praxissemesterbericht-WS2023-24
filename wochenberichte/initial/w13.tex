@@ -1,0 +1,29 @@
+\section{Woche 13 - Fertigstellung der Integration des Datenmodells \headerand Dokumentation} \label{sec:bericht-wo-13-initial}
+
+% 2023-11-27 bis 2023-12-01
+
+\lweekdaymarginpar{\weekdayMondayShort, \weekdayTuesdayShort}
+
+Gegen Ende der letzten Woche fiel es mir zunehmend schwer, mich auf den Report zu konzentrieren.
+Die Pause am Wochenende war anscheinend hilfreich, denn bis Dienstagabend konnte ich nach diesen zwei Wochen die Integration in den Report fast vollständig abschließen.
+Ich musste natürlich auch hier noch neue Segmente in den Templates anlegen, die die Herkunft einer Schwachstelle erklären können, wie ich es auch schon im VAD getan hatte.
+
+\sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort}
+
+Am Mittwoch startete ich motiviert in den Tag, da nur noch wenige Schritte bis zur Fertigstellung des neuen Prozesses fehlten.
+Dazu zählten vor allem die Übersichtsdiagramme mit verschiedenen Statistiken über die gefundenen Schwachstellen, die sowohl im VAD als auch im PDF-Report dargestellt werden.
+Im VAD verwenden wir dafür ChartJs\footnote{\url{https://www.chartjs.org}}, während für den PDF-Report SVG-Charts mit JFreeChart\footnote{\url{https://www.jfree.org/jfreechart}} während der Dashboard-Generierung gerendert werden.
+
+Ich stellte schnell fest, dass nie genau definiert wurde, welche Diagramme welche Werte aus welchen Quellen darstellen sollen und wie diese Werte gemappt werden.
+Diese Unklarheit erschwerte es mir, die Diagramme im neuen Prozess zu replizieren, da ich die genauen Datenquellen erst durch Reverse-Engineering ermitteln musste.
+Bevor ich also mit der Implementierung anfing, begann ich, ein wenig Dokumentation zu diesem Thema zu verfassen.
+Tatsächlich konnte ich diese Arbeit bis später am Donnerstag abschließen und hatte damit das große Thema des Refactorings des Datenmodells quasi abgeschlossen.
+
+\sweekdaymarginpar{\weekdayFridayLong}
+
+Weil mir in den vergangenen Tagen die Wichtigkeit von Dokumentation wieder einmal aufgefallen war, nutzte ich den Freitag, um im internen Wiki einen \qt{Migrationsguide} zu erstellen.
+Dieser dokumentiert alle Änderungen zwischen der alten und der neuen Generation unseres Systems und enthält zusätzliche Informationen zu einzelnen Themen.
+Dazu gehören der Refactor der CVSS-Implementierung mit Unterstützung für mehrere Vektoren gleicher Art, die sonstige Erweiterung der Prozesse um CVSS, das Tracking der Herkunft von CVSS-Vektoren und Schwachstellen, das neue Datenmodell für Schwachstellen und Security Advisories, die zentrale Security Policy Konfiguration, neue Namenskonventionen, geändertes Verhalten und vieles mehr.
+
+Im Weekly Meeting konnte ich berichten, dass der neue Prozess nahezu abgeschlossen ist.
+Obwohl es noch einige Monate dauern wird, bis die ersten Kunden diesen nutzen, ist es immer ein gutes Gefühl, ein solches Projekt abzuschließen.

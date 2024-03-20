@@ -1,0 +1,95 @@
+\section{Woche 7 - Windows-Inventar-Extraktion \headerand Strategieworkshop} \label{sec:bericht-wo-7-initial}
+
+% Woche 7 (2023-10-16 bis 2023-10-20)
+
+\lweekdaymarginpar{\weekdayMondayLong}
+
+Montag stellte ich also eine erste, funktionierende Version der PowerShell Skripte fertig, die alle Use-Cases abdecken konnten.
+Ich habe hier nach dem Prinzip \qt{Lieber zuviel als zu wenig} gearbeitet, habe also redundante und zusätzliche Informationen gesammelt, da das nächste Meeting erst wieder am Freitag sein wird und ich nicht darauf warten könnte.
+
+Das Meeting mit den Mitarbeitern von {\aeclientZEZESE} verlief sehr gut:
+Wir wurden live per Video-Call in das Test-Labor mitgenommen, wo das Ziel-Windows-Gerät vorhanden war.
+Meine Skripte wurden auf dem System ohne Komplikationen ausgeführt und nach Besprechungen über das weitere Vorgehen haben wir diese Daten auch übermittelt bekommen.
+
+\sweekdaymarginpar{\weekdayTuesdayLong}
+
+Den Dienstag habe ich dann begonnen, die Daten zunächst manuell auszuwerten und musste, wie erwartet, feststellen, dass noch einige Daten für ein vollständiges Bild fehlen.
+Vor allem zu den PNP-Devices gibt es im WMI-Interface sehr viele Subklassen, die je Details über eine gewisse Kategorie liefern können.
+Die Skripte habe ich den Tag lang angepasst, sodass sie nun wirklich alle benötigten Daten abfragen.
+
+\sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort}
+
+Die folgenden beiden Tage habe ich damit verbracht, den zweiten Schritt der Windows-Inventar-Extraktion zu schreiben:
+einen Java-Prozess, der die JSON-Daten verwertet und daraus ein Inventar im proprietären Format der {\metaeffekt} erzeugt.
+
+Ich habe in der Vergangenheit bereits Erfahrungen mit Inkonsistenzen in den Datenquellen von Microsoft gemacht, wie denen zwischen dem
+MSRC Security Update Guide\footnote{\url{https://msrc.microsoft.com/update-guide}},
+MSRC CVRF API\footnote{\url{https://api.msrc.microsoft.com/cvrf/v2.0/swagger/index}} und
+Security Update Catalogue\footnote{\url{httphttps://www.catalog.update.microsoft.com/Home.aspx}},
+die jeweils ein unvollständiges Bild der Security-Situation rund um Microsoft geben und nur zusammen betrachtet vollständig sind.
+Nicht anders war es hier:
+die unterschiedlichen Befehle an die PowerShell liefern je Teile eines großen Bildes zurück, die sich gegenseitig ergänzen müssen.
+
+Dies war vor allem bei den Systeminformationen und Informationen zu PNP-Geräten der Fall.
+Bei den Systeminformationen bieten mindestens vier verschiedene Befehle (siehe Listing\ \ref{lst:win-systeminfo-commands-initial}) jeweils teils überlappende, teils einzigartige Datensätze an.
+Die PNP-Geräte waren ähnlich:
+Grundlegende Informationen können durch zwei Hauptbefehle abgerufen werden (siehe Listing\ \ref{lst:win-pnp-commands-base-initial}), für Details zu einzelnen Devices müssen jedoch viele verschiedene spezifische WMI-Klassen abgefragt werden (siehe Listing\ \ref{lst:win-pnp-commands-details-initial}).
+Hier habe ich mindestens 20 weitere Klassen\footnote{Alle Klassen: \url{https://learn.microsoft.com/de-de/windows/win32/cimwin32prov/win32-provider}} abgefragt und die Daten in einen einheitlichen Datensatz konsolidieren können.
+
+\begin{lstlisting}[language=PowerShell, label={lst:win-systeminfo-commands-initial}, caption={Windows Systeminformationen abfragen}]
+Get-ComputerInfo
+systeminfo
+Get-WmiObject -Class Win32_ComputerSystem
+Get-WmiObject -Class Win32_OperatingSystem
+\end{lstlisting}
+
+\begin{lstlisting}[language=PowerShell, label={lst:win-pnp-commands-base-initial}, caption={Windows PNP-Devices abfragen}]
+Get-PnpDevice
+Get-WmiObject -Class Win32_PnPEntity
+\end{lstlisting}
+
+\begin{lstlisting}[language=PowerShell, label={lst:win-pnp-commands-details-initial}, caption={Details zu Windows PNP-Devices abfragen}]
+Get-WmiObject -Class Win32_Printer
+Get-WmiObject -Class Win32_Processor
+\end{lstlisting}
+
+Natürlich habe ich auch die restlichen Daten noch verarbeitet und hatte zum Schluss über 30 verwendete PowerShell-Befehle, deren Daten ich zu dem Inventar umgewandelt habe.
+Donnerstagabend hatte ich also einen Prozess und ein vorläufiges Inventar, das wir am Freitag mit dem Kunden besprechen konnten.
+
+\sweekdaymarginpar{\weekdayFridayLong}
+
+Dieser Freitag war ein ereignisreicher Tag:
+Die {\metaeffekt} hat einen Strategieworkshop gehalten, der das Vorgehen der nächsten 9--12 Monate angeben sollte.
+Auf diesen Tag hatte ich mich bereits seit einigen Wochen gefreut, da er jedes Jahr für mich und die anderen neue Aufgaben und einen roten Faden festlegt, der vor allem für mein Praxissemester dieses Halbjahr wichtig ist.
+
+An einem großen Tisch und auf mehreren großen Whiteboard-Blättern wurden Wünsche und Pflichten aufgeschrieben und diskutiert.
+Ein großer Punkt war dieses Mal:
+Wenn wir nächstes Jahr in Erfurt auf der großen Bühne stehen, was wollen wir dort zeigen können?
+
+Aus den Ergebnissen des Tages ließ sich auf jeden Fall ein roter Faden für mich herauslesen.
+Zu den Strategiepunkten, bei denen ich beteiligt sein werde, gehören:
+
+\begin{smitemize}
+    \item Eine Java-Implementierung von CVSS:2.0, CVSS:3.1 und CVSS:4.0 soll als Open-Source-Projekt auf GitHub veröffentlicht werden.
+    Dazu muss die CVSS:4.0-Implementierung noch fertiggestellt und zusammen mit den anderen in unser Haupt-Repository (Core) verschoben werden.
+    \item Ein weiteres Open-Source-Projekt soll ebenfalls auf GitHub angelegt werden, das den CVSS-Standard in den Versionen 2.0, 3.1 und 4.0 in TypeScript implementiert und damit auch im Web nutzbar ist.
+    Hiervon existiert noch nichts, sodass ich hier von Grund auf beginnen werde.
+    \item Mit der TypeScript-Implementierung soll ein öffentliches Web-Interface erstellt werden, das die Berechnung und Modifikation von CVSS-Vektoren ermöglicht.
+    \item Das interne Datenmodell, das für die Speicherung von Schwachstellen und Security Advisories verwendet wird, soll komplett neu geschrieben werden.
+    Dabei sollen einige Redundanzen entfernt und die Datenstruktur sowohl für den Entwickler, als auch für den Nutzer einfacher und nachvollziehbarer werden.
+    Nachvollziehbarkeit ist ein wichtiges Stichwort, denn es soll mit diesem System zu jeder Zeit möglich sein, die exakte Quelle einer Schwachstelle und von CVSS-Vektoren zu programmatisch identifizieren.
+    \item Eine der Ausgaben unseres Systems ist ein sog. \qt{Vulnerability Assessment Dashboard} (VAD), für welches ich vor einigen Jahren den Code einer \qt{Version 1} und \qt{Version 2} geschrieben hab.
+    Es stellt die Ergebnisse aus dem Schwachstell-Monitoring in einem übersichtlichen Dashboard mit aggregierten Details dar.
+    Dieses VAD soll im Anschluss an die Neuentwicklung des Datenmodells ebenfalls neu geschrieben werden, da mit der Zeit viele mögliche Verbesserungen aufgekommen sind.
+    Bei dieser \qt{Version 3.0} des VAD sollen auch Kundenwünsche berücksichtigt werden.
+    \item Das letzte Ziel wird nicht mehr in meinem Praxissemester gestartet:
+    Es soll ein Software-Asset Monitoring implementiert werden, das über einzelne Software-Artefakte hinausgeht und Aussagen über ganze Software-Produkte treffen können soll.
+    Dazu soll ebenfalls ein Reporting und Dashboard erstellt werden, dieses Mal wird es allerdings kein alleinstehendes Dokument, sondern bekommt ein Backend in Java.
+\end{smitemize}
+
+Hier haben wir zum Schluss eine große Timeline gezeichnet, die sich in mehrere Stränge aufteilt.
+Diese Stränge bestehen aus mehreren Schlüsselpunkten, an denen der Fortschritt gemessen werden kann.
+Diese Timeline hing bis zum Ende meines Praxissemesters noch dort und war immer nützlich, um zu sehen, wie weit auch andere sind.
+
+Natürlich war dies nicht der einzige Tagespunkt, denn den Mitarbeitern von {\aeclientZEZESE} haben wir unsere Ergebnisse der Windows-Scans gezeigt und darum gebeten, dass sie die aktualisierten Skripte erneut ausführen, damit wir vollständigere Daten erhalten.
+Dieses Meeting war allerdings recht schnell vorbei.

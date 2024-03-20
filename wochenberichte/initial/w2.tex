@@ -1,0 +1,39 @@
+\section{Woche 2 - Vertiefung in CVSS 4.0 \headerand Korrelationsdaten} \label{sec:bericht-wo-2-initial}
+
+% Woche 2 (2023-09-11 bis 2023-09-15)
+
+\lweekdaymarginpar{\weekdayMondayLong}
+
+Ich verbrachte den Montag damit, die Spezifikation\footnote{\url{htthttps://www.first.org/cvss/v4.0/specification-document}},
+die Entwicklungsgeschichte\footnote{\url{https://www.first.org/cvss/v4.0/user-guide\#New-Scoring-System-Development}}
+und den Code tiefergehender anzusehen, um zu verstehen, wie die Berechnung des Scores funktioniert.
+Über den ersten Schritt der Berechnung mit den MacroVektoren hatte ich ein bereits ein gutes Verständnis, meine Unklarheiten lagen eher in dem zweiten Schritt mit der Interpolation zwischen den einzelnen MacroVektoren.
+Ich konnte selbst nach einem ganzen Tag an Recherche keine zufriedenstellende Erklärung finden, wie die Berechnung in diesem Schritt funktioniert.
+
+\sweekdaymarginpar{\weekdayTuesdayShort, \weekdayWednesdayShort}
+
+In Abwesenheit eines Kollegen übernahm ich Dienstag seine Aufgabe, die Pflege von sog. \qt{Korrelationsdaten}, ein von uns gepflegter Datensatz, der Software-Komponenten automatisch Produkten in externen Datenbanken wie den CPEs der NVD\footnote{\url{https://nvd.nist.gov/products/cpe}} zuordnen kann.
+Dazu konnte ich ein von mir entwickeltes Tool nutzen, das ich kurz vor meinem Praktikum als Web-UI über Spring Boot neu aufgesetzt hatte, basierend auf umfangreichem Feedback des Kollegen.
+
+In den verbleibenden zwei Stunden diskutierte ich mit meinem Chef über das Abbilden von \qt{Vulnerability Chaining} in unseren Systemen – ein Thema, das wir auf Kundenwunsch in den kommenden Monaten angehen müssen, auch wenn es noch keine hohe Priorität hat.
+
+\sweekdaymarginpar{\weekdayThursdayLong}
+
+Da die Implementierung und Integration von CVSS 4.0 bis Wochenende abgeschlossen sein musste, musste ich mich mit den folgenden verbleibenden Aufgaben intensiv beschäftigen:
+
+\begin{smitemize}
+    \item Parsing der Vektoren aus verschiedenen Quellen/Formaten
+    \item Korrektes Verarbeiten der Berechnung von Scores und Modifizieren von Vektoren
+    \item Anzeigen der Ergebnisse in unseren HTML- und PDF-Reports
+\end{smitemize}
+
+Da keine externe Datenquelle bisher CVSS 4.0 Vektoren bereitstellt, basierten einige meiner Annahmen über deren Formate auf Vermutungen, die später eventuell noch angepasst werden müssen.
+Ich nutzte den Rest des Tages, um viele Code-Muster, die ich aus der Referenzimplementierung übernommen hatte, durch Refactoring-Operationen eleganter und objektorientierter zu gestalten und Code zu deduplizieren.
+Am Ende des Tages stellte ich Pull Requests für die drei betroffenen Code-Projekte fertig.
+
+\sweekdaymarginpar{\weekdayFridayLong}
+
+Freitag widmete ich mich erneut dem Verständnis von CVSS 4.0.
+Unter anderem berechnete ich manuell mehrfach auf unterschiedliche Weisen die drei Beispiele der MacroVektor-Interpolation aus der Spezifikation, was mein Verständnis erheblich verbesserte.
+
+Das Weekly am Ende des Tages dehnte sich von einer auf fast zweieinhalb Stunden aus, da nicht nur ich, sondern auch einige Kollegen, diese Woche viel erreicht hatten.
