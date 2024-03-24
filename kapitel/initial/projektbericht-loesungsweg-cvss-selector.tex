@@ -190,7 +190,7 @@ Im folgenden Abschnitt wird diser Prozess anhand eines Beispiels demonstriert.
 
 Das Beispiel, begonnen unter Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} im Schaubild \ref{fig:cvss-selection-process-collection}, wird hier mit den aggregierten Vektoren fortgeführt.
 Um die Selektion durchzuführen werden die beiden folgenden Selektoren für initial und context verwendet, die dank einer \code{CvssSelector.explain()}-Methode als menschenlesbarer Text dargestellt werden können.
-Diese gezeigten und verwendeten Selektoren sind auch die, die als Standard-Werte im Produktionscode\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/1f0a1f6ac5e8343e10ea182794faf534bdfb3310/libraries/ae-inventory-processor/src/main/java/org/metaeffekt/core/inventory/processor/report/configuration/CentralSecurityPolicyConfiguration.java\#L568}} eingetragen sind.
+Diese gezeigten und verwendeten Selektoren sind auch die, die als Standard-Werte im Produktionscode\footnote{\href{https://github.com/org-metaeffekt/metaeffekt-core/blob/1f0a1f6ac5e8343e10ea182794faf534bdfb3310/libraries/ae-inventory-processor/src/main/java/org/metaeffekt/core/inventory/processor/report/configuration/CentralSecurityPolicyConfiguration.java\#L568}{\texttt{https://github.com/org-metaeffekt/metaeffekt-core/blob/...}}} eingetragen sind.
 
 \paragraph{Beispiel, CVSS-Selektor \qt{initial}} \label{par:projektbericht-loesungsweg-cvss-selection-example-selector-initial}
 
@@ -238,13 +238,6 @@ Additionally, 1 vector evaluator will be applied to the resulting vector:
 
 \paragraph{Beispiel, Schritt 1: Aggregieren der Vektoren} \label{par:projektbericht-loesungsweg-cvss-selection-example-step-1}
 
-\begin{figure}[htbp] % here, top, bottom, separate page
-    \centering
-    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-1}
-    \caption{Aggregierung der CVSS-Vektoren}
-    \label{fig:cvss-selection-process-selection-1}
-\end{figure}
-
 Dieser Abschnitt bezieht sich auf Schaubild \ref{fig:cvss-selection-process-selection-1}.
 
 Zunächst muss, als Eingabe für die Selektionsschritte, eine Menge an Vektoren gesammelt werden.
@@ -253,7 +246,16 @@ Die Vektoren der Security Advisories können jedoch mit Bedingungen versehen sei
 In diesem Fall wird der Vektor, der sich auf die \qt{MS Product ID 1234} bezieht, herausgenommen, da auf der Komponente die andere Id \qt{5678} geführt wird.
 Microsoft gibt pro Produkt nur einen Vektor heraus, was dies erklärt.
 
+\begin{figure}[htbp] % here, top, bottom, separate page
+    \centering
+    \includegraphics[width=1\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-1}
+    \caption{Aggregierung der CVSS-Vektoren}
+    \label{fig:cvss-selection-process-selection-1}
+\end{figure}
+
 \paragraph{Beispiel, Schritt 2: Anwenden der CVSS-Selektoren} \label{par:projektbericht-loesungsweg-cvss-selection-example-step-2}
+
+Dieser Abschnitt bezieht sich auf die Schaubilder \ref{fig:cvss-selection-process-selection-2} und \ref{fig:cvss-selection-process-selection-3}.
 
 \begin{figure}[htbp] % here, top, bottom, separate page
     \centering
@@ -269,8 +271,6 @@ Microsoft gibt pro Produkt nur einen Vektor heraus, was dies erklärt.
     \label{fig:cvss-selection-process-selection-3}
 \end{figure}
 
-Dieser Abschnitt bezieht sich auf die Schaubilder \ref{fig:cvss-selection-process-selection-2} und \ref{fig:cvss-selection-process-selection-3}.
-
 Nun können die Selektoren auf die Vektor-Menge angewendet werden.
 Im Fall des \qt{initial}-Selektors wird einfach die erste zutreffende Quelle aus der Liste in Regel 1 gewählt.
 Außer bei CVSS:4.0 (keine nicht-Assessment-Vektoren) wird immer genau ein Vektor zurückgegeben und auch nicht weiter verarbeitet.
@@ -282,15 +282,15 @@ Das bedeutet, wie in Schaubild \ref{fig:cvss-selection-process-selection-3} zu s
 
 \paragraph{Beispiel, Schritt 3: Anwenden der Versions-Selektion} \label{par:projektbericht-loesungsweg-cvss-selection-example-step-4}
 
+Dieser Abschnitt bezieht sich auf Schaubild \ref{fig:cvss-selection-process-selection-4}.
+
+Nun können die verbleibenden Vektoren auf einen einzigen je \qt{initial} und \qt{context} durch den Versions-Seletor reduziert werden.
+Hier wird einfach \code{LATEST} angewandt, das heißt, die höchste Versionszahl gewinnt.
+Diese Vektoren können nun für weitere Zwecke verwendet werden.
+
 \begin{figure}[htbp] % here, top, bottom, separate page
     \centering
     \includegraphics[width=0.7\textwidth, keepaspectratio]{res/grafiken/cvss-selection-process-selection-4}
     \caption{Anwenden der Versions-Selektion}
     \label{fig:cvss-selection-process-selection-4}
 \end{figure}
-
-Dieser Abschnitt bezieht sich auf Schaubild \ref{fig:cvss-selection-process-selection-4}.
-
-Nun können die verbleibenden Vektoren auf einen einzigen je \qt{initial} und \qt{context} durch den Versions-Seletor reduziert werden.
-Hier wird einfach \code{LATEST} angewandt, das heißt, die höchste Versionszahl gewinnt.
-Diese Vektoren können nun für weitere Zwecke verwendet werden.
