@@ -1,0 +1,57 @@
+\subsection{CVSS-Vektor Quellenmanagement} \label{subsec:projektbericht-loesungsweg-cvss-source-management}
+
+Um das Problem von multiplen CVSS-Vektoren pro Schwachstelle zu lösen, muss zunächst ein System entworfen werden, mit dem eine Quelle eines CVSS-Vektors eindeutig nach Aufnahme weiterhin identifiziert werden kann.
+Einige Anforderungen an das Format sind, dass sie in einen einfachen menschenlesbaren String serialisiert und von diesem wieder deserialisiert werden kann, aber auch die Eindeutigkeit der Quellen so hoch ist, dass sich zwei in irgendeiner Art unterschiedliche Quellen auch in der textuellen Repräsentation unterscheiden und aus einem externen Datensatz eindeutig weitere Metadaten hinzugefügt werden können.
+Um dieses Format zu bilden, wurden unter anderem die folgenden Quellen berücksichtigt:
+
+\begin{itemize}
+    \item NVD:
+    Organisationen und Institutionen können, wenn sie als sogenannte CVE Naming Authorities (CNA) registriert sind, für CVEs beliebige CVSS-Vektoren veröffentlichen.
+    Eine öffentlich verfügbare Liste an CNAs ist online\footnote{\url{https://nvd.nist.gov/vuln/cvmap/search}} mit Metadaten verfügbar.
+    \item MSRC:
+    Sie stellen für jede für Microsoft relevante Schwachstelle und pro betroffene (numerische) Produkt-Id einen CVSS-Vektor zur Verfügung.
+    \item CERT-SEI und GHSA: Stellen jeweils einen Vektor pro referenzierter Schwachstelle zur Verfügung.
+\end{itemize}
+
+Aus diesen Anforderungen wurde das in Listing \ref{lst:cvss-source-format} abgebildete Format entworfen, wobei jede der drei Optionen gültig ist.
+Eine Quelle besteht immer aus der Vektor-Version (CvssVersion) und der Entität, die den Vektor auf ihrer Platform zur Verfügung stellen (HostingEntity).
+Eine Entität kann sich beispielsweise auf die NVD, MSRC, GHSA, usw\ldots beziehen.
+Wenn die herausgebende Entität (HostingEntity) und die Entität, die den Vektor initial zur Verfügung gestellt hat (IssuingEntity), sich unterscheiden, müssen diese beide mit angegeben werden.
+In gewissen externen Schwachstelldatenbanken werden die Issuing Entities unter einem gewissen Rollennamen geführt, wie die CNAs bei der NVD\.
+In diesem Fall muss auch die IssuerRole in der Mitte angegeben werden.
+
+Zum Ablegen dieser Werte getrennt voneinander kann eine beliebige Datenstruktur genutzt werden, falls die Quelle jedoch als String serialisiert werden soll, muss sie auf eine besondere Weise formatiert werden:
+In den Entities und im Rollenbezeichner müssen zunächst alle Bindestriche (\qt{-}) mit einem \qt{\textbackslash}-Symbol escaped werden und alle restlichen \qt{\textbackslash} durch \qt{\textbackslash\textbackslash}.
+Damit ist es möglich, die in Listing \ref{lst:cvss-source-format} angegeben Bindestriche als Trennzeichen für die einzelnen Elemente zu verwenden.
+Da eine CVSS-Version kein Leerzeichen enthält, kann hier einfach das erste Leerzeichen als Trennung zwischen Version und den restlichen Elementen verwendet werden.
+
+Das System muss allerdings auch kombinierte Vektoren und deren kombinierte Quellen unterstützen.
+Hierfür wird eine Erweiterung des Formats eingeführt, bei dem die Zeichenfolge \qt{ + } als Trennung für mehrere Quellen dienen kann, wie in Listing \ref{lst:cvss-source-format-combined} zu sehen.
+Natürlich macht es dies nötig, auch Plus-Zeichen (\qt{+}) in den Quellen mit \qt{\textbackslash+} zu ersetzen.
+Die Vektor-Version muss dennoch nur einmal angegeben werden, da es unmöglich ist, Vektoren unterschiedlicher Version miteinander zu kombinieren.
+Laut Format-Definition müssen die Quellen ist die Reihenfolge der Quellen signifikant, da die erste Quelle den ursprünglichen Vektor repräsentiert und die darauf folgenden, in gelisteter Reihenfolge, auf diesen angewandt wurden.
+
+\begin{lstlisting}[language={}, label={lst:cvss-source-format}, caption={CVSS-Quellen Format}]
+CvssVersion HostingEntity
+CvssVersion HostingEntity-IssuingEntity
+CvssVersion HostingEntity-IssuerRole-IssuingEntity
+\end{lstlisting}
+
+\begin{lstlisting}[language={}, label={lst:cvss-source-format-combined}, caption={CVSS-Quellen Format \(Kombiniert\)}]
+CvssVersion HostingEntity-IssuerRole-IssuingEntity + HostingEntity-IssuerRole-IssuingEntity + ...
+\end{lstlisting}
+
+Einige Beispiele für Quellen sind in Listing \ref{lst:cvss-source-format-examples} zu finden.
+Dieses Format wird in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-selection} als Basis zur Verwaltung und Selektion von Vektoren verwendet.
+
+\begin{lstlisting}[language={}, label={lst:cvss-source-format-examples}, caption={CVSS Sources Format}]
+CVSS:3.1 Microsoft Corporation
+CVSS:2.0 Assessment-all
+CVSS:2.0 NVD-CNA-NVD
+CVSS:3.1 NVD-CNA-Microsoft Corporation
+CVSS:4.0 Assessment-lower
+\end{lstlisting}
+
+Um den einzelnen Entitäten Metadaten, wie die E-Mail Adressen der zuständigen Institutionen und Organisationen oder URLs zu deren Homepages oder Datenquellen, zuordnen zu können, muss ein Datensatz aller bekannter Datenquellen aufgebaut werden, der diesen zugeordnet werden kann.
+Hierfür wurde ein Prozess entworfen, der automatisiert die Liste aller CNAs der NVD\footnote{\url{https://nvd.nist.gov/vuln/cvmap/search}} und einem Mirror davon, gehostet auf CVE.org\footnote{\url{https://www.cve.org/PartnerInformation/ListofPartners}}, abfragt und daraus eine JSON-Datei generiert, in der diese Informationen abgelegt und später wieder eingelesen werden können.
+Zu einigen ausgewählten Entitäten wird ein zusätzlicher, manueller Datensatz gepflegt, der weitere Informationen zu diesen trägt.
