@@ -2,45 +2,22 @@
 
 % Woche 8 (2023-10-23 bis 2023-10-27)
 
-\lweekdaymarginpar{\weekdayMondayLong}
+\lweekdaymarginpar{\weekdayMondayShort, \weekdayTuesdayShort}
 
-Durch einige neue Anforderungen an die Windows-Extraktion, die ich am Freitag erhalten hatte, habe ich die Woche mit der Anpassung der Skripte und der Inventar-Generierung begonnen.
-Vor allem ging es um die (genauere) Erkennung von Treibern, PNP-Devices, optionalen Features und einen umfangreicheren Dateisystem-Scan.
-Ich nutzte diese Gelegenheit um die Performance einiger Skripte durch parallele Ausführung, performantere Datenstrukturen und weitere Optimierungen zu verbessern.
-
-\sweekdaymarginpar{\weekdayTuesdayLong}
-
-Dienstag sollte die Windows-Thematik vorerst abgeschossen werden.
-Dazu waren noch zwei Schritte nötig:
-Einerseits die PowerShell-Skripte unter einer MIT-Lizenz auf einem unserer GitHub Repositories zu veröffentlichen, da einer unserer Kunden nicht nur daran Interesse hat diese zu konsumieren, sondern auch weiterzuentwickeln.
-Und andererseits musste noch ein Maven-Plugin für die Inventar-Extraktion in Java geschrieben werden, damit diese auch tatsächlich ausgeführt werden kann.
-Diese beiden Aufgaben konnte ich am Dienstag erledigen.
+Mit den neuen Daten vom Freitag konnte ich Montag die Erkennung von Treibern, PNP-Devices und optionalen Features und die Performance des umfangreicheren Dateisystem-Scans einiger Skripte verbessern.
+Um Dienstag die Windows-Extraktion vorerst abzuschließen, habe ich den restlichen Tag noch die PowerShell-Skripte unter einer MIT-Lizenz auf GitHub veröffentlicht und ein Maven-Plugin für die Inventar-Extraktion in Java geschrieben.
 
 \sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort}
 
-Die folgenden beiden Tage konnte ich dann mit den Tasks beginnen, die mir beim Strategieworkshop zugewiesen wurden.
-Ich beschloss zusammen mit meinem Chef, dass die CVSS:4.0-Implementierung zusammen mit dem Refactoring der Datenstruktur in beiden betroffenen Projekten (core, artifact analysis) auf je nur einem Branch passieren sollten.
+Mittwoch konnte ich (endlich) mit der Neuimplementierung der Datenstruktur und Logik dahinter beginnen.
 Die einzelnen Tasks, die damit einhergehen, würden mich also die nächsten Wochen beschäftigen.
-Begonnen habe ich also damit, mehrere Seiten in unserem internen Wiki zu den geplanten Änderungen zu verfassen:
-
-Der Hauptgedanke hinter dem rewrite der Datenstruktur ist es, bestimmte öfters vorkommende (und je unterschiedlich implementierte) Prozessschritte zu generalisieren und an nur einen Ort zu implementieren.
-Das beinhaltet vor allem das Lesen und Schreiben der Daten, die Berechnung von effektiven Zuständen wie dem Status einer Schwachstelle oder der Scores von CVSS-Vektoren, aber auch die Verallgemeinerung der Datenstruktur, sodass Schwachstellen und Security Advisories gleich behandelt werden können.
-Eine weitere konzeptionelle Änderung, die im Folgenden große Auswirkungen haben wird, ist, dass nun pro Schwachstelle und Security Advisory mehrere CVSS-Vektoren existieren können und diese noch immer unterschieden werden können müssen.
-
-Begonnen habe ich mit dem Einführen eines Systems (Listing \ref{lst:cvss-source-format}), das eine Quelle und Version eines Vektors eindeutig angeben und als einfacher String repräsentiert werden kann.
-Dabei wird eine Quelle in die Entität aufgeteilt, die den Vektor herausgibt (\code{HostingEntity}), und die, die ihn erstellt hat (\code{IssuingEntity}).
-Wenn die Rolle des \code{IssuingEntity} auf dem \code{HostingEntity} bekannt ist, wird diese mit der \code{IssuerRole} angegeben.
-
-Die Entitäten werden durch Bindestriche getrennt, sind bis auf das \code{HostingEntity} optional und werden durch die CVSS-Version ge-prefixt.
-Intern kann dieses Format dann in eine Datenstruktur geparst werden.
-Viele CVSS-Provider führen eine Liste ihrer \qt{IssuingEntity}, wie z.B.\ die NVD\footnote{\url{https://nvd.nist.gov/vuln/cvmap/search}} oder CVE.org\footnote{\url{https://www.cve.org/PartnerInformation/ListofPartners}} mit ihren CVE Numbering Authorities (CNA).
-Diese können wir dann zu unserem Format matchen und dadurch Metadaten wie Links oder schönere Namen in den Reports anzeigen.
-Dazu habe ich einen Prozess geschrieben, der diese Datenquellen herunterlädt und in eine JSON-Datei schreibt, um sie später wieder einlesen zu können.
-Ein weiteres System macht diese optional in Java komfortabel Instanzen verfügbar.
+Bevor ich tatsächlich etwas programmieren konnte, wollte ich meine geplanten Änderungen in unserem internen Wiki dokumentieren und planen:
+Begonnen habe ich mit dem Einführen eines Systems, das eine Quelle und Version eines Vektors eindeutig angeben kann.
+Details dazu können in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-source-management} gefunden werden.
+Eine erste Implementierung dazu konnte ich bereits Donnerstag fertigstellen.
 
 \sweekdaymarginpar{\weekdayFridayLong}
 
 Freitag habe ich damit verbracht, einem Kollegen zu helfen, der Probleme mit einer Software-Bibliothek hatte, die wir seit geraumer Zeit einsetzen.
-Das Problem ließ sich am Ende auf einen internen Cache der Bibliothek zurückführen, der sich bei der ersten und zweiten Ausführung unterschiedlich verhalten hat und zu inkorrektem Verhalten an einer anderen Stelle geführt hat.
-Dies haben wir den Betreuern der Bibliothek in einem Issue\footnote{\url{https://github.com/spdx/Spdx-Java-Library/issues/215}} mitgeteilt.
+Das Problem ließ sich am Ende auf einen internen Cache der Bibliothek zurückführen, den wir den Betreuern der Bibliothek in einem Issue\footnote{\url{https://github.com/spdx/Spdx-Java-Library/issues/215}} mitteilten.
 Dieses Issue wurde einige Tage später durch einen Pull Request (PR) von meinem Kollegen behoben.

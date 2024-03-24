@@ -5,14 +5,12 @@
 \lweekdaymarginpar{\weekdayMondayLong}
 
 Ende letzter Woche hatte ich also alle CVSS-bezogenen Features implementiert und in den Anreicherungsprozess integriert, sodass das System nun in der Lage war, CVSS-Vektoren von beliebigen Datenquellen aufzunehmen und deren Quellen nachvollziehbar zu halten.
-Diesen Montag nutzte ich, um diese Vektoren und deren berechneten Scores im VAD, einem unserer Reporting-Outputs, anzuzeigen.
-Um die effektiven Vektoren zu berechnen, musste ich auch die CVSS-Selektion anwenden, was erstaunlich gut funktionierte.
+Den Montag nutzte ich, um diese Vektoren und deren berechneten Scores im VAD auf eine angereicherte Art anzuzeigen, was erstaunlich gut funktionierte.
 
 \sweekdaymarginpar{\weekdayTuesdayLong}
 
 Dienstagmorgen besprach ich mit meinem Chef die Integration dieser Änderungen in den PDF-Report unseres Core-Projekts.
-Wir konnten zwar zu dem Schluss kommen, dass es für die Codebasis sinnvoll wäre, sowohl das Datenmodell als auch das Reporting in separate Projekte auszulagern.
-Wie so oft in der Informatik entschieden wir uns aufgrund von Zeitmangel jedoch für einen einfacheren Weg:
+Wir konnten zwar zu dem Schluss kommen, dass es für die Codebasis sinnvoll wäre, sowohl das Datenmodell als auch das Reporting in separate Projekte auszulagern, wie so oft in der Informatik entschieden wir uns aufgrund von Zeitmangel jedoch für einen einfacheren Weg:
 Wir kopierten Teile der Klassen in das andere Projekt, um auch dort Zugriff auf die Parsing-Logik zu haben.
 
 Noch am Dienstag konnte ich die relevanten Klassen in das Core-Projekt übernehmen und testen.

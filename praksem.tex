@@ -58,19 +58,18 @@
 
     \end{abstract}
 
-    \ifshortenedReport
-    \begin{center}
-        \fbox{
-            \begin{minipage}{0.9\textwidth}
-                \textbf{Hinweis:}
-                Dieser Bericht wurde aus Gründen der Übersichtlichkeit und der maximalen Seitenzahl gekürzt.
-                Der vollständige Bericht ist alternativ auf Abfrage verfügbar.
-            \end{minipage}
-        }
-    \end{center}
-    \fi
-
     \tableofcontents
+
+    \ifshortenedReport
+    \vspace*{20px}
+    \fbox{
+        \begin{minipage}{1\textwidth}
+            \textbf{Hinweis:}
+            Dieser Bericht wurde aus Gründen der Übersichtlichkeit und der maximalen Seitenzahl gekürzt.
+            Der vollständige Bericht ist alternativ auf Abfrage verfügbar.
+        \end{minipage}
+    }
+    \fi
 
 
     \include{kapitel/einleitung}
