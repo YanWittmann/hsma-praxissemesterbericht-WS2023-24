@@ -4,40 +4,25 @@
 
 \lweekdaymarginpar{\weekdayMondayLong}
 
-Der Montag war auch der erste Arbeitstag eines neuen Kollegen, der uns in Teilzeit bei der Entwicklung einer CI-Pipeline und eines eigenen Testing-Frameworks für unsere Datenstrukturen unterstützen sollte.
-Ich half ihm am Vormittag, unsere Projekte auf seinem Laptop einzurichten und verbrachte den halben Tag damit, ihm verschiedene Teile unserer Codebasis zu erklären.
-Nach der Mittagspause übernahm mein Chef die Einarbeitung, und ich widmete mich einem anderen Kollegen, der Fragen zu einem Inventar und den von ihm erstellten Korrelationsdaten hatte.
-Wir gingen gemeinsam über 40 Produkt-Mappings, um sicherzustellen, dass alles korrekt war.
-
-Diese Überprüfung nahm zwar den Rest des Tages in Anspruch, war aber nützlich für meinen Kollegen:
-Da er kein Informatiker ist, ist sein Wissen über die verschiedenen Ökosysteme und \qt{weit bekannte} Produkte begrenzt.
-So konnte ich ihm verschiedene Paketmanager und Quellen für Paketinformationen zeigen.
+Der Montag war auch der erste Arbeitstag eines neuen Kollegen, der uns bei der Entwicklung einer CI-Pipeline und eines Testing-Frameworks unterstützen sollte.
+Ich half ihm vormittags bei der Einrichtung seines Laptops und erklärte ihm unsere Codebasis.
+Nachmittags widmete ich mich einem anderen Kollegen, um über seine Änderungen an den Korrelationsdaten zu gehen, was den Rest des Tages in Anspruch nahm.
 
 \sweekdaymarginpar{\weekdayTuesdayLong}
 
-Diese Session brachte mir ein länger bestehendes Problem in Erinnerung: die Art und Weise, wie wir Java-Versionen in diesem Datensatz erkennen.
-Bisher hatte ich mich nicht getraut, Änderungen am Code davon zu machen, weil nicht alle Kunden die neueste Version nutzen und dieser Datensatz von allen verwendet wird.
-Ich verbrachte den Dienstag damit, mit dem alten Code ein System zu entwerfen, das automatisch Einträge für alle bekannten Java-Versionen (etwa 2500 aus der NVD über CPE) generieren und den eingesetzten Java-Versionen unserer Kunden zuordnen kann.
+Diese gestrige Session mit den Korrelationsdaten erinnerte mich an die Art und Weise, wie wir Java-Versionen mit diesem System erkennen und, dass es nur ein provisorisches System sein sollte.
+Ich entwarf Dienstag also ein System, das automatisch Korrelations-Einträge für alle bekannten Java-Versionen generieren kann.
+Nach drei erfolglosen Iterationen über dieses Problem fand ich dann eine akzeptable und funktionierende Lösung und stellte sie dem Kollegen und meinem Chef vor.
 
-Ich durchlief drei erfolglose Iterationen, die jeweils fast funktionierten, aber es fehlte immer ein entscheidendes Feature.
-Die fehlenden Features waren ähnlich, aber unterschiedlich genug, sodass ich sie nicht direkt verwenden konnte.
-Manchmal hatte ich das Gefühl, mein früheres Ich hätte diese Features absichtlich ausgelassen.
-Zum Tagesende fand ich glücklicherweise eine funktionierende vierte Möglichkeit und legte dafür einen Testdatensatz an.
 
 \sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort}
 
 In den folgenden Tagen nahm ich einen Schritt zurück, um den Refactoring-Prozess des Datenmodells noch einmal zu überprüfen.
-Abgesehen davon, dass ich vergessen hatte, zwei größere Klassen in das neue Modell zu überführen, wollte ich auch inhaltlich sicher sein.
-In dem Security-Kontext unserer Applikation ist es besonders wichtig, dass die Ergebnisse entweder gleichbleiben oder sich verbessern, da Kunden korrekte Schwachstellen nicht übersehen sollen, nur weil sich unser Prozess verschlechtert hat.
-Ich erstellte daher aus Bestandsdaten einige Testfälle und verglich die Ergebnisse mit der alten Version.
-Einige der Ergebnisse unterschieden sich auf eine Weise, die nicht besser war als zuvor, welche sich dann allerdings recht Schnell auf konkrete Fehler in der Programmierung zurückführen ließen, die ich beheben konnte.
-
-Donnerstagabend war für diesen Datensatz in jedem Fall die neue Version im Matching verbessert und Schwachstellen sind nur korrekt und nachvollziehbar verschwunden.
-Diese Vergleichsdatensätze besprach ich auch noch einmal mit meinem Chef.
+Ich stellte fest, dass ich zwei größere Klassen vergessen hatte zu überführen und korrigierte zudem noch einige Fehler, die im Vergleich zu Generation 2 zu (zu stark) abweichenden Ergebnissen führten.
+Nach diesen Korrekturen waren die Ergebnisse verbessert, und ich konnte endlich meine Generation 3 des Vulnerability-Monitorings meinem Chef präsentieren und besprechen.
 
 \sweekdaymarginpar{\weekdayFridayLong}
 
-Der bevorstehende CSAF-Workshop nächste Woche rückte näher, deshalb widmete ich den Freitag der Recherche über CSAF, las die Dokumentation und sah einige Beispiele an.
-Meine bis dahin gesammelten Erkenntnisse fasste ich in einem neuen Wiki-Artikel zusammen.
-Allerdings kam ich nicht so weit, wie ich gehofft hatte, da ich immer wieder durch kleinere Anfragen meines Chefs und das wöchentliche Meeting unterbrochen wurde.
-Die Recherche würde ich dann in der nächsten Woche fortfahren.
+Der bevorstehende CSAF-Workshop nächste Woche rückte näher, darum widmete ich den Freitag der Recherche über CSAF, indem ich die Dokumentation und einige Beispiele ansah.
+Meine Erkenntnisse fasste ich in einem neuen Wiki-Artikel zusammen, wurde jedoch durch kleinere Anfragen und das wöchentliche Meeting immer wieder unterbrochen.
+Die Recherche würde ich in der nächsten Woche fortsetzen.
