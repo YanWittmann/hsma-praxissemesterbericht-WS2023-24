@@ -1,5 +1,7 @@
 \section{Grundlagen} \label{sec:projektbericht-grundlagen}
 
+Um eine gemeinsame Grundlage zu schaffen, werden in diesem Kapitel die wichtigsten Begriffe und Standards erläutert, die im weiteren Verlauf des Berichts verwendet werden.
+
 \subsection{Software-Inventare} \label{subsec:projektbericht-grundlagen-inventories}
 
 Software-Inventare werden bei der {\metaeffekt} in einem eigens entwickelten, proprietären Format, schlicht \qt{Inventar} genannt, abgelegt.
@@ -37,18 +39,18 @@ Die CPE Naming Specification Version 2.3 \cite[Seite 37, Kapitel 6.2]{NISTIR7695
 
 \code{cpe : 2.3 : part : vendor : product : version : update : edition}\newline\hphantom{\code{cpe}}\code{: language : sw_edition : target_sw : target_hw:other}
 
-Auf dem NVD Dashboard\footnote{\url{https://nvd.nist.gov/general/nvd-dashboard}} ist gelistet, dass es am 08.03.2024 insgesamt 240899 eindeutige CVEs und 1261617 CPEs gibt.
+Auf dem NVD Dashboard\footnote{\url{https://nvd.nist.gov/general/nvd-dashboard}} ist geführt, dass es am 08.03.2024 insgesamt 240899 eindeutige CVEs und 1261617 CPEs gibt.
 Diese Zahl wächst exponentiell und zeigt, wie wichtig es ist, Schwachstellen automatisiert zu verarbeiten.
 
 \subsection{CVSS} \label{subsec:projektbericht-grundlagen-cvss}
 
-Das Common Vulnerability Scoring System (CVSS) wird in Version 4.0 \cite{CVSSv4.0Specification} vom FIRST\footnote{\url{https://www.first.org}} (Forum of Incident Response and Security Teams) als ein offener Standard für die Bewertung der Sicherheitsanfälligkeit von Software- und Hardwarekomponenten beschrieben.
-Dieser Standard legt fest, wie sog\. CVSS-Vektoren, definiert als Sammlung von Schlüssel-Wert Paaren, zur möglichst objektiven Darstellung von Schwachstelleneigenschaften genutzt werden können.
-Solche Vektoren können textuell als \code{CVSS:VERSION/KEY:VALUE/KEY:VALUE/...} formatiert werden, wobei jedes Wertepaar durch \qt{/} getrennt und mit \qt{CVSS:} gefolgt von der Vektor-Version beginnen muss.
+Das Common Vulnerability Scoring System (CVSS) wird (in Version 4.0) \cite{CVSSv4.0Specification} vom FIRST\footnote{\url{https://www.first.org}} (Forum of Incident Response and Security Teams) als ein offener Standard für die Bewertung der Sicherheitsanfälligkeit von Software- und Hardwarekomponenten beschrieben.
+Dieser Standard legt fest, wie sog. CVSS-Vektoren, definiert als Sammlung von Schlüssel-Wert Paaren, zur möglichst objektiven Klassifizierung von Schwachstelleneigenschaften genutzt werden können.
+Solche Vektoren können textuell als \code{CVSS:VERSION/KEY:VALUE/KEY:VALUE/...} formatiert werden, wobei jeder Vektor mit \qt{CVSS:} gefolgt von der Vektor-Version beginnen und jedes Wertepaar durch \qt{/} getrennt werden muss.
 
-Ein Beispiel für einen Basisvektor in Version 3.1, der einen mittleren Schweregrad (\qt{Medium}) mit einem Score von 6.0 darstellt, kann folgendermaßen aussehen: \code{CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N}.
 Allgemein reichen die Scores, die aus diesen Vektoren berechnet werden, von 0 bis 10 und ordnen die Schwachstellen in die Kategorien \qt{Low}, \qt{Medium}, \qt{High} und \qt{Critical} ein, wobei höhere Werte eine dringendere Bewertung erfordern.
 Diese Berechnungen lassen sich leicht mit Online-Rechnern\footnote{\url{https://metaeffekt.com/security/cvss/calculator}} oder Software-Tools, verfügbar in allen populären Programmiersprachen, durchführen.
+Ein Beispiel für einen Basisvektor in Version 3.1, der einen mittleren Schweregrad (\qt{Medium}) mit einem Score von 6.0 darstellt, kann folgendermaßen aussehen:\newline\code{CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N}.
 
 Die versionsabhängigen Metriken der Vektoren ordnen jeweils eine Charakteristik einer Schwachstelle einem Wert zu.
 So steht beispielsweise \code{AV:L} für einen \qt{Attack Vector} mit dem Wert \qt{Adjacent Network}, was die räumliche Nähe beschreibt, die ein Angreifer benötigt, um die Schwachstelle auszunutzen.
@@ -93,7 +95,7 @@ Jedoch kann es sowohl bei großen, aber auch schon bei kleinen Projekten mit kri
 Es werden also objektive und automatisierbare Faktoren benötigt, anhand denen die Schwachstellen möglichst ohne weiteres Zutun in eine priorisierte Liste eingeordnet werden können, um die kritischsten zuerst abarbeiten zu können.
 
 Diese Faktoren sind Projekt- und Umgebungsspezifisch und können stark variieren.
-In diesem Kapitel wird nur CVSS als Priorisierungsfaktor betrachtet, wie sie in der CVSS-Spezifikation beschrieben werden \code{[TODO: CITATION NEEDED]}.
+In diesem Kapitel wird nur CVSS als Priorisierungsfaktor betrachtet, wie sie in der CVSS-Spezifikation beschrieben werden.
 In Kapitel \ref{subsec:projektbericht-grundlagen-cvss} wurde bereits auf die Metrik-Gruppen eingegangen.
 Da jede Schwachstelle aus dem CVE-System und den meisten anderen Systemen mindestens einen CVSS-Vektor von den Herausgebern angehängt bekommen hat, kann bereits ohne großen Mehraufwand eine nach dem daraus errechneten Basis-Score sortierte Liste als initiale Reihenfolge dienen.
 

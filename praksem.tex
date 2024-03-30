@@ -75,11 +75,7 @@
 
     \include{kapitel/einleitung}
 
-    \ifshortenedReport
-    \include{wochenberichte/shortened/wochenberichte}
-    \else
-    \include{wochenberichte/initial/wochenberichte}
-    \fi
+    \includeReport{wochenberichte/shortened/wochenberichte}{wochenberichte/initial/wochenberichte}
 
     \include{kapitel/projektbericht}
 

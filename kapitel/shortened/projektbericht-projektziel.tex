@@ -1,0 +1,12 @@
+\section{Problemstellungen und Projektziel} \label{sec:projektbericht-projektziel}
+
+Innerhalb der relevanten Abteilung bei {\metaeffekt} ging es vor allem um die Verbesserung des hauseigenen automatisierten Vulnerability Monitorings.
+Dieses wird als eine Serie von Schritten (\qt{Inventory Enrichment Pipeline}) durchgeführt, wobei jeder das Software-Inventar modifiziert und an den nächsten Schritt weitergibt, um am Ende alle notwendigen Informationen über Schwachstellen zu enthalten.
+Die Hauptziele des Semesters sind:
+
+\begin{smitemize}
+    \item Die Neugestaltung des Datenmodells für das Vulnerability Monitoring, um die Neukonzeption der Speicherung und Verarbeitung von mehreren CVSS-Vektoren von verschiedenen Quellen für eine Schwachstelle zu ermöglichen.
+    Zudem war ein Mechanismus zur Auswahl der relevanten CVSS-Vektoren nötig.
+    \item Die Entwicklung und Open-Source-Veröffentlichung einer Implementierung des CVSS-Standards in TypeScript, inklusive eines Web-UIs für einen interaktiven CVSS-Rechner.
+    Dieser Rechner soll direkt aus unseren Berichten heraus verlinkt werden können.
+\end{smitemize}

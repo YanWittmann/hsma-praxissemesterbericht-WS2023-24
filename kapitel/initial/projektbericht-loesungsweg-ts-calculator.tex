@@ -66,7 +66,7 @@ public calculateExactImpactScore(): number {
 }
 \end{lstlisting}
 
-\subsubsection{CVSS:4.0 Implementierung} \label{subsec:projektbericht-loesungsweg-typescript-cvss-online-calculator-cvss-4P0}
+\subsubsection{CVSS:4.0 TypeScript Implementierung} \label{subsec:projektbericht-loesungsweg-typescript-cvss-online-calculator-cvss-4P0}
 
 Etwas anders verhält es sich mit der Version 4.0 von CVSS, welche nur einen einzigen Score berechnet und dazu keine statischen Formeln, sondern höhere mathematische Konzepte verwendet.
 Laut der Dokumentation und Entwicklungsgeschichte von CVSS 4.0 \cite{CVSSv4.0Specification} wurden die 15 Millionen möglichen CVSS-Vektoren automatisiert in 270 Äquivalenzgruppen aufgeteilt und einer Expertengruppe mit 50 Teilnehmern bereitgestellt, die diese absolut dem Schweregrad entsprechend einordnen sollten.
@@ -144,7 +144,6 @@ function calculateOverallScore(inputVector):
       availableSeverityReduction = macroVectorScore - nextLowerMacroScore
 
       macroVectorDepth = lookupMacroVectorDepth(eqOp, macroVector)
-      // sums up the severity distances for the given EQ operation
       severityDistanceFromThisToHighestSeverity = eqOp.sumSeverityDistances(highestSeveritySeverityDistances)
 
       if not isNaN(availableSeverityReduction) and macroVectorDepth != 0.0:
@@ -154,6 +153,5 @@ function calculateOverallScore(inputVector):
 
   adjustedOriginalMacroVectorScore = macroVectorScore - meanScoreAdjustment.average()
 
-   // 0 - 10
   return adjustScoreWithinValidRange(adjustedOriginalMacroVectorScore)
 \end{lstlisting}

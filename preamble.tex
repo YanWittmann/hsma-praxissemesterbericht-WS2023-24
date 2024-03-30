@@ -151,6 +151,15 @@
 \newcommand{\code}[1]{\colorbox{codegray}{\texttt{\detokenize{#1}}}}
 \newcommand{\codendt}[1]{\colorbox{codegray}{\texttt{#1}}}
 
+% conditional commands
+\newcommand{\includeReport}[2]{
+    \ifshortenedReport
+    \input{#1} % Inkludiert den ersten Parameter, wenn shortenedReport wahr ist
+    \else
+    \input{#2} % Inkludiert den zweiten Parameter, wenn shortenedReport falsch ist
+    \fi
+}
+
 % custom environments
 \newenvironment{smitemize}
 { \begin{itemize}
