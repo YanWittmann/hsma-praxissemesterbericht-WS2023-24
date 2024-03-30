@@ -8,7 +8,7 @@ Diese Woche begann ich mit dem nächsten Schritt, der Überarbeitung des Datenfo
 Das bisherige Datenformat besteht im Wesentlichen aus einer \codendt{Map<List<Map<String, String>\!>\!>}, was das domänenspezifische Parsen der Werte erschwert, denn komplexe Attribute müssen so über mehrere Schlüssel verteilt sein.
 Durch das Ein- und Auslesen dieser mehreren oder komplex strukturierten Felder entsteht ein zusätzlicher Komplexitätsaufwand, den man lieber vermeiden möchte.
 
-\sweekdaymarginpar{\weekdayTuesdayShort, \weekdayThursdayShort, \weekdayFridayShort}
+\sweekdaymarginpar{\weekdayTuesdayShort\ - \weekdayFridayShort}
 
 Nach der Fertigstellung der Planung der Implementierung in zwei Schritten am Montag konnte ich den Rest dieser Woche mit der Umsetzung in unserem internen Projekt, Artifact Analysis, starten.
 Ich startete mit der Entwicklung von Wrapper-Klassen um die inneren \code{Map<String, String>} Strukturen, die die Map in eine Kollektion Instanzen unseres Datenmodells umwandeln.
