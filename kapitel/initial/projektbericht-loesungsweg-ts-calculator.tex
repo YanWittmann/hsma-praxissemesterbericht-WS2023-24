@@ -89,16 +89,16 @@ Um die Formeln zu verstehen, muss verstanden werden, dass es zwei unterschiedlic
 
 \begin{description}
     \item[Severity Distance Scale] Diese Skala ist mit den Vektormetriken und deren möglichen Werten verbunden.
-    Eine Änderung von $\pm 1$ auf dieser Skala stellt eine Änderung eines einzelnen Metrikwerts um einen Wert nach oben oder unten dar (schlimmer, weniger schlimm).
+    Eine Änderung von $\pm 1$ auf dieser Skala stellt eine Änderung eines einzelnen Metrikwerts um einen Wert nach oben oder unten dar (ernster, weniger ernst).
     \item[CVSS Score Scale] Sie quantifiziert die Schwere der Schwachstelle in einem Bereich von 0 bis 10, wobei höhere Werte auf schwerwiegendere Schwachstellen hinweisen.
-    Die kleinste mögliche Änderung auf dieser Skala ist $0,1$.
+    Die kleinste mögliche Änderung auf dieser Skala ist $0.1$.
 \end{description}
 
 Damit können die folgenden Werte und Formeln definiert werden:
 
 \begin{itemize}[noitemsep]
     \item \textbf{MV} ist der aus dem ursprünglichen Vektor berechnete MakroVektor.
-    \item \textbf{EQ} ist eine sog. Äquivalenzgruppe, die aus einer Menge an Definitionen für Kriterien, wann ein Vektor innerhalb dieser Gruppe ist und welche die schlimmstmöglichsten Vektoren in dieser Gruppe sind, steht.
+    \item \textbf{EQ} ist eine sog.\ Äquivalenzgruppe, die aus einer Menge an Definitionen für Kriterien, wann ein Vektor innerhalb dieser Gruppe ist und eine Liste der Vektoren mit den höchstmöglichen Scores die in dieser Gruppe sind, führt.
     \item \textbf{ScoreInterpolated$(V)$} ist der endgültig berechnete Score für den Vektor.
     \item \textbf{ScoreBase$(MV)$} ist der Score für den MacroVector, bestimmt durch Nachschlagen in der Tabelle.
     \item \textbf{Mean$(scores)$} berechnet den Durchschnittsscore über alle EQ (Äquivalenz)-Gruppen, die für den Vektor zutreffen.

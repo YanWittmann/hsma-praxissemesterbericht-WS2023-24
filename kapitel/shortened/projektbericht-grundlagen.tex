@@ -8,7 +8,7 @@ Software-Inventare werden bei der {\metaeffekt} in einem eigens entwickelten, pr
 Meist wird, um ein solches Inventar zu erhalten, ein ebenfalls eigens entwickelter Scanner verwendet, der ganze Dateisysteme nach Komponenten durchsucht und daraus ein Inventar generiert.
 Um möglichst breiten Support zu bieten, gibt es allerdings nicht nur den Scanner, sondern auch diverse Konverter, mit denen Inventare von und zu Formaten wie CycloneDX SBOM\footnote{\url{https://cyclonedx.org/specification/overview}} oder SPDX\footnote{\url{https://spdx.dev}} umgewandelt werden können.
 
-Diese Inventare können mehrere Kategorien an Daten enthalten: Software-Komponenten (\qt{Artefakte}), Schwachstell-Informationen, Security Advisories, Lizenzinformationen und einige weitere.
+Diese Inventare können mehrere Kategorien an Daten enthalten: Software-Komponenten (\qt{Artefakte}), Schwachstell-Informationen, Security Advisories, Lizenzinformationen und weitere.
 
 \subsection{NVD / NIST} \label{subsec:projektbericht-grundlagen-nvd-nist}
 
@@ -18,12 +18,12 @@ Die Schwachstellen sind damit global über eine API oder über die Website errei
 
 \subsection{CVE / CPE} \label{subsec:projektbericht-grundlagen-cve-cpe}
 
-\qt{CVE} ist ein von dem CVE Project eingeführtes System, das Schwachstellen in Software- und Hardwareprodukten eindeutig identifiziert und beschreibt.
-Im CVE-System bekommt jede Schwachstelle eine eindeutige ID von der Form \qt{CVE-YYYY-NNNN} zugewiesen und wird nur als Schwachstelle bezeichnet, wenn sie ausgenutzt wird, die Konfidentialität, Integrität oder Verfügbarkeit negativ beeinflusst.
+\qt{CVE} (Common Vulnerabilities and Exposures) ist ein vom CVE Project eingeführtes System, das Schwachstellen in Software- und Hardwareprodukten eindeutig identifiziert und beschreibt.
+Im CVE-System bekommt jede Schwachstelle eine eindeutige ID der Form \qt{CVE-YYYY-NNNN} zugewiesen und wird nur als Schwachstelle bezeichnet, wenn sie ausgenutzt wird, die Vertraulichkeit, Integrität oder Verfügbarkeit negativ beeinflusst.
 Die Behebung solcher Schwachstellen kann Codeanpassungen, Änderungen in den Spezifikationen oder sogar die komplette Entfernung betroffener Protokolle oder Funktionen erfordern \cite{nvdVulnerabilityDefinition}.
 Es soll kein CVE-Eintrag existieren, der keinen Einfluss auf die Vertraulichkeit, Integrität oder Verfügbarkeit eines Systems hat \cite{nvdVulnerabilityMetrics}.
 
-Auf dem NVD Dashboard\footnote{\url{https://nvd.nist.gov/general/nvd-dashboard}} ist geführt, dass es am 08.03.2024 insgesamt 240899 eindeutige CVEs und 1261617 CPEs gibt.
+Auf dem NVD Dashboard\footnote{\url{https://nvd.nist.gov/general/nvd-dashboard}} wird angezeigt, dass es am 08.03.2024 insgesamt 240899 eindeutige CVEs und 1261617 CPEs gibt.
 Diese Zahl wächst exponentiell und zeigt, wie wichtig es ist, Schwachstellen automatisiert zu verarbeiten.
 
 \subsection{CVSS} \label{subsec:projektbericht-grundlagen-cvss}
@@ -32,21 +32,21 @@ Das Common Vulnerability Scoring System (CVSS) wird (in Version 4.0) \cite{CVSSv
 Dieser Standard legt fest, wie CVSS-Vektoren zur möglichst objektiven Klassifizierung von Schwachstelleneigenschaften genutzt werden können.
 Sie können als \code{CVSS:VERSION/KEY:VALUE/KEY:VALUE/...} formatiert werden, wobei jeder Vektor mit \qt{CVSS:} gefolgt von der Version beginnen und jedes Wertepaar durch \qt{/} getrennt werden muss.
 
-Allgemein reichen die Scores, die aus diesen Vektoren berechnet werden, von 0 bis 10 und ordnen die Schwachstellen in die Kategorien \qt{Low}, \qt{Medium}, \qt{High} und \qt{Critical} ein, wobei höhere Werte eine dringendere Bewertung erfordern.
+Allgemein reichen die Scores, die aus diesen Vektoren berechnet werden, von 0 bis 10 und ordnen die Schwachstellen in die Kategorien \qt{Low}, \qt{Medium}, \qt{High} und \qt{Critical} ein, wobei höhere Werte eine dringendere Analyse erfordern.
 Diese Berechnungen lassen sich leicht mit Online-Rechnern\footnote{\url{https://metaeffekt.com/security/cvss/calculator}} oder Software-Tools, verfügbar in allen populären Programmiersprachen, durchführen.
 
 Die versionsabhängigen Metriken der Vektoren ordnen jeweils eine Charakteristik einer Schwachstelle einem Wert zu.
 So steht beispielsweise \code{AV:L} für einen \qt{Attack Vector} mit dem Wert \qt{Adjacent Network}, was die räumliche Nähe beschreibt, die ein Angreifer benötigt, um die Schwachstelle auszunutzen.
-Andere Werte wie \qt{Network} (aus dem Internet ausnutzbar, höchster Schweregrad), \qt{Local} oder \qt{Physical} (physikalischer Zugang benötigt, am weigsten schlimm) spezifizieren weitere Angriffsszenarien für diese Metrik.
+Andere Werte wie \qt{Network} (aus dem Internet ausnutzbar, höchster Schweregrad), \qt{Local} oder \qt{Physical} (physikalischer Zugang benötigt, am wenigsten ernst) spezifizieren weitere Angriffsszenarien für diese Metrik.
 
 \subsection{Schwachstellen-Priorisierung durch CVSS} \label{subsec:projektbericht-grundlagen-vulnerability-assessment}
 
-Nachdem eine Liste an Schwachstellen bekannt ist, muss die manuelle Bewertung der Schwachstellen durch Einschätzungen, einm Status und erforderlichen Maßnahmen angegeben werden.
+Nachdem eine Liste an Schwachstellen bekannt ist, muss die manuelle Bewertung der Schwachstellen durch Einschätzungen, einem Status und erforderlichen Maßnahmen angegeben werden.
 Objektive und automatisierbare Faktoren helfen, die Schwachstellen in eine priorisierte Liste einzuordnen.
 Diese Faktoren sind Projekt- und Umgebungsspezifisch und können stark variieren.
 Hier wird nur CVSS als Priorisierungsfaktor betrachtet, wie sie in der CVSS-Spezifikation beschrieben werden.
-Jede Schwachstelle besitzt i.d.r. mindestens einen CVSS-Vektor und kann damit bereits ohne großen Mehraufwand eine nach dem Score sortierte Liste als initiale Reihenfolge erzeugen.
+Jede Schwachstelle besitzt i.d.R. mindestens einen CVSS-Vektor und kann damit bereits ohne großen Mehraufwand eine nach dem Score sortierte Liste als initiale Reihenfolge erzeugen.
 
 Zur Kontextualisierung dieser Liste kann danach die Environmental-Metrikgruppe dienen.
 Angenommen, in einem Vektor ist \code{AV} auf \code{L} gesetzt und die betroffene lokale Schwachstelle ist in einer netzwerkisolierten Applikation netzwerktechnisch nicht ausnutzbar, dann kann eine Anpassung des CVSS-Vektors zu \code{AV:P} erfolgen.
-Zusätzliche Metriken wie Konfidentialitäts-, Integritäts- oder Verfügbarkeitsrisiken unterstützen weitere Feinabstimmungen.
+Zusätzliche Metriken wie Vertraulichkeits-, Integritäts- oder Verfügbarkeitsrisiken unterstützen weitere Feinabstimmungen.

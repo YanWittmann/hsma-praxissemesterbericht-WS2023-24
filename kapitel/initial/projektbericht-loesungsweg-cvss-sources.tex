@@ -15,12 +15,12 @@ Um dieses Format zu bilden, wurden unter anderem die folgenden Quellen berücksi
 
 Aus diesen Anforderungen wurde das in Listing \ref{lst:cvss-source-format} abgebildete Format entworfen, wobei jede der drei Optionen gültig ist.
 Eine Quelle besteht immer aus der Vektor-Version (CvssVersion) und der Entität, die den Vektor auf ihrer Platform zur Verfügung stellen (HostingEntity).
-Eine Entität kann sich beispielsweise auf die NVD, MSRC, GHSA, usw\ldots beziehen.
+Eine Entität kann sich beispielsweise auf die NVD, MSRC, GHSA, usw. beziehen.
 Wenn die herausgebende Entität (HostingEntity) und die Entität, die den Vektor initial zur Verfügung gestellt hat (IssuingEntity), sich unterscheiden, müssen diese beide mit angegeben werden.
 In gewissen externen Schwachstelldatenbanken werden die Issuing Entities unter einem gewissen Rollennamen geführt, wie die CNAs bei der NVD\.
 In diesem Fall muss auch die IssuerRole in der Mitte angegeben werden.
 
-Zum Ablegen dieser Werte getrennt voneinander kann eine beliebige Datenstruktur genutzt werden, falls die Quelle jedoch als String serialisiert werden soll, muss sie auf eine besondere Weise formatiert werden:
+Dies kann innerhalb einer Datenstruktur durch getrennte Attribute dargestellt werden, falls die Quelle jedoch als String serialisiert werden soll, muss sie auf eine besondere Weise formatiert werden:
 In den Entities und im Rollenbezeichner müssen zunächst alle Bindestriche (\qt{-}) mit einem \qt{\textbackslash}-Symbol escaped werden und alle restlichen \qt{\textbackslash} durch \qt{\textbackslash\textbackslash}.
 Damit ist es möglich, die in Listing \ref{lst:cvss-source-format} angegeben Bindestriche als Trennzeichen für die einzelnen Elemente zu verwenden.
 Da eine CVSS-Version kein Leerzeichen enthält, kann hier einfach das erste Leerzeichen als Trennung zwischen Version und den restlichen Elementen verwendet werden.
@@ -29,7 +29,7 @@ Das System muss allerdings auch kombinierte Vektoren und deren kombinierte Quell
 Hierfür wird eine Erweiterung des Formats eingeführt, bei dem die Zeichenfolge \qt{ + } als Trennung für mehrere Quellen dienen kann, wie in Listing \ref{lst:cvss-source-format-combined} zu sehen.
 Natürlich macht es dies nötig, auch Plus-Zeichen (\qt{+}) in den Quellen mit \qt{\textbackslash+} zu ersetzen.
 Die Vektor-Version muss dennoch nur einmal angegeben werden, da es unmöglich ist, Vektoren unterschiedlicher Version miteinander zu kombinieren.
-Laut Format-Definition müssen die Quellen ist die Reihenfolge der Quellen signifikant, da die erste Quelle den ursprünglichen Vektor repräsentiert und die darauf folgenden, in gelisteter Reihenfolge, auf diesen angewandt wurden.
+Laut Format-Definition ist die Reihenfolge der Quellen signifikant, da die erste Quelle den ursprünglichen Vektor repräsentiert und die darauffolgenden, in gelisteter Reihenfolge, auf diesen angewandt wurden.
 
 \begin{lstlisting}[language={}, label={lst:cvss-source-format}, caption={CVSS-Quellen Format}]
 CvssVersion HostingEntity
@@ -52,6 +52,6 @@ CVSS:3.1 NVD-CNA-Microsoft Corporation
 CVSS:4.0 Assessment-lower
 \end{lstlisting}
 
-Um den einzelnen Entitäten Metadaten, wie die E-Mail Adressen der zuständigen Institutionen und Organisationen oder URLs zu deren Homepages oder Datenquellen, zuordnen zu können, muss ein Datensatz aller bekannter Datenquellen aufgebaut werden, der diesen zugeordnet werden kann.
-Hierfür wurde ein Prozess entworfen, der automatisiert die Liste aller CNAs der NVD\footnote{\url{https://nvd.nist.gov/vuln/cvmap/search}} und einem Mirror davon, gehostet auf CVE.org\footnote{\url{https://www.cve.org/PartnerInformation/ListofPartners}}, abfragt und daraus eine JSON-Datei generiert, in der diese Informationen abgelegt und später wieder eingelesen werden können.
-Zu einigen ausgewählten Entitäten wird ein zusätzlicher, manueller Datensatz gepflegt, der weitere Informationen zu diesen trägt.
+Um den einzelnen Entitäten Metadaten, wie die E-Mail-Adressen der zuständigen Institutionen und Organisationen oder URLs zu deren Homepages oder Datenquellen, zuordnen zu können, muss ein Datensatz aller bekannter Datenquellen aufgebaut werden, der diesen zugeordnet werden kann.
+Um automatisiert eine lokale Liste aller der NVD bekannten CNAs zu erzeugen, wurde ein Prozess entworfen, der auf die Webinhalte von CVE.org\footnote{\url{https://www.cve.org/PartnerInformation/ListofPartners}} zugreift und mehrere JSON-Dateien erzeugt, in denen diese Daten abgelegt werden.
+Um weitere, in dem Datensatz nicht geführte, relevante Entitäten zu unterstützen, wird ein zusätzlicher Datensatz gepflegt, der weitere Informationen zu diesen trägt.

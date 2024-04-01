@@ -1,15 +1,16 @@
 \subsection{CVSS-Vektor Selektion} \label{subsec:projektbericht-loesungsweg-cvss-selection}
 
 Mit dem Format aus Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-source-management} werden ab Generation 3 des Vulnerability Monitorings der {\metaeffekt} ALLE Vektoren zu den gefundenen Schwachstellen mit in das Inventar der Komponenten aufgenommen.
-Generation 2 dieses Systems hat diese Multiplizität der Vektoren einfach übergangen, und als Nebeneffekt des zuständigen Codes ein \qt{First-Come-First-Serve}-Verfahren für die Vektoren angewendet, was eine bewusste Entscheidung eines interessierten Bewertungsteams von Anfang an ausschloss.
-Mit diesem neuen System, bei dem zunächst alle Vektoren aggregiert und erst in den Schritten ausgewertet werden, in denen sie visualisiert werden müssen, kann also zu jedem Zeitpunkt die genaue Quelle eines Vektors nachvollzogen werden.
+Generation 2 dieses Systems hat diese Multiplizität der Vektoren einfach übergangen.
+Da die Auswahl der effektiven Vektoren als Nebeneffekt des zuständigen Codes durch ein \qt{First-Come-First-Serve}-Verfahren realisiert war, wurde eine bewusste Entscheidung der Kunden von Anfang an ausgeschlossen.
+Um zu jedem Zeitpunkt die genaue Quelle eines Vektors nachvollziehbar zu halten, werden bei dem neuen System zunächst alle Vektoren über den Prozessverlauf aggregiert und erst in den Schritten ausgewertet werden, in denen sie interpretiert werden müssen.
 Die Funktionsweise der CVSS-Vektor-Selektion wird in diesem Kapitel erklärt.
 
 Vor Beginn ist konzeptionell erneut zu betonen, dass die Auswahl der, von den vorhergegangenen Prozessschritten angesammelten, Vektoren wirklich erst ab den Schritten geschieht, in denen sie auf egal welcher Art und Weise dargestellt oder für weitere Berechnungen benötigt werden.
 Die Selektion bezieht sich immer auf die Vektoren einer einzigen, vollständigen Schwachstelle.
 Dieser Prozess wird in zwei Teile geteilt, da für einige Use-Cases bereits das Zwischenergebnis von Interesse ist.
 
-Ein Schritt, der vor der Auswahl stattfinden muss, ist es, erst die relevanten Vektoren einer Schwachstelle zusammenzusammeln.
+Ein Schritt, der vor der Auswahl stattfinden muss, ist es, erst die relevanten Vektoren einer Schwachstelle zu sammeln.
 Hierfür gibt es einige Fälle die beachtet werden müssen:
 Natürlich werden alle Vektoren, die direkt auf der Schwachstelle sind, direkt hinzugefügt.
 Einige Vektoren werden nicht von der Schwachstelle selbst, sondern von referenzierten Security Advisories beigetragen, also müssen auch diese eingesammelt werden.
@@ -18,7 +19,11 @@ Diese Bedingungen müssen hier erst ausgewertet werden, wodurch Vektoren eventue
 Zudem kann es sein, dass ein projektinternes Bewertungsteam eigene Vektoren für eine Schwachstelle vergeben hat, diese müssen natürlich auch berücksichtigt werden.
 
 Um die Einordnung des Themas zu vereinfachen, wird dieser Prozess beispielhaft in Schaubild \ref{fig:cvss-selection-process-collection} mit dem Betriebssystem \qt{Windows 10 Pro} mit frei erdachten, jedoch realistischen Schwachstellen, Security Advisories und Vektor-Quellen durchgeführt.
+\ifshortenedReport
+Dieses betroffene Betriebssystem durchläuft als Komponente die Inventory Enrichment Pipeline, und bekommt damit die gefundenen Schwachstellen und Security Advisories angehängt.
+\else
 Dieses betroffene Betriebssystem durchläuft als Komponente die Inventory Enrichment Pipeline, wie in Kapitel \ref{subsec:projektbericht-grundlagen-vulnerability-monitoring} beschrieben, und bekommt damit die gefundenen Schwachstellen und Security Advisories angehängt.
+\fi
 Nicht nur die Schwachstelle und die Security Advisories wurden mit CVSS-Vektoren versehen, sondern gab es auch mehrere Vektor-Modifikationen von manuellen Bewertungen als \qt{Assessment}-Vektoren.
 Das Beispiel wird in Kapitel \ref{subsubsec:projektbericht-loesungsweg-cvss-selection-example} mit der Selektion der Vektoren weitergeführt.
 
@@ -47,13 +52,14 @@ Der Grund dafür ist, dass es für Kunden wichtig ist, die Nachvollziehbarkeit, 
 
 Allgemein ist der Selektionsschritt in drei Abschnitte aufteilbar.
 Der erste sucht in potenziell mehreren Schritten, definiert durch gekapselte Regeln, Vektoren aus der aggregierten Menge an Vektoren heraus und kombiniert diese auf eine definierbare Weise.
-Die darauf folgenden beiden Schritte dienen zur Auswertung des Ergebnisvektors, um diesen eventuell noch einmal zu manipulieren oder etwa in bestimmten Situationen gar keinen zurückzugeben.
+Die darauffolgenden beiden Schritte dienen zur Auswertung des Ergebnisvektors, um diesen eventuell noch einmal zu manipulieren oder etwa in bestimmten Situationen gar keinen zurückzugeben.
 
 Ein Auszug der relevanten Klasse mit ihren Attributen, die für die Selektion aus Schritt 1 zuständig sind, kann in Listing \ref{lst:cvss-selector-class-attributes} gefunden werden.
 Der volle Quellcode mit der vollen Logik kann auf dem öffentlichen Repository\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/24a26dd37ab6f9087e2fdc1b338857b404fa835e/libraries/ae-security/src/main/java/org/metaeffekt/core/security/cvss/processor/CvssSelector.java}} gefunden werden.
 Eine weitere Anforderung für das dahinterliegende Datenmodell der Selektoren ist es, komplett als JSON-Objekt serialisierbar zu sein, aus dem dann wieder eine identische Java-Objektstruktur aufgebaut werden kann.
 Im Quellcode werden darum einige Konvertierungsmethoden zur Verfügung gestellt.
 
+% basicstyle=\tiny
 \begin{lstlisting}[language=Java, label={lst:cvss-selector-class-attributes}, caption={CVSS-Selektor Klassen}]
 public class CvssSelector {
     // Die folgenden Unterkapitel gehen auf diese Attributen ein:
@@ -131,9 +137,10 @@ public class CvssSelector {
 
 \paragraph{Schritt 1.1: Regeln zur Vektor-Selektion und -Kombination} \label{par:projektbericht-loesungsweg-cvss-selection-rules-1-1}
 
-Die Logik zur Vektor-Selektion und -Kombination besteht aus einer sequenziellen Menge an Regeln, die jeweils definieren, welchen Vektor sie auswählen, wie damit umgegangen werden soll, falls einer/keiner gefunden wurde und ob nutzerdefinierte Variablen modifiziert werden sollen.
-Zunächst werden die im Code in der Klasse \code{SourceSelector} als \code{SourceSelectorEntry} benannten Regeleinträge erlkärt.
-Diese Klassen verwendet die Vektor-Quellennotation, wie in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-source-management} aufgeführt, zur Eingrenzung des Vektors, der ausgewält werden soll.
+Zur Selektion (und Kombination) der effektiven Vektoren werden von einem Benutzer eine Menge an Regeln definiert.
+Diese legen je fest, welchen Vektor sie auswählen, wie mit Ergebnissen umgegangen werden soll und ob nutzerdefinierte Variablen modifiziert werden sollen.
+Zunächst werden die im Code in der Klasse \code{SourceSelector} als \code{SourceSelectorEntry} benannten Regeleinträge erklärt.
+Diese Klassen verwendet die Vektor-Quellennotation, wie in Kapitel \ref{subsec:projektbericht-loesungsweg-cvss-source-management} aufgeführt, zur Eingrenzung des Vektors, der ausgewählt werden soll.
 Die einzelnen Einträge erlauben es, Hosting- und Issuing-Entities und eine Issuing Role anzugeben, mit Sonderwerten von \qt{*} für das matchen von beliebigen, aber nicht-leeren Werten und \qt{null}, um einen leeren Wert zu verlangen, die gegen jeden Vektor der Eingangsvektoren gehalten werden.
 Das Ergebnis kann optional durch einen weiteren Parameter bei jeder Auswertung invertiert werden, um komplexere Abfragen zu erlauben.
 Der erste erfolgreiche Eintrag, der einen Vektor findet, wird an die obere Ebene zurückgegeben, was die Definition von fallback-Strategien ermöglicht.
@@ -152,17 +159,18 @@ Dies ist nützlich bei Assessment-Vektoren (vom Bewertungsteam ausgestellten), d
 Die letzte Option ist \code{OVERWRITE}, welche einfach vollständig den vorherigen Vektor durch den neuen ersetzt.
 
 Beim Anwenden dieser Vektoren werden über die \code{SelectorStatsCollector} verschiedene ganzzahlig numerische Statistiken in benutzerdefinierte Variablen für die \qt{Statistics Evaluators} in Schritt 1.2 getrackt.
-Beispielsweise kann ein \qt{Statistics Collector} erstellt werden, der trackt, ob ein Vektor von einer gewissen Regel gefunden wurde (präsenz-Check), oder wie viele Metriken von diesem angewandt wurden (wurde der Vektor modifiziert?), was bei den Methoden \code{HIGHER} und \code{LOWER} nützlich sein kann.
-Diese Variablen werden bis zum Schritt 1.2 gesichert, bei dem sie ausgewertet werden können.
+Beispielsweise kann ein \qt{Statistics Collector} erstellt werden, der trackt, ob ein Vektor von einer gewissen Regel gefunden wurde (präsenz-Check), oder wie viele Metriken von diesem angewandt wurden (also ob der Vektor modifiziert wurde), was bei den Methoden \code{HIGHER} und \code{LOWER} nützlich sein kann.
+Diese Variablen werden bis zum Schritt 1.2 gespeichert, bei dem sie ausgewertet werden können.
 
-Zuletzt können pro Regel noch einige Checks mit \code{SelectorVectorEvaluator} durchgeführt werden.
-Diese können Aktionen über \code{EvaluatorAction} auslösen, wie den Prozess komplett scheitern zu lassen, einen leeren Vektor zurückzugeben, diese Regel zu überspringen oder an der vorherigen Regel abzubrechen.
+Zuletzt können pro Regel noch Checks mit \code{SelectorVectorEvaluator} durchgeführt werden.
+Diese können Aktionen über \code{EvaluatorAction} auslösen, wie:
+den Prozess komplett scheitern zu lassen, einen leeren Vektor zurückzugeben, diese eine Regel zu überspringen oder an der vorherigen Regel abzubrechen.
 Diese Checks können optional invertiert werden.
 
 \paragraph{Schritt 1.2: Statistics Evaluators (Statistik-Auswerter)}
 
 Nun, da in Schritt 1.1 (Unterkapitel von \ref{par:projektbericht-loesungsweg-cvss-selection-rules-1-1}) von den Regeln ein einziger, kombinierter Vektor gebaut wurde, können optional einige der \qt{Statistics Collectors} über die \code{SelectorStatsEvaluator} ausgewertet werden.
-Hier werden die typischen numerischen Vergleichsmethoden wie größer, kleiner, Gleichheit, und so weiter zur Verfügung gestellt, um auch hier die Aktionen aus \code{EvaluatorAction} ausführen zu können.
+Hier werden die typischen numerischen Vergleichsmethoden wie größer, kleiner, gleich, und so weiter zur Verfügung gestellt, um auch hier die Aktionen aus \code{EvaluatorAction} ausführen zu können.
 
 \paragraph{Schritt 1.3: Vector Evaluators}
 
@@ -242,9 +250,8 @@ Dieser Abschnitt bezieht sich auf Schaubild \ref{fig:cvss-selection-process-sele
 
 Zunächst muss, als Eingabe für die Selektionsschritte, eine Menge an Vektoren gesammelt werden.
 Da sich dieses Beispiel auf die Schwachstelle \qt{CVE-2020-1234} aus dem vorhergegangenen Beispiel bezieht, werden auf jeden Fall alle Vektoren der Schwachstelle selbst und der referenzierten manuellen Bewertungen (\qt{Assessments}) aufgenommen.
-Die Vektoren der Security Advisories können jedoch mit Bedingungen versehen sein, welche erst ausgewertet werden müssen.
-In diesem Fall wird der Vektor, der sich auf die \qt{MS Product ID 1234} bezieht, herausgenommen, da auf der Komponente die andere Id \qt{5678} geführt wird.
-Microsoft gibt pro Produkt nur einen Vektor heraus, was dies erklärt.
+Bedingte Vektoren müssen nun noch auf ihre Bedingung geprüft werden:
+Microsoft ordnet pro Produkt in ihren Datensätzen nur einen Vektor zu, darum wird der Vektor mit der Beziehung zu \qt{MS Product ID 1234} herausgefiltert, da die Id der verwendeten Komponente \qt{5678} darauf nicht referenziert wird.
 
 \begin{figure}[htbp] % here, top, bottom, separate page
     \centering
@@ -273,7 +280,7 @@ Dieser Abschnitt bezieht sich auf die Schaubilder \ref{fig:cvss-selection-proces
 
 Nun können die Selektoren auf die Vektor-Menge angewendet werden.
 Im Fall des \qt{initial}-Selektors wird einfach die erste zutreffende Quelle aus der Liste in Regel 1 gewählt.
-Außer bei CVSS:4.0 (keine nicht-Assessment-Vektoren) wird immer genau ein Vektor zurückgegeben und auch nicht weiter verarbeitet.
+Außer bei CVSS:4.0 (keine nicht-Assessment-Vektoren) wird hier immer genau ein Vektor zurückgegeben.
 
 Bei dem \qt{context}-Selektor werden genau dieselben initialen Vektoren zunächst ausgewählt, bei CVSS:2.0 wird allerdings noch von den anderen Regeln 2 und 3 ein Vektor gefunden und entsprechend den Regeln angewandt (alle Metriken, nur \qt{lower}).
 Bei CVSS:4.0 wird sogar nur durch einen Assessment-Vektor eine Kontribution gemacht, nicht durch etwa Regel 1.
