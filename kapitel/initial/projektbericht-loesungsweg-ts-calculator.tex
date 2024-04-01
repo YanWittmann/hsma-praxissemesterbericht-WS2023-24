@@ -13,14 +13,14 @@ In Abbildung \ref{fig:cvss-ts-calculator-class-diagram} kann das Klassendiagramm
 Da sich die Vektoren nur in ihren verwendeten Metriken, Metrikgruppen und der Score-Berechnung unterscheiden, kann recht viel der gemeinsamen Logik in eine Oberklasse \code{CvssVector} extrahiert werden.
 In Listing \ref{lst:cvss-typescript-cvss-vector-class-attributes} wird ein Ausschnitt der recht schmalen Attributmenge und einigen relevanten Methoden gegeben.
 
-\begin{lstlisting}[language=Java, label={lst:cvss-typescript-cvss-vector-class-attributes}, caption={CvssVector Klasse in TypeScript}]
+\begin{lstlisting}[language=Java, label={lst:cvss-typescript-cvss-vector-class-attributes}, caption={CvssVector Klasse in TypeScript}, basicstyle=\scriptsize]
 export abstract class CvssVector<R extends BaseScoreResult> {
- components: Map<VectorComponent<VectorComponentValue>, VectorComponentValue>;
+    components: Map<VectorComponent<VectorComponentValue>, VectorComponentValue>;
 
- public abstract calculateScores(normalize: boolean): R;
- public abstract getVectorName(): string;
- public applyComponent(setComponent: VectorComponent<VectorComponentValue>, setValue: VectorComponentValue) { ... }
- public getComponent<T extends VectorComponentValue>(component: VectorComponent<T>): T { ... }
+    public abstract calculateScores(normalize: boolean): R;
+    public abstract getVectorName(): string;
+    public applyComponent(setComponent: VectorComponent<VectorComponentValue>, setValue: VectorComponentValue) { ... }
+    public getComponent<T extends VectorComponentValue>(component: VectorComponent<T>): T { ... }
 }
 \end{lstlisting}
 
@@ -30,7 +30,7 @@ CVSS 3.1 hat unter anderem das Problem, dass der sog. \qt{Environmental} und \qt
 Mit einem \code{normalize}-Parameter können diese scores auf die Spanne von 0-10 gemappt werden.
 Zudem kann nicht immer jeder Score berechnet werden, denn zu den Scores müssen immer mindestens die entsprechenden Metriken vorhanden sein.
 
-\begin{lstlisting}[language=Java, label={lst:cvss-typescript-cvss-3P1-calculateScores}, caption={CVSS 3.1 Score-Berechnung in TypeScript}]
+\begin{lstlisting}[language=Java, label={lst:cvss-typescript-cvss-3P1-calculateScores}, caption={CVSS 3.1 Score-Berechnung in TypeScript}, basicstyle=\scriptsize]
 calculateScores(normalize: boolean = false): MultiScoreResult {
     const base = isBaseFullyDefined();
     const temp = isAnyTemporalDefined();
@@ -57,12 +57,12 @@ In Listing \ref{lst:cvss-typescript-cvss-3P1-calculateExactImpactScore} ist der 
     \text{If Scope is Changed:} & \quad 7.52 \times (\text{ISS} - 0.029) - 3.25 \times (\text{ISS} - 0.02)^{15}
 \end{align*}
 
-\begin{lstlisting}[language=Java, label={lst:cvss-typescript-cvss-3P1-calculateExactImpactScore}, caption={CVSS 3.1 Impact Score-Berechnung in TypeScript}]
+\begin{lstlisting}[language=Java, label={lst:cvss-typescript-cvss-3P1-calculateExactImpactScore}, caption={CVSS 3.1 Impact Score-Berechnung in TypeScript}, basicstyle=\scriptsize]
 public calculateExactImpactScore(): number {
- const iss = 1 - ((1 - getComponent(C).value) * (1 - getComponent(I).value) * (1 - getComponent(A).value));
+    const iss = 1 - ((1 - getComponent(C).value) * (1 - getComponent(I).value) * (1 - getComponent(A).value));
 
- if (getComponent(S).value) return SCOPE_CHANGED_FACTOR * (iss - 0.029) - 3.25 * Math.pow(iss - 0.02, 15);
- else return SCOPE_UNCHANGED_FACTOR * iss;
+    if (getComponent(S).value) return SCOPE_CHANGED_FACTOR * (iss - 0.029) - 3.25 * Math.pow(iss - 0.02, 15);
+    else return SCOPE_UNCHANGED_FACTOR * iss;
 }
 \end{lstlisting}
 
@@ -71,7 +71,6 @@ public calculateExactImpactScore(): number {
 Etwas anders verhält es sich mit der Version 4.0 von CVSS, welche nur einen einzigen Score berechnet und dazu keine statischen Formeln, sondern höhere mathematische Konzepte verwendet.
 Laut der Dokumentation und Entwicklungsgeschichte von CVSS 4.0 \cite{CVSSv4.0Specification} wurden die 15 Millionen möglichen CVSS-Vektoren automatisiert in 270 Äquivalenzgruppen aufgeteilt und einer Expertengruppe mit 50 Teilnehmern bereitgestellt, die diese absolut dem Schweregrad entsprechend einordnen sollten.
 Dadurch konnte eine durchschnittliche Liste an Vektoren mit aufsteigenden Schweregraden berechnet werden, welcher recht einfach linear die CVSS-Scores von 0 bis 10 statisch vergeben und in einer Lookup-Tabelle der Öffentlichkeit zur Verfügung gestellt wurde.
-
 Bei der Berechnung der Scores wird nun der initiale Input-Vektor mit seinen 32 Metriken auf nur 6 Dimensionen über diverse Regeln auf einen sog. \qt{MakroVektor} reduziert, um durch eben diese Lookup-Tabelle einen entsprechenden Basis-Score zu erhalten.
 Nun wären allerdings 270 Scores etwas wenig, um die Vielfalt und den Detailgrad aller 15 Millionen Kombinationen darzustellen.
 Daher wird ein Interpolationschritt dahinter geschaltet, der den Großteil der Berechnungslogik einnimmt.
@@ -113,16 +112,14 @@ Damit können die folgenden Werte und Formeln definiert werden:
 
 In Listing \ref{lst:cvss-typescript-cvss-4P0-calculateOverallScore-pseudocode} wird der Pseudocode für die Berechnung des Scores gezeigt, wie er sonst in der Cvss4P0-Klasse gefunden werden kann.
 
-\begin{lstlisting}[language=Java, label={lst:cvss-typescript-cvss-4P0-calculateOverallScore-pseudocode}, caption={CVSS 4.0 Score-Berechnung Pseudocode}]
+\begin{lstlisting}[language=Java, label={lst:cvss-typescript-cvss-4P0-calculateOverallScore-pseudocode}, caption={CVSS 4.0 Score-Berechnung Pseudocode}, basicstyle=\scriptsize]
 function calculateOverallScore(inputVector):
   if not isBaseFullyDefined(inputVector):
       return 0.0
-
   if isNoImpactOnSystem(inputVector):
       return 0.0
 
-  // implementations for handling different equivalence groups
-  eqOperations = getEqImplementations()
+  eqOperations = getEqImplementations() // implementations for handling equivalence groups
 
   macroVector = getMacroVector(inputVector)
   performSafetyCheck(macroVector)

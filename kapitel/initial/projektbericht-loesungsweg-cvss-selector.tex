@@ -60,9 +60,9 @@ Eine weitere Anforderung für das dahinterliegende Datenmodell der Selektoren is
 Im Quellcode werden darum einige Konvertierungsmethoden zur Verfügung gestellt.
 
 % basicstyle=\tiny
-\begin{lstlisting}[language=Java, label={lst:cvss-selector-class-attributes}, caption={CVSS-Selektor Klassen}]
+\begin{lstlisting}[language=Java, label={lst:cvss-selector-class-attributes}, caption={CVSS-Selektor Klassen}, basicstyle=\scriptsize]
 public class CvssSelector {
-    // Die folgenden Unterkapitel gehen auf diese Attributen ein:
+    // Die Attribute werden in diesen Unterkapiteln erklaert.
     List<CvssRule> rules; // 1.1
     List<SelectorStatsEvaluator> statsEvaluatorActions; // 1.2
     List<SelectorVectorEvaluator> selectorVectorEvaluators; // 1.3
@@ -73,62 +73,50 @@ public class CvssSelector {
         List<SelectorStatsCollector> statsCollectors;
         List<SelectorVectorEvaluator> vectorEvaluators;
     }
-
     public static class SourceSelector {
         List<SourceSelectorEntry> preferredSources;
     }
-
     public static class SourceSelectorEntry {
         List<SourceSelectorEntryEntry<CvssEntity>> hostingEntities;
         List<SourceSelectorEntryEntry<CvssEntity>> issuingEntities;
         List<SourceSelectorEntryEntry<CvssIssuingEntityRole>> issuingEntityRoles;
     }
-
     public static class SourceSelectorEntryEntry<T extends CvssSource.EntityNameProvider> {
         T value;
         boolean inverted;
     }
-
     public static class SelectorStatsCollector {
         String attributeName;
         StatsCollectorProvider provider;
         StatsCollectorSetType setType;
     }
-
     public static class SelectorVectorEvaluator {
         // operations are combined using AND
         // individual operations can be inverted by setting value to true
         Map<VectorEvaluatorOperation, Boolean> operations;
         EvaluatorAction action;
     }
-
     public static class SelectorStatsEvaluator {
         String attributeName;
         StatsEvaluatorOperation comparator;
         EvaluatorAction action;
         Integer comparisonValue;
     }
-
     public enum MergingMethod {
         ALL, LOWER, HIGHER, OVERWRITE
     }
-
     public enum StatsCollectorProvider {
         PRESENCE, ABSENCE, APPLIED_PARTS_COUNT
     }
-
     public enum StatsCollectorSetType {
         ADD, SUBTRACT, SET, MAX, MIN
     }
-
     public enum StatsEvaluatorOperation {
         EQUAL, SMALLER, SMALLER_OR_EQUAL, GREATER, GREATER_OR_EQUAL
     }
-
     public enum VectorEvaluatorOperation {
         IS_NULL, IS_BASE_FULLY_DEFINED, IS_BASE_PARTIALLY_DEFINED, IS_ENVIRONMENTAL_PARTIALLY_DEFINED, IS_TEMPORAL_PARTIALLY_DEFINED, IS_THREAT_PARTIALLY_DEFINED
     }
-
     public enum EvaluatorAction {
         FAIL, RETURN_NULL, SKIP, RETURN_PREVIOUS
     }
