@@ -1,6 +1,7 @@
 \subsection{CVSS-Vektor Quellenmanagement} \label{subsec:projektbericht-loesungsweg-cvss-source-management}
 
-Um das Problem von multiplen CVSS-Vektoren pro Schwachstelle zu lösen, muss zunächst ein System entworfen werden, mit dem eine Quelle eines CVSS-Vektors eindeutig nach Aufnahme weiterhin identifiziert werden kann.
+Dieses Kapitel geht auf das Problem ein, dass es auf einer Schwachstelle potenziell mehrere CVSS-Vektoren geben kann.
+Als Grundlage dazu wurde ein System entworfen, mit dem eine Quelle eines CVSS-Vektors eindeutig nach Aufnahme weiterhin identifiziert werden kann.
 Einige Anforderungen an das Format sind, dass sie in einen einfachen menschenlesbaren String serialisiert und von diesem wieder deserialisiert werden kann, aber auch die Eindeutigkeit der Quellen so hoch ist, dass sich zwei in irgendeiner Art unterschiedliche Quellen auch in der textuellen Repräsentation unterscheiden und aus einem externen Datensatz eindeutig weitere Metadaten hinzugefügt werden können.
 Um dieses Format zu bilden, wurden unter anderem die folgenden Quellen berücksichtigt:
 
