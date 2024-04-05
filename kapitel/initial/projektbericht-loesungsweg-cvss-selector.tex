@@ -55,7 +55,7 @@ Der erste sucht in potenziell mehreren Schritten, definiert durch gekapselte Reg
 Die darauffolgenden beiden Schritte dienen zur Auswertung des Ergebnisvektors, um diesen eventuell noch einmal zu manipulieren oder etwa in bestimmten Situationen gar keinen zurückzugeben.
 
 Ein Auszug der relevanten Klasse mit ihren Attributen, die für die Selektion aus Schritt 1 zuständig sind, kann in Listing \ref{lst:cvss-selector-class-attributes} gefunden werden.
-Der volle Quellcode mit der vollen Logik kann auf dem öffentlichen Repository\footnote{\url{https://github.com/org-metaeffekt/metaeffekt-core/blob/24a26dd37ab6f9087e2fdc1b338857b404fa835e/libraries/ae-security/src/main/java/org/metaeffekt/core/security/cvss/processor/CvssSelector.java}} gefunden werden.
+Der volle Quellcode mit der Logik kann auf dem \href{https://github.com/org-metaeffekt/metaeffekt-core/blob/24a26dd37ab6f9087e2fdc1b338857b404fa835e/libraries/ae-security/src/main/java/org/metaeffekt/core/security/cvss/processor/CvssSelector.java}{[öffentlichen Repository]} gefunden werden.
 Eine weitere Anforderung für das dahinterliegende Datenmodell der Selektoren ist es, komplett als JSON-Objekt serialisierbar zu sein, aus dem dann wieder eine identische Java-Objektstruktur aufgebaut werden kann.
 Im Quellcode werden darum einige Konvertierungsmethoden zur Verfügung gestellt.
 
