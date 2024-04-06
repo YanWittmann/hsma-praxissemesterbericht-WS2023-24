@@ -36,7 +36,8 @@ Allgemein reichen die Scores, die aus diesen Vektoren berechnet werden, von 0 bi
 Diese Berechnungen lassen sich leicht mit Online-Rechnern\footnote{\url{https://metaeffekt.com/security/cvss/calculator}} oder Software-Tools, verfügbar in allen populären Programmiersprachen, durchführen.
 
 Die versionsabhängigen Metriken der Vektoren ordnen jeweils eine Charakteristik einer Schwachstelle einem Wert zu.
-So steht beispielsweise \code{AV:L} für einen \qt{Attack Vector} mit dem Wert \qt{Adjacent Network}, was die räumliche Nähe beschreibt, die ein Angreifer benötigt, um die Schwachstelle auszunutzen.
+So steht beispielsweise in CVSS:3.1 mit \code{AV:A} für einen \qt{Attack Vector} mit dem Wert \qt{Adjacent Network}.
+Dies beschreibt die räumliche Nähe, die ein Angreifer benötigt, um die Schwachstelle auszunutzen.
 Andere Werte wie \qt{Network} (aus dem Internet ausnutzbar, höchster Schweregrad), \qt{Local} oder \qt{Physical} (physikalischer Zugang benötigt, am wenigsten ernst) spezifizieren weitere Angriffsszenarien für diese Metrik.
 
 \subsection{Schwachstellen-Priorisierung durch CVSS} \label{subsec:projektbericht-grundlagen-vulnerability-assessment}
@@ -48,5 +49,5 @@ Hier wird nur CVSS als Priorisierungsfaktor betrachtet, wie sie in der CVSS-Spez
 Jede Schwachstelle besitzt i.d.R. mindestens einen CVSS-Vektor und kann damit bereits ohne großen Mehraufwand eine nach dem Score sortierte Liste als initiale Reihenfolge erzeugen.
 
 Zur Kontextualisierung dieser Liste kann danach die Environmental-Metrikgruppe dienen.
-Angenommen, in einem Vektor ist \code{AV} auf \code{L} gesetzt und die betroffene lokale Schwachstelle ist in einer netzwerkisolierten Applikation netzwerktechnisch nicht ausnutzbar, dann kann eine Anpassung des CVSS-Vektors zu \code{AV:P} erfolgen.
+Angenommen, in einem Vektor ist \code{AV} auf \code{L} gesetzt und diese lokale Schwachstelle ist dank der Netzwerkisolation der Applikation netzwerktechnisch nicht ausnutzbar, dann kann eine Anpassung des CVSS-Vektors zu \code{AV:P} erfolgen.
 Zusätzliche Metriken wie Vertraulichkeits-, Integritäts- oder Verfügbarkeitsrisiken unterstützen weitere Feinabstimmungen.

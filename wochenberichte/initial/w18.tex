@@ -7,8 +7,8 @@
 Den Beginn der Woche verbrache ich damit, die Implementierung von CVSS:4.0 in TypeScript abzuschließen.
 Wie auch schon für die vorherigen Versionen war das Definieren der CVSS-Metriken und ihrer möglichen Werte einer der aufwendigeren Teile, insbesondere bei den über 30 Metriken von CVSS:4.0.
 Im Vergleich zur offiziellen JavaScript-Referenzimplementierung\footnote{\url{https://github.com/RedHatProductSecurity/cvss-v4-calculator/blob/main/app.js}}, die in einer einzigen Datei geschrieben ist, ist mein Java-Code in über 7 Klassen deutlich objektorientierter.
-Daher habe ich zum Übernehmen der Implementierung einen eher ungewöhnlichen Ansatz gewählt:
-Ich kopierte die Java-Klassen direkt 1:1 in das TypeScript-Projekt rüber und übersetzte sie nach und nach in die andere Sprache.
+Ich habe zum Übernehmen der Implementierung einen eher ungewöhnlichen Ansatz gewählt:
+Ich kopierte die Java-Klassen direkt 1:1 in das TypeScript-Projekt rüber und übersetzte sie nach und nach in die Zielsprache.
 
 Dieser Prozess lief natürlich nicht reibungslos, und ich musste oft Konstrukte komplett neu schreiben, aber es war auf jeden Fall einfacher, als alles komplett neu schreiben zu müssen.
 Kleinere Probleme hatte ich mit zirkulären Referenzen, die ich mit dem Tool madge\footnote{\url{https://www.npmjs.com/package/madge}} über einen Abhängigkeitsgraphen eliminieren konnte.
@@ -35,7 +35,8 @@ Er stellte es noch am selben Tag und in der folgenden Woche unseren Kunden vor, 
     \label{fig:metaeffekt-cvss-calculator-ui-initial}
 \end{figure}
 
-Von Herrn Shane Coughlan (OpenChain General Manager und ein Referent vom Open Source Forum der bitkom) haben wir freundlicherweise folgendes Zitat zu unserem Rechner erhalten:
+Von Shane Coughlan, OpenChain General Manager und ein Referent des Open Source Forum der bitkom, haben wir freundlicherweise folgendes Zitat zu unserem Rechner erhalten:
+
 \begin{quote}
     \textit{\qt{Contextualizing security threats is as important as identifying their existence,” says Shane Coughlan, OpenChain General Manager. “The emergence of open source tools to visualize this is a key part of ensuring the supply chain can plan ahead and action responses. We are delighted to see the work by Metaeffekt, an official OpenChain Partner, in the domain. It aligns well with OpenChain ISO/IEC 18974, the international standard for open source security assurance.}}
 \end{quote}

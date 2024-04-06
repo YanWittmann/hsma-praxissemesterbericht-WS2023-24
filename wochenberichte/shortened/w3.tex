@@ -4,23 +4,24 @@
 
 \lweekdaymarginpar{\weekdayMondayLong}
 
-Montag sollte ich unseren automatisierten CPE Matching-Algorithmus zwischen Hardware- und Software-Komponenten zu unterscheiden lassen, sodass Softwarekomponenten nicht mehr Hardware-CPEs (und umgekehrt) zugeordnet werden würden.
+Montag sollte ich unseren automatisierten CPE Matching-Algorithmus zwischen Hardware- und Software-Komponenten zu unterscheiden lassen, sodass Softwarekomponenten nicht mehr Hardware CPEs (und umgekehrt) zugeordnet werden würden.
 Ob eine Komponente Hardware oder Software ist, wollten wir durch eine für die einzelnen Komponenten vergebbare definierte Liste an Kategorien ermöglichen.
 Die Implementierung war recht simpel, doch der Detailgrad dieser Kategorien war jedoch bisher noch nicht geklärt.
 Nach einiger Recherche habe ich drei Vorschläge für meinen Chef vorbereitet und wir konnten uns recht schnell auf einen einigen.
-Eine davon deutliche abweichende Drittmeinung eines anderen Kollegen hat die Diskussion den gesamten restlichen Tag einnehmen lassen und ohne eine Lösung zu finden, vertagten wir die Diskussion.
+Eine davon deutliche abweichende Drittmeinung eines anderen Kollegen hat die Diskussion den gesamten restlichen Tag einnehmen lassen.
+Ohne eine Lösung zu finden, vertagten wir die Diskussion.
 
 \sweekdaymarginpar{\weekdayTuesdayShort\ - \weekdayThursdayShort}
 
 Den Dienstag konnte ich eine lang-ersehnte Verbesserung der Excel-Serialisierung und Deserialisierung unserer Software-Inventare vornehmen.
 Das Zeichenlimit von $32.767$\footnote{\url{https://support.microsoft.com/en-gb/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3}} Zeichen pro Excel-Zelle stellte uns vor Probleme, da unsere Daten oft dieses Limit überschreiten.
 Aktuell gibt es einen Workaround, der die Daten bereits im Datenmodell in mehrere Spalten aufteilt, was gewisse Probleme hervorbringt.
-Mit einer eleganteren Lösung, die die Datenaufteilung nicht schon im Datenmodell, sondern erst beim (De-)Serialisierungsprozess vornimmt habe ich zusammen mit einem allgemeinen Styling-Modell für Excel-Dokumente habe ich die alte Implementierung ersetzt.
+Mit einer eleganteren Lösung, die die Datenaufteilung nicht schon im Datenmodell, sondern erst beim (De-)Serialisierungsprozess vornimmt habe ich, zusammen mit einem allgemeinen Styling-Modell für Excel-Dokumente, die alte Implementierung ersetzt.
 
 \sweekdaymarginpar{\weekdayFridayLong}
 
 Freitagmorgen wurde ich von meinem Chef überrascht:
-Nächste Woche Dienstag und Mittwoch sollte mit ihm und einer Kollegin nach Erfurt auf das Treffen des Arbeitskreises OpenSource\footnote{\url{https://www.bitkom.org/Bitkom/Organisation/Gremien/Open-Source.html}} unter dem Thema \qt{Open-Source-Communities} und auf das darauf folgende Forum OpenSource\footnote{\url{htthttps://www.bitkom.org/bfoss23}} der {\bitkom} gehen.
+Nächste Woche Dienstag und Mittwoch sollte mit ihm und einer Kollegin nach Erfurt auf das Treffen des Arbeitskreises OpenSource\footnote{\url{https://www.bitkom.org/Bitkom/Organisation/Gremien/Open-Source.html}} unter dem Thema \qt{Open-Source-Communities} und auf das darauf folgende Forum OpenSource\footnote{\url{https://www.bitkom.org/bfoss23}} der {\bitkom} gehen.
 Der eigentliche überraschende Punkt war, dass ich bei dem Treffen des Arbeitskreises eine 25-Minütige Präsentation vor 30 Leuten, unter anderem von RedHat, Siemens, DB Systel und anderen großen Unternehmen, über die \qt{Identifikation und Bewertung von Schwachstellen mit Inhalten aus öffentlichen Quellen} halten sollte.
 
 Ich nahm mir den restlichen Tag für die Vorbereitung darauf.

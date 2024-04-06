@@ -4,17 +4,18 @@
 
 \lweekdaymarginpar{\weekdayMondayShort, \weekdayTuesdayShort}
 
-Nach einer Pause am Wochenende nach der intensiven Report-Arbeit letzte Woche konnte ich eben die Integration des Datenmodells in den Report bis Dienstagabend fast vollständig abschließen, einschließlich neuer Segmente in den Templates zur Erklärung der Herkunft einer Schwachstelle.
+Nach einer Pause am Wochenende und der intensiven Report-Arbeit letzte Woche, konnte ich eben die Integration des Datenmodells in den Report bis Dienstagabend fast vollständig abschließen.
+Dies schließt auch die neuen Segmente in den Templates zur Erklärung der Herkunft einer Schwachstelle ein.
 
 \sweekdaymarginpar{\weekdayWednesdayShort, \weekdayThursdayShort}
 
 Die Arbeit am neuen Datenmodell und Report war nun fast fertiggestellt.
 Es blieben nur noch die Übersichtsdiagramme mit Statistiken über die gefundenen Schwachstellen für VAD (mit ChartJs\footnote{\url{https://www.chartjs.org}}) und PDF-Report (mit JFreeChart\footnote{\url{https://www.jfree.org/jfreechart}}) übrig.
-Nachdem ich einige Zeit mit Reverse-Engineering der existierenden Diagramme verwendet hatte, musste ich zuerst einmal für zukünftige Zugriffe dokumentieren, welche Datenquellen wie verarbeitet werden und habe mit meinem Chef einige sinnvolle und lang geplante Änderungen daran besprochen.
+Nachdem ich einige Zeit mit Reverse-Engineering der existierenden Diagramme verwendet hatte, musste ich zuerst einmal für zukünftige Zugriffe dokumentieren, welche Datenquellen wie verarbeitet werden und habe mit meinem Chef einige sinnvolle und lang geplante Änderungen an diesem Datenmodell besprochen.
 Bis Donnerstag konnte ich das Thema des Refactorings des Datenmodells dann tatsächlich abschließen.
 
 \sweekdaymarginpar{\weekdayFridayLong}
 
-Da ich später im Praktikum diese Änderungen bei den Kunden anwenden werden muss, habe ich am Freitag aus Voraussicht ich einen \qt{Migrationsguide} im internen Wiki erstellt, der alle Änderungen zwischen der alten und der neuen Generation unseres Systems dokumentiert.
-Dieser Guide umfasst Themen wie die Änderungen an der CVSS-Implementierung, mit dem Tracking der CVSS-Vektoren und Schwachstellen, das neue Datenmodell, die neuen Konfigurationsparameter, neue Namenskonventionen und geändertes Verhalten.
-Im Weekly Meeting berichtete ich, dass der neue Prozess nahezu abgeschlossen ist, was durchaus einen Meilenstein darstellt.
+Da später im Praktikum diese Änderungen auch bei den Kunden angewendet werden müssen, habe ich am Freitag aus Voraussicht einen \qt{Migrationsguide} im internen Wiki erstellt, der alle Änderungen zwischen der alten und der neuen Generation unseres Systems dokumentiert.
+Dieser Guide umfasst Themen wie die Änderungen an der CVSS-Implementierung, dem Tracking der CVSS-Vektoren und Schwachstellen, das neue Datenmodell, die neuen Konfigurationsparameter, neue Namenskonventionen und das restliche geändertes Verhalten.
+Im Weekly Meeting berichtete ich, dass der neue Prozess nahezu abgeschlossen ist.
