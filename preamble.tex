@@ -34,6 +34,13 @@
 % ein bisschen eine bessere Verteilung der Buchstaben...
 \usepackage{microtype}
 
+% table of contents:
+% vermeiden, dass die Kapitelnummerierung im Inhaltsverzeichnis zu weit nach rechts eingerückt ist und mit dem Kapitelnamen kollidiert
+% MUSS VOR dem subfig package geladen werden (https://tex.stackexchange.com/questions/530946/extending-table-of-contents-dots-up-to-large-page-numbers)
+\usepackage{tocloft}
+\cftsetpnumwidth{2em} % Breite der Seitenzahlen im Inhaltsverzeichnis
+\cftsetrmarg{3em} % Abstand der Seitenzahlen vom rechten Rand
+
 % Bilder und Listings
 \usepackage{graphicx} % wir wollen Bilder einfügen
 \usepackage{subfig} % Teilbilder
@@ -92,7 +99,7 @@
 %% Quellen
 % Eine Alternative wäre Quellen in Literatur und Online-Quellen
 % zu teilen
-% \usepackage{bibtopic} 
+% \usepackage{bibtopic}
 
 % Hochschule Logo, noch nicht perfekt
 \usepackage{hsmalogo}
